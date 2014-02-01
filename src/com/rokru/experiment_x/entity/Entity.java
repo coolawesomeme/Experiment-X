@@ -11,6 +11,11 @@ public abstract class Entity {
 	private boolean removed = false;
 	protected Level level;
 	protected final Random random = new Random();
+	protected String UUID;
+	
+	public Entity(String uuid){
+		UUID = uuid;
+	}
 	
 	public void update() {
 	}

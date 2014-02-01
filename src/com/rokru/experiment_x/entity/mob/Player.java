@@ -11,12 +11,14 @@ public class Player extends Mob {
 	private int anim = 0;
 	private boolean walking = false;
 	
-	public Player (Keyboard input) {
+	public Player (Keyboard input, String username, String UUID) {
+		super(UUID);
 		this.input = input;
 		sprite = Sprite.player_up;
 	}
 	
-	public Player(int x, int y, Keyboard input) {
+	public Player(int x, int y, Keyboard input, String username, String UUID) {
+		super(UUID);
 		this.x = x;
 		this.y = y;
 		this.input = input;

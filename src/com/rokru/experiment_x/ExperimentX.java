@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -31,6 +33,7 @@ public class ExperimentX extends Canvas implements Runnable{
     private Keyboard key;
     private Level level;
     private Player player;
+    private static String username;
     private boolean running = false;
     
     private Render screen;
@@ -46,23 +49,37 @@ public class ExperimentX extends Canvas implements Runnable{
         frame = new JFrame();
         key = new Keyboard();
         level = new RandomLevel(64, 64);
-        player = new Player(key);
+        player = new Player(key, username, "NYI");
         
         addKeyListener(key);
         
     }
 
     public static void main(String[] args) {
-        ExperimentX x = new ExperimentX();
-        x.frame.setResizable(false);
-        x.frame.setTitle(gameVersionFormatted);
-        x.frame.add(x);
-        x.frame.pack();
-        x.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        x.frame.setLocationRelativeTo(null);
-        x.frame.setVisible(true);
+    	List<String> parameters = new ArrayList<String>();
+		for(String s : args){
+			parameters.add(s);
+		}
+		if(parameters.size() > 0){
+			if(parameters.size() == 1){
+				username = parameters.get(0);
+			}else{
+				username = "Player";
+			}
+			
+			ExperimentX x = new ExperimentX();
+			x.frame.setResizable(false);
+			x.frame.setTitle(gameVersionFormatted);
+			x.frame.add(x);
+			x.frame.pack();
+			x.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			x.frame.setLocationRelativeTo(null);
+			x.frame.setVisible(true);
         
-        x.start();
+			x.start();
+		}else{
+			Runtime.getRuntime().exit(0);
+		}
     }
 
     public synchronized void start(){
