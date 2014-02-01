@@ -50,7 +50,7 @@ public class ExperimentX extends Canvas implements Runnable{
         frame = new JFrame();
         key = new Keyboard();
         level = new RandomLevel(64, 64);
-        player = new Player(key, username, "NYI");
+        player = new Player(key, username);
         
         addKeyListener(key);
         
@@ -62,11 +62,14 @@ public class ExperimentX extends Canvas implements Runnable{
 			parameters.add(s);
 		}
 		if(parameters.size() > 0){
-			if(parameters.size() == 1){
-				username = parameters.get(0);
-			}else{
-				username = "Player";
+			username = "Player";
+			for (String q : parameters){
+				if (q.startsWith("-user:")){
+					username = parameters.get(parameters.indexOf(q)).split(":")[1];
+				    break;
+				}
 			}
+			Logger.logInfo("Current Username: " + username);
 			makeDirectories();
 			ExperimentX x = new ExperimentX();
 			x.frame.setResizable(false);

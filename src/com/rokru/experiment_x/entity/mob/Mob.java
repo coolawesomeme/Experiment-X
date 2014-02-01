@@ -5,8 +5,7 @@ import com.rokru.experiment_x.graphics.Sprite;
 
 public abstract class Mob extends Entity {
 	
-	public Mob(String UUID) {
-		super(UUID);
+	public Mob() {
 	}
 
 	protected Sprite sprite;

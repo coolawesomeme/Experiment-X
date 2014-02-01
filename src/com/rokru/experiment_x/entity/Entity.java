@@ -1,5 +1,6 @@
 package com.rokru.experiment_x.entity;
 
+import java.util.HashMap;
 import java.util.Random;
 
 import com.rokru.experiment_x.graphics.Render;
@@ -12,9 +13,14 @@ public abstract class Entity {
 	protected Level level;
 	protected final Random random = new Random();
 	protected String UUID;
+	private HashMap<String, Entity> uuidList = new HashMap<String, Entity>();
 	
-	public Entity(String uuid){
-		UUID = uuid;
+	public Entity(){
+		UUID = generateUUID();
+		while(uuidList.containsKey(UUID)){
+			UUID = generateUUID();
+		}
+		uuidList.put(UUID, this);
 	}
 	
 	public void update() {
@@ -32,4 +38,7 @@ public abstract class Entity {
 		return removed;
 	}
 
+	protected String generateUUID(){
+		return "NYI";
+	}
 }
