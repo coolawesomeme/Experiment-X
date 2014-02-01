@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,7 @@ public class ExperimentX extends Canvas implements Runnable{
 			}else{
 				username = "Player";
 			}
-			
+			makeDirectories();
 			ExperimentX x = new ExperimentX();
 			x.frame.setResizable(false);
 			x.frame.setTitle(gameVersionFormatted);
@@ -78,6 +79,8 @@ public class ExperimentX extends Canvas implements Runnable{
         
 			x.start();
 		}else{
+			/** This will prevent testing, but it was sort of necessary. */
+			Logger.logError("No username provided, either use the launcher or run from commandline.");
 			Runtime.getRuntime().exit(0);
 		}
     }
@@ -154,4 +157,29 @@ public class ExperimentX extends Canvas implements Runnable{
     	g.dispose();
     	bs.show();
     }
+    
+    private static void makeDirectories() {
+		File f;
+		if(System.getProperty("user.home") != null){
+			f = new File(System.getProperty("user.home") + "/.experimentx/Game");
+			if(f.mkdirs()){
+				Logger.logInfo("Game File Folder created at:");
+				Logger.logInfo(f.getAbsolutePath());
+			}
+		}else{
+			f = new File(".experimentx/Game");
+			if(f.mkdirs()){
+				Logger.logInfo("Game File Folder created at:");
+				Logger.logInfo(f.getAbsolutePath());
+			}
+		}
+	}
+
+	public static String getDirectory(){
+		if(System.getProperty("user.home") != null){
+			return System.getProperty("user.home") + "/.experimentx/Game";
+		}else{
+			return ".experimentx/Game";
+		}
+	}
 }
