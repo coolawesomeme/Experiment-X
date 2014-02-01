@@ -1,6 +1,7 @@
 package com.rokru.experiment_x;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 import com.rokru.experiment_x.entity.mob.Player;
@@ -52,7 +54,7 @@ public class ExperimentX extends Canvas implements Runnable{
         screen = new Render(width, height);
         frame = new JFrame();
         key = new Keyboard();
-        level = new RandomLevel(64, 64);
+        level = new RandomLevel(128, 128);
         player = new Player(key, username);
         
         addKeyListener(key);
@@ -76,6 +78,10 @@ public class ExperimentX extends Canvas implements Runnable{
 		Logger.logInfo("Current Username: " + username);
 		makeDirectories();
 		ExperimentX x = new ExperimentX();
+		/*JLabel user = new JLabel(username, JLabel.LEFT);
+		user.setFont(getDefaultFont(Font.BOLD, 15, 1));
+		user.setBounds(5, 10, 100, 15);
+		x.frame.add(user);*/
 		x.frame.setResizable(false);
 		x.frame.setTitle(gameVersionFormatted);
 		x.frame.add(x);
@@ -83,7 +89,7 @@ public class ExperimentX extends Canvas implements Runnable{
 		x.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		x.frame.setLocationRelativeTo(null);
 		x.frame.setVisible(true);
-    
+		
 		x.start();
     }
 
