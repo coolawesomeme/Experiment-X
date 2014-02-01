@@ -61,31 +61,27 @@ public class ExperimentX extends Canvas implements Runnable{
 		for(String s : args){
 			parameters.add(s);
 		}
+		username = "Player";
 		if(parameters.size() > 0){
-			username = "Player";
 			for (String q : parameters){
 				if (q.startsWith("-user:")){
 					username = parameters.get(parameters.indexOf(q)).split(":")[1];
 				    break;
 				}
 			}
-			Logger.logInfo("Current Username: " + username);
-			makeDirectories();
-			ExperimentX x = new ExperimentX();
-			x.frame.setResizable(false);
-			x.frame.setTitle(gameVersionFormatted);
-			x.frame.add(x);
-			x.frame.pack();
-			x.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			x.frame.setLocationRelativeTo(null);
-			x.frame.setVisible(true);
-        
-			x.start();
-		}else{
-			/** This will prevent testing, but it was sort of necessary. */
-			Logger.logError("No username provided, either use the launcher or run from commandline.");
-			Runtime.getRuntime().exit(0);
 		}
+		Logger.logInfo("Current Username: " + username);
+		makeDirectories();
+		ExperimentX x = new ExperimentX();
+		x.frame.setResizable(false);
+		x.frame.setTitle(gameVersionFormatted);
+		x.frame.add(x);
+		x.frame.pack();
+		x.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		x.frame.setLocationRelativeTo(null);
+		x.frame.setVisible(true);
+    
+		x.start();
     }
 
     public synchronized void start(){
