@@ -2,7 +2,9 @@ package com.rokru.experiment_x;
 
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -11,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.UIManager;
 
 import com.rokru.experiment_x.entity.mob.Player;
 import com.rokru.experiment_x.graphics.Render;
@@ -179,6 +182,38 @@ public class ExperimentX extends Canvas implements Runnable{
 			return System.getProperty("user.home") + "/.experimentx/Game";
 		}else{
 			return ".experimentx/Game";
+		}
+	}
+	
+	public static Font getDefaultFont(int fontType, int fontSize){
+		try{
+			return new Font("Arial", fontType, fontSize);
+		}catch(Exception e){
+			return new Font(UIManager.getFont("Label.font").getFontName(), fontType, fontSize);
+		}
+	}
+	
+	public static Font getDefaultFont(int fontType, int fontSize, int reformatIfDefault){
+		boolean flag = false;
+		GraphicsEnvironment g = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        String []fonts=g.getAvailableFontFamilyNames();
+            for (int i = 0; i < fonts.length; i++) {
+            	if(fonts[i].equals("Arial")){
+            		flag = true;
+            		break;
+            	}
+            }
+		if(flag){
+			return new Font("Arial", fontType, fontSize);
+		}else{
+			if(reformatIfDefault <= 1)
+				return new Font(UIManager.getFont("Label.font").getFontName(), Font.PLAIN, fontSize);
+			else if(reformatIfDefault == 2)
+				return new Font(UIManager.getFont("Label.font").getFontName(), Font.BOLD, fontSize);
+			else if(reformatIfDefault == 3)
+				return new Font(UIManager.getFont("Label.font").getFontName(), Font.ITALIC, fontSize);
+			else
+				return new Font(UIManager.getFont("Label.font").getFontName(), Font.PLAIN, fontSize);
 		}
 	}
 }
