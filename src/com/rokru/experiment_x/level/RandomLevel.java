@@ -13,15 +13,17 @@ public class RandomLevel extends Level {
 	protected void generateLevel() {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				int q = random.nextInt(4);
+				int q = random.nextInt(5);
 				if(q == 0){
-					tiles[x + y * width] = q;
+					tiles[x + y * width] = q+1;
 				}else if(q == 1){
-					tiles[x + y * width] = random.nextBoolean() ? q : 0;
+					tiles[x + y * width] = random.nextBoolean() ? q+1 : 1;
 				}else if(q == 2){
-					tiles[x + y * width] = random.nextInt(4) <= 2 ? q : 0;
+					tiles[x + y * width] = random.nextInt(4) <= 3 ? q+1 : 1;
+				}else if(q == 3){
+					tiles[x + y * width] = random.nextBoolean() ? q+1 : 1;
 				}else{
-					tiles[x + y * width] = q;
+					tiles[x + y * width] = 0;
 				}
 			}
 		}
