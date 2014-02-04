@@ -1,7 +1,6 @@
 package com.rokru.experiment_x;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -14,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.UIManager;
 
 import com.rokru.experiment_x.entity.mob.Player;
