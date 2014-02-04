@@ -1,6 +1,8 @@
 package com.rokru.experiment_x.entity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import com.rokru.experiment_x.Logger;
@@ -15,14 +17,16 @@ public abstract class Entity {
 	protected Level level;
 	protected final Random random = new Random();
 	protected String UUID;
-	private HashMap<String, Entity> uuidList = new HashMap<String, Entity>();
+	private static HashMap<String, Entity> uuidMap = new HashMap<String, Entity>();
+	private static List<Entity> entityList = new ArrayList<Entity>();
 
 	public Entity() {
 		UUID = generateUUID();
-		while (uuidList.containsKey(UUID)) {
+		while (uuidMap.containsKey(UUID)) {
 			UUID = generateUUID();
 		}
-		uuidList.put(UUID, this);
+		uuidMap.put(UUID, this);
+		entityList.add(this);
 		if(this instanceof Player){
 			Logger.logInfo("Player UUID: " + UUID);
 		}
@@ -43,6 +47,18 @@ public abstract class Entity {
 		return removed;
 	}
 
+	public static List<Entity> getEntityList(){
+		return entityList;
+	}
+	
+	public static Entity getEntityFromUUID(String UUID){
+		try{
+			return uuidMap.get(UUID);
+		}catch(Exception e){
+			return null;
+		}
+	}
+	
 	protected String generateUUID() {
 		String uuid = "";
 		String[] appenders = { "a", "b", "c", "d", "e", "f", "g", "h", "i",
