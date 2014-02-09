@@ -7,22 +7,31 @@ public class Tile {
 	
 	public int x, y;
 	public Sprite sprite;
+	private int ID;
 	
-	public static Tile grass = new GrassTile(Sprite.grass);
-	public static Tile flower_1 = new FlowerTile(Sprite.flower_1);
-	public static Tile flower_2 = new FlowerTile(Sprite.flower_2);
-	public static Tile rock = new RockTile(Sprite.rock);
-	public static Tile voidTile = new VoidTile(Sprite.voidSprite);
+	public static Tile voidTile = new VoidTile(Sprite.voidSprite, 0);
+	public static Tile grass = new GrassTile(Sprite.grass, 1);
+	public static Tile flower_1 = new FlowerTile(Sprite.flower_1, 2);
+	public static Tile rock = new RockTile(Sprite.rock, 3);
+	public static Tile flower_2 = new FlowerTile(Sprite.flower_2, 4);
 	
-	public Tile(Sprite sprite) {
+	public Tile(Sprite sprite, int id) {
 		this.sprite = sprite;
+		this.ID = id;
 	}
 	
 	public void render(int x, int y, Render screen) {
 	}
 	
+	public int getTileID(){
+		return ID;
+	}
+	
 	public boolean solid() {
-		return false;
+		if(this.equals(voidTile))
+			return false;
+		else
+			return true;
 	}
 
 }

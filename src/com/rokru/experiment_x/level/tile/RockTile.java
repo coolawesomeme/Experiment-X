@@ -5,8 +5,8 @@ import com.rokru.experiment_x.graphics.Sprite;
 
 public class RockTile extends Tile {
 
-	public RockTile(Sprite sprite) {
-		super(sprite);
+	public RockTile(Sprite sprite, int id) {
+		super(sprite, id);
 	}
 	
 	public void render(int x, int y, Render screen) {

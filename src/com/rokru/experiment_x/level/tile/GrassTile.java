@@ -5,8 +5,8 @@ import com.rokru.experiment_x.graphics.Sprite;
 
 public class GrassTile extends Tile {
 
-	public GrassTile(Sprite sprite) {
-		super(sprite);
+	public GrassTile(Sprite sprite, int id) {
+		super(sprite, id);
 	}
 	
 	public void render(int x, int y, Render screen) {
