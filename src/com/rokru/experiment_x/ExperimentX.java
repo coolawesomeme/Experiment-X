@@ -169,27 +169,18 @@ public class ExperimentX extends Canvas implements Runnable{
     }
     
     private static void makeDirectories() {
-		File f;
-		if(System.getProperty("user.home") != null){
-			f = new File(System.getProperty("user.home") + "/.experimentx/Game");
-			if(f.mkdirs()){
-				Logger.logInfo("Game File Folder created at:");
-				Logger.logInfo(f.getAbsolutePath());
-			}
-		}else{
-			f = new File(".experimentx/Game");
-			if(f.mkdirs()){
-				Logger.logInfo("Game File Folder created at:");
-				Logger.logInfo(f.getAbsolutePath());
-			}
+    	File f = new File(getDirectory());
+		if(f.mkdirs()){
+			Logger.logInfo("Game File Folder created at:");
+			Logger.logInfo(f.getAbsolutePath());
 		}
 	}
 
 	public static String getDirectory(){
 		if(System.getProperty("user.home") != null){
-			return System.getProperty("user.home") + "/.experimentx/Game";
+			return System.getProperty("user.home") + "/.experimentx/game";
 		}else{
-			return ".experimentx/Game";
+			return ".experimentx/game";
 		}
 	}
 	
