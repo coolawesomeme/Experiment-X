@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
@@ -84,6 +85,7 @@ public class ExperimentX extends Canvas implements Runnable{
 		x.frame.add(user);*/
 		x.frame.setResizable(false);
 		x.frame.setTitle(gameVersionFormatted);
+		x.frame.setIconImage(new ImageIcon(ExperimentX.class.getResource("/images/app_icon.png")).getImage());
 		x.frame.add(x);
 		x.frame.pack();
 		x.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
