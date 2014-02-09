@@ -184,6 +184,14 @@ public class ExperimentX extends Canvas implements Runnable{
 		}
 	}
 	
+	public static String getLauncherDirectory(){
+		if(System.getProperty("user.home") != null){
+			return System.getProperty("user.home") + "/.experimentx/launcher";
+		}else{
+			return ".experimentx/launcher";
+		}
+	}
+	
 	public static Font getDefaultFont(int fontType, int fontSize){
 		try{
 			return new Font("Arial", fontType, fontSize);
