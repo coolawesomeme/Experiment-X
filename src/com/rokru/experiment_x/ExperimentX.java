@@ -1,6 +1,7 @@
 package com.rokru.experiment_x;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -79,10 +80,6 @@ public class ExperimentX extends Canvas implements Runnable{
 		Logger.logInfo("Current Username: " + username);
 		makeDirectories();
 		ExperimentX x = new ExperimentX();
-		/*JLabel user = new JLabel(username, JLabel.LEFT);
-		user.setFont(getDefaultFont(Font.BOLD, 15, 1));
-		user.setBounds(5, 10, 100, 15);
-		x.frame.add(user);*/
 		x.frame.setResizable(false);
 		x.frame.setTitle(gameVersionFormatted);
 		x.frame.setIconImage(new ImageIcon(ExperimentX.class.getResource("/images/app_icon.png")).getImage());
@@ -164,6 +161,9 @@ public class ExperimentX extends Canvas implements Runnable{
     	
     	Graphics g = bs.getDrawGraphics();
     	g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+    	g.setColor(Color.WHITE);
+    	g.setFont(getDefaultFont(Font.BOLD, 14, 1));
+    	g.drawString(username, 5, 16);
     	g.dispose();
     	bs.show();
     }
