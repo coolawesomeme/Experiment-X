@@ -11,6 +11,7 @@ import java.awt.image.DataBufferInt;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -64,7 +65,8 @@ public class ExperimentX extends Canvas implements Runnable{
 		for(String s : args){
 			parameters.add(s);
 		}
-		username = "Player";
+		Random random = new Random();
+		username = "Player" + random.nextInt(999);
 		if(parameters.size() > 0){
 			for (String q : parameters){
 				if (q.startsWith("-user:")){
