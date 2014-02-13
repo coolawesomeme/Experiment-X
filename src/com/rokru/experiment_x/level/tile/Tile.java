@@ -12,8 +12,9 @@ public class Tile {
 	public static Tile voidTile = new VoidTile(Sprite.voidSprite, 0);
 	public static Tile grass = new GrassTile(Sprite.grass, 1);
 	public static Tile flower_1 = new FlowerTile(Sprite.flower_1, 2);
-	public static Tile rock = new RockTile(Sprite.rock, 3);
+	public static Tile rock_1 = new RockTile(Sprite.rock_1, 3);
 	public static Tile flower_2 = new FlowerTile(Sprite.flower_2, 4);
+	public static Tile rock_2 = new RockTile(Sprite.rock_2, 5);
 	
 	public Tile(Sprite sprite, int id) {
 		this.sprite = sprite;
