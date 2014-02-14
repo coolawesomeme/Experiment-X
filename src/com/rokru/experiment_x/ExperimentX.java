@@ -67,6 +67,10 @@ public class ExperimentX extends Canvas implements Runnable{
 		for(String s : args){
 			parameters.add(s);
 		}
+		if(parameters.contains("-v") || parameters.contains("-version")){
+			System.out.println(gameVersion);
+			System.exit(0);
+		}
 		Random random = new Random();
 		username = "Player" + random.nextInt(999);
 		if(parameters.size() > 0){
