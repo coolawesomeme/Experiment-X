@@ -34,6 +34,7 @@ public class Player extends Mob {
 		
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
+			com.rokru.experiment_x.Logger.logInfo("COORDS: (" + x + ", " + y + ")");
 			walking = true;
 		} else {
 			walking = false;
