@@ -56,7 +56,7 @@ public class ExperimentX extends Canvas implements Runnable{
         frame = new JFrame();
         key = new Keyboard();
         level = new RandomLevel(128, 128);
-        player = new Player(key, username);
+        player = new Player(level, key, username);
         
         addKeyListener(key);
         

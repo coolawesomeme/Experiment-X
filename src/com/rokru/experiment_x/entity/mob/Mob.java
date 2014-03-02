@@ -2,10 +2,12 @@ package com.rokru.experiment_x.entity.mob;
 
 import com.rokru.experiment_x.entity.Entity;
 import com.rokru.experiment_x.graphics.Sprite;
+import com.rokru.experiment_x.level.Level;
 
 public abstract class Mob extends Entity {
 	
-	public Mob() {
+	public Mob(Level level) {
+		super(level);
 	}
 
 	protected Sprite sprite;

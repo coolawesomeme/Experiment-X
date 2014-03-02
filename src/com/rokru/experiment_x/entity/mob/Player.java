@@ -4,6 +4,7 @@ import com.rokru.experiment_x.Logger;
 import com.rokru.experiment_x.graphics.Render;
 import com.rokru.experiment_x.graphics.Sprite;
 import com.rokru.experiment_x.input.Keyboard;
+import com.rokru.experiment_x.level.Level;
 
 public class Player extends Mob {
 	
@@ -12,12 +13,14 @@ public class Player extends Mob {
 	private int anim = 0;
 	private boolean walking = false;
 	
-	public Player (Keyboard input, String username) {
+	public Player (Level level, Keyboard input, String username) {
+		super(level);
 		this.input = input;
 		sprite = Sprite.player_up;
 	}
 	
-	public Player(int x, int y, Keyboard input, String username) {
+	public Player(Level level, int x, int y, Keyboard input, String username) {
+		super(level);
 		this.x = x;
 		this.y = y;
 		this.input = input;
@@ -35,7 +38,8 @@ public class Player extends Mob {
 		
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
-			Logger.playerLogger.logInfo("COORDS: (" + x + ", " + y + ")");
+			// 2033 / 128 is total number of x or y the player can move, divided by the number of tiles
+			Logger.playerLogger.logInfo("COORDS: (" + x / (2033/128) + ", " + y / (2033/128) + ")");
 			walking = true;
 		} else {
 			walking = false;

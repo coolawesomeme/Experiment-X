@@ -20,7 +20,8 @@ public abstract class Entity {
 	private static HashMap<String, Entity> uuidMap = new HashMap<String, Entity>();
 	private static List<Entity> entityList = new ArrayList<Entity>();
 
-	public Entity() {
+	public Entity(Level level) {
+		this.level = level;
 		UUID = generateUUID();
 		while (uuidMap.containsKey(UUID)) {
 			UUID = generateUUID();
