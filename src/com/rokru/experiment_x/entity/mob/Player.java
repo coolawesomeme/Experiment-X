@@ -1,5 +1,6 @@
 package com.rokru.experiment_x.entity.mob;
 
+import com.rokru.experiment_x.Logger;
 import com.rokru.experiment_x.graphics.Render;
 import com.rokru.experiment_x.graphics.Sprite;
 import com.rokru.experiment_x.input.Keyboard;
@@ -34,7 +35,7 @@ public class Player extends Mob {
 		
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
-			com.rokru.experiment_x.Logger.logInfo("COORDS: (" + x + ", " + y + ")");
+			Logger.playerLogger.logInfo("COORDS: (" + x + ", " + y + ")");
 			walking = true;
 		} else {
 			walking = false;

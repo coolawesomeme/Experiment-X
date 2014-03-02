@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.rokru.experiment_x.Logger;
 import com.rokru.experiment_x.level.tile.Tile;
 
 public class SpawnLevel extends Level{
@@ -25,7 +26,7 @@ public class SpawnLevel extends Level{
 			image.getRGB(0, 0, w, h, levelPixels, 0, w);
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("Exception! Could not load level file!");
+			Logger.generalLogger.logError("Exception! Could not load level file!");
 		}
 	}
 	

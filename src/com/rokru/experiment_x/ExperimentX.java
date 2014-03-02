@@ -68,7 +68,7 @@ public class ExperimentX extends Canvas implements Runnable{
 			parameters.add(s);
 		}
 		if(parameters.contains("-v") || parameters.contains("-version")){
-			System.out.println(gameVersion);
+			Logger.xLogger.logPlain(gameVersion);
 			System.exit(0);
 		}
 		Random random = new Random();
@@ -81,7 +81,7 @@ public class ExperimentX extends Canvas implements Runnable{
 				}
 			}
 		}
-		Logger.logInfo("Current Username: " + username);
+		Logger.playerLogger.logInfo("Current Username: " + username);
 		makeDirectories();
 		ExperimentX x = new ExperimentX();
 		x.frame.setResizable(false);
@@ -133,7 +133,7 @@ public class ExperimentX extends Canvas implements Runnable{
             
             if (System.currentTimeMillis() - timer > 1000) {
             	timer += 1000;
-            	System.out.println(updates + "ups, " + frames + " fps");
+            	Logger.xLogger.logInfo(updates + "ups, " + frames + " fps");
             	frame.setTitle(title + "  |  "  + updates + " ups, " + frames + " fps");
             	updates = 0;
             	frames = 0;
@@ -175,8 +175,8 @@ public class ExperimentX extends Canvas implements Runnable{
     private static void makeDirectories() {
     	File f = new File(getDirectory());
 		if(f.mkdirs()){
-			Logger.logInfo("Game File Folder created at:");
-			Logger.logInfo(f.getAbsolutePath());
+			Logger.xLogger.logInfo("Game File Folder created at:");
+			Logger.xLogger.logInfo(f.getAbsolutePath());
 		}
 	}
 

@@ -28,7 +28,7 @@ public abstract class Entity {
 		uuidMap.put(UUID, this);
 		entityList.add(this);
 		if(this instanceof Player){
-			Logger.logInfo("Player UUID: " + UUID);
+			Logger.playerLogger.logInfo("Player UUID: " + UUID);
 		}
 	}
 
