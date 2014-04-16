@@ -16,6 +16,8 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import com.rokru.experiment_x.entity.mob.Player;
@@ -67,7 +69,11 @@ public class ExperimentX extends Canvas implements Runnable{
 		for(String s : args){
 			parameters.add(s);
 		}
-		if(parameters.contains("-v") || parameters.contains("-version")){
+		if(parameters.isEmpty()){
+			JOptionPane.showMessageDialog(null, new JLabel("Please use the launcher to open the game.", JLabel.CENTER), "Error", JOptionPane.ERROR_MESSAGE);
+			Logger.xLogger.logError("Launcher not used, going to exit.");
+			System.exit(0);
+		}else if(parameters.contains("-v") || parameters.contains("-version")){
 			Logger.xLogger.logPlain(gameVersion);
 			System.exit(0);
 		}
