@@ -16,13 +16,10 @@ public class Level {
 	}
 	
 	public Level(String path) {
-		loadLevel(path);
+		//loadLevel(path);
 	}
 
 	protected void generateLevel() {		
-	}
-
-	private void loadLevel(String path) {
 	}
 	
 	public void update() {
