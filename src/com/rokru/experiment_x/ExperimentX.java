@@ -70,8 +70,10 @@ public class ExperimentX extends Canvas implements Runnable{
 			parameters.add(s);
 		}
 		if(parameters.isEmpty()){
-			JOptionPane.showMessageDialog(null, new JLabel("Please use the launcher to open the game.", JLabel.CENTER), "Error", JOptionPane.ERROR_MESSAGE);
-			Logger.xLogger.logError("Launcher not used, going to exit.");
+			try {
+				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());} catch (Exception e) {}
+			JOptionPane.showMessageDialog(null, new JLabel("Please use the official (or a custom) launcher to open the game.", JLabel.CENTER), "Error", JOptionPane.ERROR_MESSAGE);
+			Logger.xLogger.logError("Launcher not detected, going to exit.");
 			System.exit(0);
 		}else if(parameters.contains("-v") || parameters.contains("-version")){
 			Logger.xLogger.logPlain(gameVersion);
