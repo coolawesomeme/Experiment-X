@@ -9,24 +9,29 @@ public class Keyboard implements KeyListener {
 	
 	private boolean[] keys = new boolean [120];
 	public boolean up, down, left, right;
+	public int up_key = KeyEvent.VK_W, 
+			down_key = KeyEvent.VK_S, 
+			left_key = KeyEvent.VK_A, 
+			right_key = KeyEvent.VK_D;
 	
 	public static boolean paused = false;
+	private int pause_key = KeyEvent.VK_ESCAPE;
 	
 	public void update() {
-		up = keys[KeyEvent.VK_W] ||keys[KeyEvent.VK_UP];
-		down = keys[KeyEvent.VK_S] ||keys[KeyEvent.VK_DOWN];
-		left = keys[KeyEvent.VK_A] ||keys[KeyEvent.VK_LEFT];
-		right = keys[KeyEvent.VK_D] ||keys[KeyEvent.VK_RIGHT];
+		up = keys[up_key];
+		down = keys[down_key];
+		left = keys[left_key];
+		right = keys[right_key];
 	}
 	
 	public void keyPressed(KeyEvent e) {
 		//Ignores key-presses during pause
 		if(!paused)
 			keys[e.getKeyCode()] = true;
-		else if(paused && (e.getKeyCode() == KeyEvent.VK_ESCAPE)) 
-			keys[KeyEvent.VK_ESCAPE] = true;
+		else if(paused && (e.getKeyCode() == pause_key)) 
+			keys[pause_key] = true;
 			
-		if(keys[KeyEvent.VK_ESCAPE]){
+		if(keys[pause_key]){
 			if(!paused){
 				paused = true;
 				Logger.generalLogger.logInfo("Paused: " + paused);
