@@ -31,10 +31,12 @@ public class Player extends Mob {
 		int xa = 0, ya = 0;
 		if (anim < 7500) anim++;
 		else anim = 0;
+		if(!input.paused){
 		if (input.up) ya--;
 		if (input.down) ya++;
 		if (input.left) xa--;
 		if (input.right) xa++;
+		}
 		
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
@@ -44,7 +46,6 @@ public class Player extends Mob {
 		} else {
 			walking = false;
 		}
-
 	}
 	
 	public void render(Render screen) {
