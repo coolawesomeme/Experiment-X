@@ -17,15 +17,15 @@ public class Logger {
 	}
 	
 	public void logInfo(String message){
-		System.out.println("[INFO] " + message);
+		System.out.println("[" + channel.toUpperCase() + " - INFO] " + message);
 	}
 	
 	public void logError(String message){
-		System.out.println("[ERROR] " + message);
+		System.out.println("[" + channel.toUpperCase() + " - ERROR] " + message);
 	}
 	
 	public void logButtonEvent(String buttonName){
-		System.out.println("[ACTION] Button Activated: " + buttonName);
+		System.out.println("[" + channel.toUpperCase() + " - ACTION] Button Activated: " + buttonName);
 	}
 
 	public String getChannel() {
