@@ -136,6 +136,7 @@ public class ExperimentX extends Canvas implements Runnable{
         		updates++;
         		delta--;
         	}
+        	if(!Keyboard.paused){
             render();
             frames++;
             
@@ -146,6 +147,7 @@ public class ExperimentX extends Canvas implements Runnable{
             	updates = 0;
             	frames = 0;
             }
+        	}
         }
         stop();
     }  
