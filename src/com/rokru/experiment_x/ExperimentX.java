@@ -153,6 +153,9 @@ public class ExperimentX extends Canvas implements Runnable{
     public void update() {
     	key.update();
     	player.update();
+    	if(Keyboard.paused){
+    		PauseMenu.openPauseMenu();
+    	}
     }
     
     public void render() {

@@ -9,13 +9,13 @@ public class Keyboard implements KeyListener {
 	
 	private boolean[] keys = new boolean [120];
 	public boolean up, down, left, right;
-	public int up_key = KeyEvent.VK_W, 
+	public static int up_key = KeyEvent.VK_W, 
 			down_key = KeyEvent.VK_S, 
 			left_key = KeyEvent.VK_A, 
 			right_key = KeyEvent.VK_D;
 	
 	public static boolean paused = false;
-	private int pause_key = KeyEvent.VK_ESCAPE;
+	public static int pause_key = KeyEvent.VK_ESCAPE;
 	
 	public void update() {
 		up = keys[up_key];
@@ -26,19 +26,12 @@ public class Keyboard implements KeyListener {
 	
 	public void keyPressed(KeyEvent e) {
 		//Ignores key-presses during pause
-		if(!paused)
+		if(!paused && e.getKeyCode() != pause_key)
 			keys[e.getKeyCode()] = true;
-		else if(paused && (e.getKeyCode() == pause_key)) 
+		else if(e.getKeyCode() == pause_key && !paused){
 			keys[pause_key] = true;
-			
-		if(keys[pause_key]){
-			if(!paused){
-				paused = true;
-				Logger.generalLogger.logInfo("Paused: " + paused);
-			}else{
-				paused = false;
-				Logger.generalLogger.logInfo("Paused: " + paused);
-			}
+			paused = true;
+			Logger.generalLogger.logInfo("Paused: " + paused);
 		}
 	}
 
@@ -50,4 +43,8 @@ public class Keyboard implements KeyListener {
 	
 	}
 
+	public static void setPaused(boolean pause){
+		paused = pause;
+	}
+	
 }

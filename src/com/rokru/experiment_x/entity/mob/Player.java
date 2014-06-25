@@ -31,16 +31,16 @@ public class Player extends Mob {
 		int xa = 0, ya = 0;
 		if (anim < 7500) anim++;
 		else anim = 0;
-		if(!input.paused){
-		if (input.up) ya--;
-		if (input.down) ya++;
-		if (input.left) xa--;
-		if (input.right) xa++;
+		if(!Keyboard.paused){
+			if (input.up) ya--;
+			if (input.down) ya++;
+			if (input.left) xa--;
+			if (input.right) xa++;
 		}
 		
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
-			// 2033 / 128 is total number of x or y the player can move, divided by the number of tiles
+			// 2033 / 128 is total number of x or y the player can move divided by the number of tiles
 			Logger.playerLogger.logInfo("COORDS: (" + x / (2033/128) + ", " + y / (2033/128) + ")");
 			walking = true;
 		} else {
