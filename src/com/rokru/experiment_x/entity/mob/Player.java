@@ -3,6 +3,7 @@ package com.rokru.experiment_x.entity.mob;
 import com.rokru.experiment_x.Logger;
 import com.rokru.experiment_x.graphics.Render;
 import com.rokru.experiment_x.graphics.Sprite;
+import com.rokru.experiment_x.gui.pause.PauseMenu;
 import com.rokru.experiment_x.input.Keyboard;
 import com.rokru.experiment_x.level.Level;
 
@@ -31,7 +32,7 @@ public class Player extends Mob {
 		int xa = 0, ya = 0;
 		if (anim < 7500) anim++;
 		else anim = 0;
-		if(!Keyboard.paused){
+		if(!PauseMenu.paused){
 			if (input.up) ya--;
 			if (input.down) ya++;
 			if (input.left) xa--;

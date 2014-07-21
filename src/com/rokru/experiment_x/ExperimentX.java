@@ -22,6 +22,7 @@ import javax.swing.UIManager;
 
 import com.rokru.experiment_x.entity.mob.Player;
 import com.rokru.experiment_x.graphics.Render;
+import com.rokru.experiment_x.gui.pause.PauseMenu;
 import com.rokru.experiment_x.input.Keyboard;
 import com.rokru.experiment_x.level.Level;
 import com.rokru.experiment_x.level.RandomLevel;
@@ -136,7 +137,7 @@ public class ExperimentX extends Canvas implements Runnable{
         		updates++;
         		delta--;
         	}
-        	if(!Keyboard.paused){
+        	if(!PauseMenu.paused){
             render();
             frames++;
             
@@ -155,7 +156,7 @@ public class ExperimentX extends Canvas implements Runnable{
     public void update() {
     	key.update();
     	player.update();
-    	if(Keyboard.paused){
+    	if(PauseMenu.paused){
     		PauseMenu.openPauseMenu();
     	}
     }

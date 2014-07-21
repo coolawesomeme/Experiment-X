@@ -3,7 +3,7 @@ package com.rokru.experiment_x.input;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import com.rokru.experiment_x.Logger;
+import com.rokru.experiment_x.gui.pause.PauseMenu;
 
 public class Keyboard implements KeyListener {
 	
@@ -13,9 +13,8 @@ public class Keyboard implements KeyListener {
 			down_key = KeyEvent.VK_S, 
 			left_key = KeyEvent.VK_A, 
 			right_key = KeyEvent.VK_D;
-	
-	public static boolean paused = false;
 	public static int pause_key = KeyEvent.VK_ESCAPE;
+	private int mostRecentKey;
 	
 	public void update() {
 		up = keys[up_key];
@@ -26,12 +25,13 @@ public class Keyboard implements KeyListener {
 	
 	public void keyPressed(KeyEvent e) {
 		//Ignores key-presses during pause
-		if(!paused && e.getKeyCode() != pause_key)
+		if(!PauseMenu.paused && e.getKeyCode() != pause_key){
 			keys[e.getKeyCode()] = true;
-		else if(e.getKeyCode() == pause_key && !paused){
+			mostRecentKey = e.getKeyCode();
+		}else if(e.getKeyCode() == pause_key && !PauseMenu.paused){
 			keys[pause_key] = true;
-			paused = true;
-			Logger.generalLogger.logInfo("Paused: " + paused);
+			keys[mostRecentKey] = false;
+			PauseMenu.setPaused(true);
 		}
 	}
 
@@ -41,10 +41,6 @@ public class Keyboard implements KeyListener {
 
 	public void keyTyped(KeyEvent e) {
 	
-	}
-
-	public static void setPaused(boolean pause){
-		paused = pause;
 	}
 	
 }
