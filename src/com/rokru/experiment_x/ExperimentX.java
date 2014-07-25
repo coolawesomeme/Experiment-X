@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -18,6 +19,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import com.rokru.experiment_x.entity.mob.Player;
@@ -41,9 +43,9 @@ public class ExperimentX extends Canvas implements Runnable{
     private Thread gameThread;
     private JFrame frame;
     private Keyboard key;
-    private Level level;
-    private Player player;
-    private static String username;
+    public static Level level;
+    public static Player player;
+    public static String username;
     private boolean running = false;
     
     private Render screen;
@@ -138,16 +140,18 @@ public class ExperimentX extends Canvas implements Runnable{
         		delta--;
         	}
         	if(!PauseMenu.paused){
-            render();
-            frames++;
+        		render();
+        		frames++;
             
-            if (System.currentTimeMillis() - timer > 1000) {
-            	timer += 1000;
-            	Logger.xLogger.logInfo(updates + "ups, " + frames + " fps");
-            	frame.setTitle(title + "  |  "  + updates + " ups, " + frames + " fps");
-            	updates = 0;
-            	frames = 0;
-            }
+        		if (System.currentTimeMillis() - timer > 1000) {
+        			timer += 1000;
+        			Logger.xLogger.logInfo(updates + "ups, " + frames + " fps");
+        			frame.setTitle(title + "  |  "  + updates + " ups, " + frames + " fps");
+        			updates = 0;
+        			frames = 0;
+        		}
+        	}else{
+        		render();
         	}
         }
         stop();
@@ -182,6 +186,16 @@ public class ExperimentX extends Canvas implements Runnable{
     	g.setColor(Color.WHITE);
     	g.setFont(getDefaultFont(Font.BOLD, 14, 1));
     	g.drawString(username, 5, 16);
+    	
+    	if(PauseMenu.paused){
+    		g.setColor(new Color(0f, 0f, 0f, 0.6f));
+        	g.fillRect(0, 0, width*scale, height*scale);
+        	g.setColor(Color.WHITE);
+        	g.setFont(getDefaultFont(Font.BOLD, 40));
+        	Rectangle2D fontBox = g.getFont().getStringBounds("PAUSED", g.getFontMetrics().getFontRenderContext());
+        	g.drawString("PAUSED", width*scale/2 - (int)fontBox.getWidth()/2, height*scale / 2);
+    	}
+    	
     	g.dispose();
     	bs.show();
     }
