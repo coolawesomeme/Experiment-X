@@ -14,14 +14,14 @@ public class Player extends Mob {
 	private int anim = 0;
 	private boolean walking = false;
 	
-	public Player (Level level, Keyboard input, String username) {
-		super(level);
+	public Player (Level level, Keyboard input, String name) {
+		super(level, name);
 		this.input = input;
 		sprite = Sprite.player_up;
 	}
 	
-	public Player(Level level, int x, int y, Keyboard input, String username) {
-		super(level);
+	public Player(Level level, int x, int y, Keyboard input, String name) {
+		super(level, name);
 		this.x = x;
 		this.y = y;
 		this.input = input;

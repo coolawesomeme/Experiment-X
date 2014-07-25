@@ -6,8 +6,8 @@ import com.rokru.experiment_x.level.Level;
 
 public abstract class Mob extends Entity {
 	
-	public Mob(Level level) {
-		super(level);
+	public Mob(Level level, String name) {
+		super(level, name);
 	}
 
 	protected Sprite sprite;

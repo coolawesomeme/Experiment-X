@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import com.rokru.experiment_x.Logger;
 import com.rokru.experiment_x.entity.mob.Player;
@@ -15,21 +16,20 @@ public abstract class Entity {
 	public int x, y;
 	private boolean removed = false;
 	protected Level level;
+	protected static String name = "Entity";
 	protected final Random random = new Random();
-	protected String UUID;
-	private static HashMap<String, Entity> uuidMap = new HashMap<String, Entity>();
+	protected static UUID entityUUID;
+	private static HashMap<UUID, Entity> uuidMap = new HashMap<UUID, Entity>();
 	private static List<Entity> entityList = new ArrayList<Entity>();
 
-	public Entity(Level level) {
+	public Entity(Level level, String name) {
 		this.level = level;
-		UUID = generateUUID();
-		while (uuidMap.containsKey(UUID)) {
-			UUID = generateUUID();
-		}
-		uuidMap.put(UUID, this);
+		this.name = name;
+		entityUUID = UUID.randomUUID();
+		uuidMap.put(entityUUID, this);
 		entityList.add(this);
 		if(this instanceof Player){
-			Logger.playerLogger.logInfo("Player UUID: " + UUID);
+			Logger.playerLogger.logInfo("Player UUID: " + entityUUID.toString());
 		}
 	}
 
@@ -42,6 +42,7 @@ public abstract class Entity {
 	public void remove() {
 		// Remove from level
 		removed = true;
+		uuidMap.remove(this);
 	}
 
 	public boolean isRemoved() {
@@ -52,25 +53,23 @@ public abstract class Entity {
 		return entityList;
 	}
 	
-	public static Entity getEntityFromUUID(String UUID){
+	public static List<UUID> getUUIDList(){
+		ArrayList<UUID> UUIDList = new ArrayList<UUID>();
+		for(UUID id : uuidMap.keySet()){
+			UUIDList.add(id);
+		}
+		return UUIDList;
+	}
+	
+	public static Entity getEntityFromUUID(String uuid){
 		try{
-			return uuidMap.get(UUID);
+			return uuidMap.get(UUID.fromString(uuid));
 		}catch(Exception e){
 			return null;
 		}
 	}
 	
-	protected String generateUUID() {
-		String uuid = "";
-		String[] appenders = { "a", "b", "c", "d", "e", "f", "g", "h", "i",
-				"j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u",
-				"v", "w", "x", "y", "z", "A", "B", "C", "D", "E", "F", "G",
-				"H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S",
-				"T", "U", "V", "W", "X", "Y", "Z", "0", "1", "2", "3", "4",
-				"5", "6", "7", "8", "9" };
-		for (int i = 0; i < 24; i++) {
-			uuid = uuid.concat(appenders[random.nextInt(appenders.length)]);
-		}
-		return uuid;
+	public static String getEntityName(){
+		return name;
 	}
 }

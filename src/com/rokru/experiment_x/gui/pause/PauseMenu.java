@@ -90,15 +90,15 @@ public class PauseMenu{
 		
 		returntogame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Logger.generalLogger.logButtonEvent("ReturnToGame");
+				Logger.generalLogger.logAction("button", "ReturnToGame");
 				closePauseMenu();
 			}
 		});
 		
 		options.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Logger.generalLogger.logButtonEvent("Options");
-				JOptionPane.showMessageDialog(null, new JLabel("Not yet implemented.", JLabel.LEFT), "Error", JOptionPane.ERROR_MESSAGE);
+				Logger.generalLogger.logAction("button", "Options");
+				JOptionPane.showMessageDialog(null, new JLabel("Not yet implemented.", JLabel.CENTER), "Error", JOptionPane.ERROR_MESSAGE);
 				options.setBackground(new Color(255, 89, 89));
 				options.setForeground(new Color(255, 89, 89));
 			}
@@ -106,7 +106,7 @@ public class PauseMenu{
 		
 		quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Logger.generalLogger.logButtonEvent("Quit");
+				Logger.generalLogger.logAction("button", "Quit");
 				System.exit(0);
 			}
 		});

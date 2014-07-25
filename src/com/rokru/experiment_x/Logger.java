@@ -24,8 +24,13 @@ public class Logger {
 		System.out.println("[" + channel.toUpperCase() + " - ERROR] " + message);
 	}
 	
-	public void logButtonEvent(String buttonName){
-		System.out.println("[" + channel.toUpperCase() + " - ACTION] Button Activated: " + buttonName);
+	public void logAction(String type, String cause){
+		if(type.equalsIgnoreCase("button"))
+			System.out.println("[" + channel.toUpperCase() + " - ACTION] Button Activated: " + cause);
+		else if(type.equalsIgnoreCase("key"))
+			System.out.println("[" + channel.toUpperCase() + " - ACTION] Key Activated: " + cause);
+		else
+			System.out.println("[" + channel.toUpperCase() + " - ACTION] " + type + ": " + cause);
 	}
 
 	public String getChannel() {
