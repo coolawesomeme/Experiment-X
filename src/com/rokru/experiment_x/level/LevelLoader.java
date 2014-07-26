@@ -1,10 +1,13 @@
 package com.rokru.experiment_x.level;
 
 import java.io.File;
+import java.util.Scanner;
+
+import com.rokru.experiment_x.level.tile.Tile;
 
 public class LevelLoader {
 
-	private String[] tiles = new String[128 * 128];
+	private static String[] tiles = new String[128 * 128];
 	
 	public LevelLoader(File file){
 		readFile(file);
@@ -17,7 +20,13 @@ public class LevelLoader {
 
 	private void readFile(File file) {
 		String result = null;
-		//TODO toplel
+		if(file.exists()){
+			try {
+				result = new Scanner(file).next();
+			} catch (Exception e) {
+				result = null;
+			}
+		}
 		interpretFile(result);
 	}
 
@@ -28,9 +37,22 @@ public class LevelLoader {
 			if(!result.startsWith("{") && !result.endsWith("}")){
 				return;
 			}else{
-				
+				result.replace("{", "");
+				result.replace("}", "");
+				String[] tileTest = result.split(",");
+				if(tileTest.length == 128 * 128){
+					tiles = result.split(",");
+				}else{
+					tiles = result.split(",");
+					for(int i = 0; i < 128*128 - tileTest.length; i++){
+						tiles[tileTest.length + i] = Tile.voidTile.getTileID();
+					}
+				}
 			}
-			//TODO toplel part 2
 		}
+	}
+	
+	public static String[] getTiles(){
+		return tiles;
 	}
 }
