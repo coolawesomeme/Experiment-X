@@ -35,10 +35,7 @@ public class Tile {
 	}
 	
 	public boolean solid() {
-		if(this.equals(voidTile))
-			return false;
-		else
-			return true;
+		return false;
 	}
 
 }
