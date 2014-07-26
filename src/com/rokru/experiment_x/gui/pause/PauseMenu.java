@@ -42,6 +42,7 @@ public class PauseMenu{
 		menu.setLocationRelativeTo(null);
 		menu.setResizable(false);
 		menu.setVisible(true);
+		menu.setAlwaysOnTop(true);
 		mainContentLabel.setLayout(null);
 		
 		menu.addKeyListener(new KeyAdapter(){
@@ -54,7 +55,7 @@ public class PauseMenu{
 		menu.addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent e) {
 				 if(paused && menuOpen){
-					 setPaused(false);
+					setPaused(false);
 				 	menuOpen = false;
 				 }
 			  }
@@ -123,6 +124,7 @@ public class PauseMenu{
 			menu.dispose();
 			menuOpen = false;
 			setPaused(false);
+			ExperimentX.pauseMenuClosed();
 		}
 	}
 

@@ -19,7 +19,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import com.rokru.experiment_x.entity.mob.Player;
@@ -41,7 +40,7 @@ public class ExperimentX extends Canvas implements Runnable{
     public static String title = "Experiment X";
     
     private Thread gameThread;
-    private JFrame frame;
+    private static JFrame frame;
     private Keyboard key;
     public static Level level;
     public static Player player;
@@ -95,14 +94,14 @@ public class ExperimentX extends Canvas implements Runnable{
 		Logger.playerLogger.logInfo("Current Username: " + username);
 		makeDirectories();
 		ExperimentX x = new ExperimentX();
-		x.frame.setResizable(false);
-		x.frame.setTitle(gameVersionFormatted);
-		x.frame.setIconImage(new ImageIcon(ExperimentX.class.getResource("/images/app_icon.png")).getImage());
-		x.frame.add(x);
-		x.frame.pack();
-		x.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		x.frame.setLocationRelativeTo(null);
-		x.frame.setVisible(true);
+		ExperimentX.frame.setResizable(false);
+		ExperimentX.frame.setTitle(gameVersionFormatted);
+		ExperimentX.frame.setIconImage(new ImageIcon(ExperimentX.class.getResource("/images/app_icon.png")).getImage());
+		ExperimentX.frame.add(x);
+		ExperimentX.frame.pack();
+		ExperimentX.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		ExperimentX.frame.setLocationRelativeTo(null);
+		ExperimentX.frame.setVisible(true);
 		
 		x.start();
     }
@@ -162,6 +161,7 @@ public class ExperimentX extends Canvas implements Runnable{
     	player.update();
     	if(PauseMenu.paused){
     		PauseMenu.openPauseMenu();
+    		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     	}
     }
     
@@ -254,5 +254,10 @@ public class ExperimentX extends Canvas implements Runnable{
 			else
 				return new Font(UIManager.getFont("Label.font").getFontName(), Font.PLAIN, fontSize);
 		}
+	}
+	
+	public static void pauseMenuClosed(){
+		frame.setAlwaysOnTop(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
