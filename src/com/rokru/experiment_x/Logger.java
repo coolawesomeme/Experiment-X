@@ -29,6 +29,8 @@ public class Logger {
 			System.out.println("[" + channel.toUpperCase() + " - ACTION] Button Activated: " + cause);
 		else if(type.equalsIgnoreCase("key"))
 			System.out.println("[" + channel.toUpperCase() + " - ACTION] Key Activated: " + cause);
+		else if(type.equalsIgnoreCase("mouse"))
+			System.out.println("[" + channel.toUpperCase() + " - ACTION] Mouse Activated: " + cause);
 		else
 			System.out.println("[" + channel.toUpperCase() + " - ACTION] " + type + ": " + cause);
 	}

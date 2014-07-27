@@ -6,7 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
-import java.awt.geom.Rectangle2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -64,6 +65,14 @@ public class ExperimentX extends Canvas implements Runnable{
         
         addKeyListener(key);
         
+		addMouseListener(new MouseAdapter() {
+		     public void mouseReleased(MouseEvent e) {
+		        if(PauseMenu.paused){
+		        	PauseMenu.requestFocus();
+		        	Logger.generalLogger.logAction("mouse", "Click (while paused)");
+		        }
+		     }
+		});
     }
 
     public static void main(String[] args) {
@@ -190,10 +199,10 @@ public class ExperimentX extends Canvas implements Runnable{
     	if(PauseMenu.paused){
     		g.setColor(new Color(0f, 0f, 0f, 0.6f));
         	g.fillRect(0, 0, width*scale, height*scale);
-        	g.setColor(Color.WHITE);
-        	g.setFont(getDefaultFont(Font.BOLD, 40));
-        	Rectangle2D fontBox = g.getFont().getStringBounds("PAUSED", g.getFontMetrics().getFontRenderContext());
-        	g.drawString("PAUSED", width*scale/2 - (int)fontBox.getWidth()/2, height*scale / 2);
+        	//g.setColor(Color.WHITE);
+        	//g.setFont(getDefaultFont(Font.BOLD, 40));
+        	//Rectangle2D fontBox = g.getFont().getStringBounds("PAUSED", g.getFontMetrics().getFontRenderContext());
+        	//g.drawString("PAUSED", width*scale/2 - (int)fontBox.getWidth()/2, height*scale / 2);
     	}
     	
     	g.dispose();
@@ -257,7 +266,6 @@ public class ExperimentX extends Canvas implements Runnable{
 	}
 	
 	public static void pauseMenuClosed(){
-		frame.setAlwaysOnTop(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }

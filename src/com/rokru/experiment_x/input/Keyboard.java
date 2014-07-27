@@ -35,6 +35,7 @@ public class Keyboard implements KeyListener {
 			Logger.generalLogger.logAction("key", "Pause Key (Key " + pause_key + ")");
 			PauseMenu.setPaused(true);
 		}else if(PauseMenu.paused){
+			Logger.generalLogger.logAction("key", "Key " + e.getKeyCode() + "(while paused)");
 			PauseMenu.requestFocus();
 		}
 	}
