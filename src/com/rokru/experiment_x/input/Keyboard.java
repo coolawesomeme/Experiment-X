@@ -34,6 +34,8 @@ public class Keyboard implements KeyListener {
 			keys[mostRecentKey] = false;
 			Logger.generalLogger.logAction("key", "Pause Key (Key " + pause_key + ")");
 			PauseMenu.setPaused(true);
+		}else if(PauseMenu.paused){
+			PauseMenu.requestFocus();
 		}
 	}
 

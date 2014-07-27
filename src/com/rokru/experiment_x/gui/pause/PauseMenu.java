@@ -42,7 +42,6 @@ public class PauseMenu{
 		menu.setLocationRelativeTo(null);
 		menu.setResizable(false);
 		menu.setVisible(true);
-		menu.setAlwaysOnTop(true);
 		mainContentLabel.setLayout(null);
 		
 		menu.addKeyListener(new KeyAdapter(){
@@ -130,6 +129,11 @@ public class PauseMenu{
 
 	public static void setPaused(boolean pause){
 		paused = pause;
+	}
+	
+	public static void requestFocus(){
+		if(menuOpen)
+			menu.requestFocus();
 	}
 	
 }
