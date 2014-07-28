@@ -67,6 +67,7 @@ public class ExperimentX extends Canvas implements Runnable{
         key = new Keyboard();
         level = new RandomLevel(128, 128);
         player = new Player(level, key, username);
+        player.initLevel(level);
         
         addKeyListener(key);
         
@@ -154,11 +155,17 @@ public class ExperimentX extends Canvas implements Runnable{
         		render();
         		frames++;
             
+        		if(!debug && System.currentTimeMillis() % 500 == 0){
+					Logger.playerLogger.logInfo("COORDS: (" + player.tileX + ", " + player.tileY + ")");
+				}
+        		
         		if (System.currentTimeMillis() - timer > 1000) {
         			timer += 1000;
         			if(debug){
         				Logger.xLogger.logInfo(updates + "ups, " + frames + " fps");
         			}
+        			u2 = updates;
+        			f2 = frames;
         			updates = 0;
         			frames = 0;
         		}
@@ -210,13 +217,8 @@ public class ExperimentX extends Canvas implements Runnable{
     	}else if(debug){
     		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
     		g.setFont(getDefaultFont(Font.BOLD, 14, 1));
-    		if(System.currentTimeMillis() % 200 == 0){
-    			u2 = updates;
-    			f2 = frames;
-    		}
     		g.drawString(u2 + " ups, " + f2 + " fps", width*scale - 5 - 105 , 16);
     	}
-    	
     	g.dispose();
     	bs.show();
     }

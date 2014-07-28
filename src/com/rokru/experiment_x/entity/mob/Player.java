@@ -1,5 +1,6 @@
 package com.rokru.experiment_x.entity.mob;
 
+import com.rokru.experiment_x.ExperimentX;
 import com.rokru.experiment_x.Logger;
 import com.rokru.experiment_x.graphics.Render;
 import com.rokru.experiment_x.graphics.Sprite;
@@ -41,8 +42,10 @@ public class Player extends Mob {
 		
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
-			// 2033 / 128 is total number of x or y the player can move divided by the number of tiles
-			Logger.playerLogger.logInfo("COORDS: (" + x / (2033/128) + ", " + y / (2033/128) + ")");
+			if(ExperimentX.debug){
+				Logger.playerLogger.logInfo("COORDS: (" + tileX + ", " + tileY + ")");
+				Logger.playerLogger.logInfo("Current Block: " + level.getTile(tileX, tileY));
+			}
 			walking = true;
 		} else {
 			walking = false;
