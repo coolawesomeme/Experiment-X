@@ -49,6 +49,8 @@ public class Level {
 		else if (tiles[x + y * width] == Tile.rock_1.getTileID()) return Tile.rock_1;
 		else if (tiles[x + y * width] == Tile.flower_2.getTileID()) return Tile.flower_2;
 		else if (tiles[x + y * width] == Tile.rock_2.getTileID()) return Tile.rock_2;
+		else if (tiles[x + y * width] == Tile.water_1.getTileID()) return Tile.water_1;
+		else if (tiles[x + y * width] == Tile.water_2.getTileID()) return Tile.water_2;
 		return Tile.voidTile;
 	}
 	

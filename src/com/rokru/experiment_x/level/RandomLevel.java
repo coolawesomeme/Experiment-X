@@ -21,11 +21,13 @@ public class RandomLevel extends Level {
 				}else if(q == 1){
 					tiles[x + y * height] = random.nextInt(5) == 0 ? Tile.flower_1.getTileID() : Tile.grass.getTileID();
 				}else if(q == 2){
-					tiles[x + y * height] = random.nextInt(3) == 0 ? Tile.rock_1.getTileID() : Tile.grass.getTileID();
+					tiles[x + y * height] = random.nextInt(5) == 0 ? Tile.rock_1.getTileID() : Tile.grass.getTileID();
 				}else if(q == 3){
 					tiles[x + y * height] = random.nextInt(5) == 0 ? Tile.flower_2.getTileID() : Tile.grass.getTileID();
 				}else if(q == 4){
-					tiles[x + y * height] = random.nextInt(3) == 0 ? Tile.rock_2.getTileID() : Tile.grass.getTileID();
+					tiles[x + y * height] = random.nextInt(5) == 0 ? Tile.rock_2.getTileID() : Tile.grass.getTileID();
+				}else if(x + y * height > 0 && x + y * height < getLevelSide()*getLevelSide()){
+					tiles[x + y * height] = random.nextBoolean() ? Tile.water_1.getTileID() : Tile.water_2.getTileID();
 				}else{
 					tiles[x + y * height] = Tile.voidTile.getTileID();
 				}

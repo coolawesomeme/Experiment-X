@@ -12,6 +12,8 @@ public class Sprite {
 	public static Sprite rock_1 = new Sprite(16, 2, 0, SpriteSheet.tiles);
 	public static Sprite flower_2 = new Sprite(16, 3, 0, SpriteSheet.tiles);
 	public static Sprite rock_2 = new Sprite(16, 4, 0, SpriteSheet.tiles);
+	public static Sprite water_1 = new Sprite(16, 14, 0, SpriteSheet.tiles);
+	public static Sprite water_2 = new Sprite(16, 15, 0, SpriteSheet.tiles);
 	public static Sprite voidSprite = new Sprite(16, 0x242424);
 	
 	
