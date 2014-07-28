@@ -14,6 +14,7 @@ import com.rokru.experiment_x.level.Level;
 public abstract class Entity {
 
 	public int x, y;
+	public int tileX, tileY;
 	private boolean removed = false;
 	protected Level level;
 	protected static String name = "Entity";
@@ -71,5 +72,9 @@ public abstract class Entity {
 	
 	public static String getEntityName(){
 		return name;
+	}
+	
+	public void initLevel(Level level){
+		this.level = level;
 	}
 }
