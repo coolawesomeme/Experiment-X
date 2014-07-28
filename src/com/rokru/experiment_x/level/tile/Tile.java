@@ -39,6 +39,7 @@ public class Tile {
 	}
 
 	public boolean walkable(){
-		return true;
+		if(this.solid()) return false;
+		else return true;
 	}
 }
