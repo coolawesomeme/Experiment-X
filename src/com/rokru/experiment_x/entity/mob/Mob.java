@@ -27,10 +27,15 @@ public abstract class Mob extends Entity {
 		if (ya < 0) dir = 0;
 		
 		if (!collision(xa, ya)) {
+			int prevTileX = tileX;
+			int prevTileY = tileY;
 			x += xa;
 			y += ya;
 			tileX = x/16;
 			tileY = y/16;
+			if(prevTileX != tileX || prevTileY != tileY){
+				level.getTile(tileX, tileY).onTileStep(this);
+			}
 		}
 	}
 	
