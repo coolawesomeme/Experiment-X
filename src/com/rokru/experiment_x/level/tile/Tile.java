@@ -34,8 +34,11 @@ public class Tile {
 		return name;
 	}
 	
-	public boolean solid() {
+	public boolean solid(){
 		return false;
 	}
 
+	public boolean walkable(){
+		return true;
+	}
 }
