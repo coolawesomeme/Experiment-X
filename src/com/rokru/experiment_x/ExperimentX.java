@@ -6,7 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
-import java.awt.geom.Rectangle2D;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
@@ -47,7 +48,12 @@ public class ExperimentX extends Canvas implements Runnable{
     public static String username;
     private boolean running = false;
     
+    private int frames, f2 = 0;
+    private int updates, u2 = 0;
+    
     private Render screen;
+    
+    public static boolean debug = false;
     
     private BufferedImage image = new BufferedImage (width, height, BufferedImage.TYPE_INT_RGB);
     private int [] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
@@ -64,6 +70,14 @@ public class ExperimentX extends Canvas implements Runnable{
         
         addKeyListener(key);
         
+		addMouseListener(new MouseAdapter() {
+		     public void mouseReleased(MouseEvent e) {
+		        if(PauseMenu.paused){
+		        	PauseMenu.requestFocus();
+		        	Logger.generalLogger.logAction("mouse", "Click (while paused)");
+		        }
+		     }
+		});
     }
 
     public static void main(String[] args) {
@@ -126,8 +140,6 @@ public class ExperimentX extends Canvas implements Runnable{
     	long timer = System.currentTimeMillis();
     	final double ns = 1000000000.0 / 60.0;
     	double delta = 0;
-    	int frames = 0;
-    	int updates = 0;
     	requestFocus();
         while(running) {
         	long now = System.nanoTime();
@@ -144,8 +156,9 @@ public class ExperimentX extends Canvas implements Runnable{
             
         		if (System.currentTimeMillis() - timer > 1000) {
         			timer += 1000;
-        			Logger.xLogger.logInfo(updates + "ups, " + frames + " fps");
-        			frame.setTitle(title + "  |  "  + updates + " ups, " + frames + " fps");
+        			if(debug){
+        				Logger.xLogger.logInfo(updates + "ups, " + frames + " fps");
+        			}
         			updates = 0;
         			frames = 0;
         		}
@@ -183,17 +196,25 @@ public class ExperimentX extends Canvas implements Runnable{
     	
     	Graphics g = bs.getDrawGraphics();
     	g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-    	g.setColor(Color.WHITE);
+    	g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
     	g.setFont(getDefaultFont(Font.BOLD, 14, 1));
     	g.drawString(username, 5, 16);
     	
     	if(PauseMenu.paused){
     		g.setColor(new Color(0f, 0f, 0f, 0.6f));
         	g.fillRect(0, 0, width*scale, height*scale);
-        	g.setColor(Color.WHITE);
-        	g.setFont(getDefaultFont(Font.BOLD, 40));
-        	Rectangle2D fontBox = g.getFont().getStringBounds("PAUSED", g.getFontMetrics().getFontRenderContext());
-        	g.drawString("PAUSED", width*scale/2 - (int)fontBox.getWidth()/2, height*scale / 2);
+        	//g.setColor(Color.WHITE);
+        	//g.setFont(getDefaultFont(Font.BOLD, 40));
+        	//Rectangle2D fontBox = g.getFont().getStringBounds("PAUSED", g.getFontMetrics().getFontRenderContext());
+        	//g.drawString("PAUSED", width*scale/2 - (int)fontBox.getWidth()/2, height*scale / 2);
+    	}else if(debug){
+    		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
+    		g.setFont(getDefaultFont(Font.BOLD, 14, 1));
+    		if(System.currentTimeMillis() % 200 == 0){
+    			u2 = updates;
+    			f2 = frames;
+    		}
+    		g.drawString(u2 + " ups, " + f2 + " fps", width*scale - 5 - 105 , 16);
     	}
     	
     	g.dispose();
@@ -257,7 +278,10 @@ public class ExperimentX extends Canvas implements Runnable{
 	}
 	
 	public static void pauseMenuClosed(){
-		frame.setAlwaysOnTop(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+	
+	public static void debugMode(boolean turnOnDebug){
+		debug = turnOnDebug;
 	}
 }

@@ -41,11 +41,13 @@ public class PauseMenu{
 		addComponents();
 		menu.setLocationRelativeTo(null);
 		menu.setResizable(false);
+		menu.setUndecorated(true);
+		menu.setBackground(new Color((float)0/255, (float)0/255, (float)0/255, 0.6f));
 		menu.setVisible(true);
 		mainContentLabel.setLayout(null);
 		
 		menu.addKeyListener(new KeyAdapter(){
-			public void keyPressed(KeyEvent arg0) {
+			public void keyReleased(KeyEvent arg0) {
 				if(arg0.getKeyCode() == Keyboard.pause_key){
 					closePauseMenu();
 				}
@@ -70,21 +72,21 @@ public class PauseMenu{
 		}
 		
 		JLabel title = new JLabel(new ImageIcon(ExperimentX.class.getResource("/images/pause_title.png")));
-		title.setBounds(187, 15, 176, 40);
+		title.setBounds(187, 35, 176, 40);
 		mainContentLabel.add(title);
 		
 		returntogame = new JButton("Return to Game");
-		returntogame.setBounds(40, 80,
+		returntogame.setBounds(40, 100,
 				465, 50);
 		mainContentLabel.add(returntogame);
 		
 		options = new JButton("Options");
-		options.setBounds(40, 80 + 60 + 20,
+		options.setBounds(40, 100 + 60 + 20,
 				465, 50);
 		mainContentLabel.add(options);
 		
 		quit = new JButton("Quit Game");
-		quit.setBounds(40, 80 + (60 + 20) * 2,
+		quit.setBounds(40, 100 + (60 + 20) * 2,
 				465, 50);
 		mainContentLabel.add(quit);
 		
