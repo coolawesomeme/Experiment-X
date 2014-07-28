@@ -17,7 +17,7 @@ public abstract class Entity {
 	public int tileX, tileY;
 	private boolean removed = false;
 	protected Level level;
-	protected static String name = "Entity";
+	protected String name = "Entity";
 	protected final Random random = new Random();
 	protected static UUID entityUUID;
 	private static HashMap<UUID, Entity> uuidMap = new HashMap<UUID, Entity>();
@@ -70,7 +70,7 @@ public abstract class Entity {
 		}
 	}
 	
-	public static String getEntityName(){
+	public String getEntityName(){
 		return name;
 	}
 	
