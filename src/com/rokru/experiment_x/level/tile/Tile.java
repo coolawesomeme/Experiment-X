@@ -1,5 +1,6 @@
 package com.rokru.experiment_x.level.tile;
 
+import com.rokru.experiment_x.entity.mob.Mob;
 import com.rokru.experiment_x.graphics.Render;
 import com.rokru.experiment_x.graphics.Sprite;
 
@@ -16,6 +17,8 @@ public class Tile {
 	public static Tile rock_1 = new RockTile(Sprite.rock_1, "e-x:"+3, "experimentx:rock 1");
 	public static Tile flower_2 = new FlowerTile(Sprite.flower_2, "e-x:"+4, "experimentx:flower 2");
 	public static Tile rock_2 = new RockTile(Sprite.rock_2, "e-x:"+5, "experimentx:rock 2");
+	public static Tile water_1 = new WaterTile(Sprite.water_1, "e-x:"+6, "experimentx:water 1");
+	public static Tile water_2 = new WaterTile(Sprite.water_2, "e-x:"+7, "experimentx:water 2");
 	
 	public Tile(Sprite sprite, String id, String name) {
 		this.sprite = sprite;
@@ -24,6 +27,7 @@ public class Tile {
 	}
 	
 	public void render(int x, int y, Render screen) {
+		screen.renderTile(x << 4, y << 4, this);
 	}
 	
 	public String getTileID(){
@@ -42,4 +46,6 @@ public class Tile {
 		if(this.solid()) return false;
 		else return true;
 	}
+	
+	public void onTileStep(Mob mob){}
 }
