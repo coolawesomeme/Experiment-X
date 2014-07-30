@@ -29,10 +29,12 @@ public class Keyboard implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		//Ignores key-presses during pause
 		if(!PauseMenu.paused && e.getKeyCode() != pause_key){
-			keys[e.getKeyCode()] = true;
-			mostRecentKey = e.getKeyCode();
-			if(e.getKeyCode() == debug_key)
-				ExperimentX.debugMode(!ExperimentX.debug);
+			if(e.getKeyCode() <= KeyEvent.KEY_LAST){
+				keys[e.getKeyCode()] = true;
+				mostRecentKey = e.getKeyCode();
+				if(e.getKeyCode() == debug_key)
+					ExperimentX.debugMode(!ExperimentX.debug);
+			}
 		}else if(e.getKeyCode() == pause_key && !PauseMenu.paused){
 			keys[pause_key] = true;
 			keys[mostRecentKey] = false;
