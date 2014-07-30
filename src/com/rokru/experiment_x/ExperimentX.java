@@ -2,10 +2,14 @@ package com.rokru.experiment_x;
 
 import java.awt.Canvas;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
@@ -68,6 +72,11 @@ public class ExperimentX extends Canvas implements Runnable{
         level = new RandomLevel(128, 128);
         player = new Player(level, key, username);
         player.initLevel(level);
+        
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image cursorI = new ImageIcon(ExperimentX.class.getResource(("/images/cursor_main.png"))).getImage();
+        Cursor cursor = toolkit.createCustomCursor(cursorI, new Point(0,0), "cursor_1");
+        setCursor(cursor);
         
         addKeyListener(key);
         
@@ -155,7 +164,7 @@ public class ExperimentX extends Canvas implements Runnable{
         		render();
         		frames++;
             
-        		if(!debug && System.currentTimeMillis() % 500 == 0){
+        		if(!debug && System.currentTimeMillis() % 600 == 0){
 					Logger.playerLogger.logInfo("COORDS: (" + player.tileX + ", " + player.tileY + ")");
 				}
         		

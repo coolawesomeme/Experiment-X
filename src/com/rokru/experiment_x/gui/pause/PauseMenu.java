@@ -1,6 +1,7 @@
 package com.rokru.experiment_x.gui.pause;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +44,7 @@ public class PauseMenu{
 		menu.setResizable(false);
 		menu.setUndecorated(true);
 		menu.setBackground(new Color((float)0/255, (float)0/255, (float)0/255, 0.6f));
+		menu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menu.setVisible(true);
 		mainContentLabel.setLayout(null);
 		
