@@ -5,15 +5,18 @@ import java.util.Scanner;
 
 import com.rokru.experiment_x.level.tile.Tile;
 
-public class LevelLoader {
+public class AlternateLevelLoader {
 
-	private static String[] tiles = new String[128 * 128];
+	private static Level level;
+	private static String[] tiles = new String[level.getLevelWidth() * level.getLevelHeight()];
 	
-	public LevelLoader(File file){
+	public AlternateLevelLoader(File file, Level level){
+		AlternateLevelLoader.level = level;
 		readFile(file);
 	}
 	
-	public LevelLoader(String path){
+	public AlternateLevelLoader(String path, Level level){
+		AlternateLevelLoader.level = level;
 		File file = new File(path);
 		readFile(file);
 	}
@@ -40,11 +43,11 @@ public class LevelLoader {
 				result.replace("{", "");
 				result.replace("}", "");
 				String[] tileTest = result.split(",");
-				if(tileTest.length == 128 * 128){
+				if(tileTest.length == level.getLevelWidth()*level.getLevelHeight()){
 					tiles = result.split(",");
 				}else{
 					tiles = result.split(",");
-					for(int i = 0; i < 128*128 - tileTest.length; i++){
+					for(int i = 0; i < level.getLevelWidth()*level.getLevelHeight() - tileTest.length; i++){
 						tiles[tileTest.length + i] = Tile.voidTile.getTileID();
 					}
 				}
@@ -52,7 +55,7 @@ public class LevelLoader {
 		}
 	}
 	
-	public static String[] getTiles(){
+	public String[] getTiles(){
 		return tiles;
 	}
 }
