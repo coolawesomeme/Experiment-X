@@ -32,7 +32,7 @@ public abstract class Mob extends Entity {
 			x += xa;
 			y += ya;
 			tileX = x/16;
-			tileY = y/16;
+			tileY = (y+15)/16;
 			if(prevTileX != tileX || prevTileY != tileY){
 				level.getTile(tileX, tileY).onTileStep(this);
 			}
