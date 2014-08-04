@@ -44,14 +44,7 @@ public class Level {
 	
 	public Tile getTile(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height || tiles[x + y * width] == null) return Tile.voidTile;
-		else if (tiles[x + y * width] == Tile.grass.getTileID()) return Tile.grass;
-		else if (tiles[x + y * width] == Tile.flower_1.getTileID()) return Tile.flower_1;
-		else if (tiles[x + y * width] == Tile.rock_1.getTileID()) return Tile.rock_1;
-		else if (tiles[x + y * width] == Tile.flower_2.getTileID()) return Tile.flower_2;
-		else if (tiles[x + y * width] == Tile.rock_2.getTileID()) return Tile.rock_2;
-		else if (tiles[x + y * width] == Tile.water_1.getTileID()) return Tile.water_1;
-		else if (tiles[x + y * width] == Tile.water_2.getTileID()) return Tile.water_2;
-		return Tile.voidTile;
+		else return Tile.getTileFromID(tiles[x+y*width]);
 	}
 	
 	public int getLevelSide(){
