@@ -20,8 +20,11 @@ public class Tile {
 	public static Tile rock_1 = new RockTile(Sprite.rock_1, "e-x:"+3, "experimentx:blocky rock");
 	public static Tile flower_2 = new FlowerTile(Sprite.flower_2, "e-x:"+4, "experimentx:purple flower");
 	public static Tile rock_2 = new RockTile(Sprite.rock_2, "e-x:"+5, "experimentx:round rock");
+	public static Tile water_0 = new WaterTile(Sprite.water_0, "e-x:"+6, "experimentx:water_still");
 	public static Tile water_1 = new WaterTile(Sprite.water_1, "e-x:"+7, "experimentx:water_vertical");
 	public static Tile water_2 = new WaterTile(Sprite.water_2, "e-x:"+8, "experimentx:water_horizontal");
+	public static Tile tall_grass_1 = new GrassTile(Sprite.tall_grass_1, "e-x:"+9, "experimentx:tall grass");
+	public static Tile tall_grass_2 = new GrassTile(Sprite.tall_grass_2, "e-x:"+10, "experimentx:tall grass");
 	
 	public Tile(Sprite sprite, String id, String name) {
 		this.sprite = sprite;
