@@ -47,8 +47,12 @@ public class Level {
 		else return Tile.getTileFromID(tiles[x+y*width]);
 	}
 	
-	public int getLevelSide(){
+	public int getLevelWidth(){
 		return width;
+	}
+	
+	public int getLevelHeight(){
+		return height;
 	}
 	
 }

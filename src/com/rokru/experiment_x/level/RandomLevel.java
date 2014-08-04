@@ -26,7 +26,7 @@ public class RandomLevel extends Level {
 					tiles[x + y * height] = random.nextInt(5) == 0 ? Tile.flower_2.getTileID() : Tile.grass.getTileID();
 				}else if(q == 4){
 					tiles[x + y * height] = random.nextInt(5) == 0 ? Tile.rock_2.getTileID() : Tile.grass.getTileID();
-				}else if(x + y * height > 0 && x + y * height < getLevelSide()*getLevelSide()){
+				}else if(x + y * height > 0 && x + y * height < getLevelWidth()*getLevelHeight()){
 					tiles[x + y * height] = random.nextBoolean() ? Tile.tall_grass_1.getTileID() : Tile.tall_grass_2.getTileID();
 				}else{
 					tiles[x + y * height] = Tile.voidTile.getTileID();
