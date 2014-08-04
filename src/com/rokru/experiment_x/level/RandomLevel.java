@@ -37,8 +37,6 @@ public class RandomLevel extends Level {
 		int z = random.nextInt(15);
 		z += 70;
 		
-		System.out.println(z);
-		
 		for(int i = 0; i < z; i++){
 			int px = random.nextInt((width-2));
 			int py = random.nextInt((height-2));
