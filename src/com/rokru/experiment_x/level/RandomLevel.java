@@ -38,19 +38,38 @@ public class RandomLevel extends Level {
 		z += 70;
 		
 		for(int i = 0; i < z; i++){
-			int px = random.nextInt((width-2));
-			int py = random.nextInt((height-2));
+			int px = random.nextInt((width-3));
+			int py = random.nextInt((height-3));
 			
-			if(px <= 2 || py <= 2){
+			if(px <= 3 || py <= 3){
 				px += 3;
 				py += 3;
 			}
 			
-			tiles[px + py * height] = Tile.water_0.getTileID();
-			tiles[(px+1) + py * height] = Tile.water_2.getTileID();
-			tiles[(px-1) + py * height] = Tile.water_2.getTileID();
-			tiles[px + (py+1) * height] = Tile.water_1.getTileID();
-			tiles[px + (py-1) * height] = Tile.water_1.getTileID();
+			if(!Tile.getTileFromID(tiles[px+py*height]).walkable()){
+				continue;
+			}
+			
+			if(random.nextBoolean()){
+				tiles[px + py * height] = Tile.water_0.getTileID();
+				tiles[(px+1) + py * height] = Tile.water_2.getTileID();
+				tiles[(px-1) + py * height] = Tile.water_2.getTileID();
+				tiles[px + (py+1) * height] = Tile.water_1.getTileID();
+				tiles[px + (py-1) * height] = Tile.water_1.getTileID();
+			}else{
+				tiles[px + py * height] = Tile.water_0.getTileID();
+				tiles[(px+1) + py * height] = Tile.water_0.getTileID();
+				tiles[(px+1) + (py-1) * height] = Tile.water_0.getTileID();
+				tiles[px + (py-1) * height] = Tile.water_0.getTileID();
+				tiles[px + (py+1) * height] = Tile.water_1.getTileID();
+				tiles[(px+1) + (py+1) * height] = Tile.water_1.getTileID();
+				tiles[px + (py-2) * height] = Tile.water_1.getTileID();
+				tiles[(px+1) + (py-2) * height] = Tile.water_1.getTileID();
+				tiles[(px-1) + py * height] = Tile.water_2.getTileID();
+				tiles[(px-1) + (py-1) * height] = Tile.water_2.getTileID();
+				tiles[(px+2) + py * height] = Tile.water_2.getTileID();
+				tiles[(px+2) + (py-1) * height] = Tile.water_2.getTileID();
+			}
 		}
 		
 		tiles[0 + 0 * height] = Tile.grass.getTileID();
