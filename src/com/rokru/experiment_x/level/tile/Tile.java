@@ -45,6 +45,10 @@ public class Tile {
 		return name;
 	}
 	
+	public String getFormattedTileName(){
+		return name.split(":")[1].toUpperCase();
+	}
+	
 	public boolean solid(){
 		return false;
 	}

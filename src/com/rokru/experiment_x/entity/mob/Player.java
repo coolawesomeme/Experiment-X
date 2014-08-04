@@ -44,7 +44,7 @@ public class Player extends Mob {
 			move(xa, ya);
 			if(ExperimentX.debug){
 				Logger.playerLogger.logInfo("COORDS: (" + tileX + ", " + tileY + ")");
-				Logger.playerLogger.logInfo("Current Block: " + level.getTile(tileX, tileY).getTileID() + " | " + level.getTile(tileX, tileY).getTileName());
+				Logger.playerLogger.logInfo("Current Block: " + level.getTile(tileX, tileY).getFormattedTileName() + " (id = " + level.getTile(tileX, tileY).getTileID() + ")");
 			}
 			walking = true;
 		} else {
