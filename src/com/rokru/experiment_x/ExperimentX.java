@@ -71,7 +71,7 @@ public class ExperimentX extends Canvas implements Runnable{
         frame = new JFrame();
         key = new Keyboard();
         level = new SpawnLevel("/level/spawn_level.png");
-        player = new Player(level, key, username);
+        player = new Player(level, 64*16 + 8, 32*16 - 1, key, username);
         player.initLevel(level);
         
         Toolkit toolkit = Toolkit.getDefaultToolkit();
