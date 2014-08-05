@@ -25,6 +25,8 @@ public class Player extends Mob {
 		super(level, name);
 		this.x = x;
 		this.y = y;
+		this.tileX = x/16;
+		this.tileY = (y+15)/16;
 		this.input = input;
 		sprite = Sprite.player_up;
 	}
