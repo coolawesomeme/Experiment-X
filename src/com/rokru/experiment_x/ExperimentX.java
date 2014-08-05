@@ -32,6 +32,7 @@ import com.rokru.experiment_x.gui.pause.PauseMenu;
 import com.rokru.experiment_x.input.Keyboard;
 import com.rokru.experiment_x.level.Level;
 import com.rokru.experiment_x.level.RandomLevel;
+import com.rokru.experiment_x.level.SpawnLevel;
 
 public class ExperimentX extends Canvas implements Runnable{
     private static final long serialVersionUID = 1L;
@@ -69,7 +70,7 @@ public class ExperimentX extends Canvas implements Runnable{
         screen = new Render(width, height);
         frame = new JFrame();
         key = new Keyboard();
-        level = new RandomLevel(128, 128);
+        level = new SpawnLevel("/level/spawn_level.png");
         player = new Player(level, key, username);
         player.initLevel(level);
         

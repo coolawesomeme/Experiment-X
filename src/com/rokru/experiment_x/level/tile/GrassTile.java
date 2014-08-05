@@ -4,8 +4,8 @@ import com.rokru.experiment_x.graphics.Sprite;
 
 public class GrassTile extends Tile {
 
-	public GrassTile(Sprite sprite, String id, String name) {
-		super(sprite, id, name);
+	public GrassTile(Sprite sprite, String id, int colorID, String name) {
+		super(sprite, id, colorID, name);
 	}
 
 }

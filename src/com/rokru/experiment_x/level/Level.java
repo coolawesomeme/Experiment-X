@@ -5,8 +5,9 @@ import com.rokru.experiment_x.level.tile.Tile;
 
 public class Level {
 	
-	protected int width, height;
 	protected String[] tiles;
+	protected int width, height;
+	protected int[] tilePixels;
 	
 	public Level(int width, int height) {
 		this.width = width;
@@ -16,11 +17,13 @@ public class Level {
 	}
 	
 	public Level(String path) {
-		//loadLevel(path);
+		loadLevel(path);
+		generateLevel();
 	}
 
-	protected void generateLevel() {		
-	}
+	protected void loadLevel(String path) {}
+
+	protected void generateLevel() {}
 	
 	public void update() {
 	}
@@ -43,8 +46,8 @@ public class Level {
 	}
 	
 	public Tile getTile(int x, int y) {
-		if (x < 0 || y < 0 || x >= width || y >= height || tiles[x + y * width] == null) return Tile.voidTile;
-		else return Tile.getTileFromID(tiles[x+y*width]);
+		if (x < 0 || y < 0 || x >= width || y >= height) return Tile.voidTile;
+		else return Tile.getTileFromColorID(tilePixels[x+y*width]);
 	}
 	
 	public int getLevelWidth(){
