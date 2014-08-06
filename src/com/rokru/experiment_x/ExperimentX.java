@@ -32,6 +32,7 @@ import com.rokru.experiment_x.gui.pause.PauseMenu;
 import com.rokru.experiment_x.input.Keyboard;
 import com.rokru.experiment_x.level.Level;
 import com.rokru.experiment_x.level.SpawnLevel;
+import com.rokru.experiment_x.level.tile.Tile;
 
 public class ExperimentX extends Canvas implements Runnable{
     private static final long serialVersionUID = 1L;
@@ -54,6 +55,8 @@ public class ExperimentX extends Canvas implements Runnable{
     
     private int frames, f2 = 0;
     private int updates, u2 = 0;
+    public static Tile currentTile = Tile.voidTile;
+    private boolean debugBar = true;
     
     private Render screen;
     
@@ -72,6 +75,7 @@ public class ExperimentX extends Canvas implements Runnable{
         level = new SpawnLevel("/level/spawn_level.png");
         player = new Player(level, 64*16 + 8, 32*16 - 1, key, username);
         player.initLevel(level);
+        setCurrentTile(level.getTile(player.tileX, player.tileY));
         
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image cursorI = new ImageIcon(ExperimentX.class.getResource(("/images/cursor_main.png"))).getImage();
@@ -212,8 +216,17 @@ public class ExperimentX extends Canvas implements Runnable{
     	
     	Graphics g = bs.getDrawGraphics();
     	g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+		g.setFont(getDefaultFont(Font.BOLD, 14, 1));
+    	if(!debug && debugBar){
+    		g.setColor(new Color(0f, 0f, 0f, 0.15f));
+    		g.fillRect(0, 0, width*scale, 22);
+    	}else if(!PauseMenu.paused && debugBar){
+    		g.setColor(new Color(0f, 0f, 0f, 0.15f));
+    		g.fillRect(0, 0, width*scale, 22);
+    		g.fillRect(0, 22, g.getFontMetrics().stringWidth("Tile: " + currentTile.getFormattedTileName()) + 15, 32);
+    	}
+    	
     	g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
-    	g.setFont(getDefaultFont(Font.BOLD, 14, 1));
     	g.drawString(username, 5, 16);
     	
     	if(PauseMenu.paused){
@@ -225,8 +238,9 @@ public class ExperimentX extends Canvas implements Runnable{
         	//g.drawString("PAUSED", width*scale/2 - (int)fontBox.getWidth()/2, height*scale / 2);
     	}else if(debug){
     		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
-    		g.setFont(getDefaultFont(Font.BOLD, 14, 1));
     		g.drawString(u2 + " ups, " + f2 + " fps", width*scale - 5 - 105 , 16);
+    		g.drawString("Tile: " + currentTile.getFormattedTileName(), 5, 32);
+    		g.drawString("(" + player.tileX + ", " + player.tileY + ")", 5, 48);
     	}
     	g.dispose();
     	bs.show();
@@ -294,5 +308,9 @@ public class ExperimentX extends Canvas implements Runnable{
 	
 	public static void debugMode(boolean turnOnDebug){
 		debug = turnOnDebug;
+	}
+	
+	public static void setCurrentTile(Tile tile){
+		currentTile = tile;
 	}
 }
