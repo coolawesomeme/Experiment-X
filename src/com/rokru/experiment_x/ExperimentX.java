@@ -31,7 +31,6 @@ import com.rokru.experiment_x.graphics.Render;
 import com.rokru.experiment_x.gui.pause.PauseMenu;
 import com.rokru.experiment_x.input.Keyboard;
 import com.rokru.experiment_x.level.Level;
-import com.rokru.experiment_x.level.RandomLevel;
 import com.rokru.experiment_x.level.SpawnLevel;
 
 public class ExperimentX extends Canvas implements Runnable{
