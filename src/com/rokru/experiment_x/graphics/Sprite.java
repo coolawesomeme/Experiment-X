@@ -18,9 +18,19 @@ public class Sprite {
 	public static Sprite voidSprite = new Sprite(16, 0x242424);
 	public static Sprite tall_grass_1 = new Sprite(16, 5, 0, SpriteSheet.tiles);
 	public static Sprite tall_grass_2 = new Sprite(16, 6, 0, SpriteSheet.tiles);
+	public static Sprite stone_bricks = new Sprite(16, 0, 1, SpriteSheet.tiles);
+	public static Sprite clay_bricks = new Sprite(16, 1, 1, SpriteSheet.tiles);
+	public static Sprite wooden_planks = new Sprite(16, 2, 1, SpriteSheet.tiles);
+	public static Sprite wooden_slope_1 = new Sprite(16, 3, 1, SpriteSheet.tiles);
+	public static Sprite wooden_slope_2 = new Sprite(16, 4, 1, SpriteSheet.tiles);
+	public static Sprite wooden_slope_3 = new Sprite(16, 5, 1, SpriteSheet.tiles);
+	public static Sprite wooden_slope_4 = new Sprite(16, 6, 1, SpriteSheet.tiles);
+	public static Sprite wooden_slab_1 = new Sprite(16, 7, 1, SpriteSheet.tiles);
+	public static Sprite wooden_slab_2 = new Sprite(16, 8, 1, SpriteSheet.tiles);
+	public static Sprite wooden_slab_3 = new Sprite(16, 9, 1, SpriteSheet.tiles);
+	public static Sprite wooden_slab_4 = new Sprite(16, 10, 1, SpriteSheet.tiles);
+	public static Sprite metal_gray = new Sprite(16, 0, 2, SpriteSheet.tiles);
 	
-	
-
 	public static Sprite player_up = new Sprite(32, 0, 0, SpriteSheet.charSpritesheet);
 	public static Sprite player_down = new Sprite(32, 3, 0, SpriteSheet.charSpritesheet);
 	public static Sprite player_left = new Sprite(32, 2, 0, SpriteSheet.charSpritesheet);
