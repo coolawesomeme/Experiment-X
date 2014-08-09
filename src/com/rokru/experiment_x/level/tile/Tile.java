@@ -35,11 +35,7 @@ public class Tile {
 	public static Tile wooden_slope_2 = new WallTile (Sprite.wooden_slope_2, "e-x:"+15,0xff4C1C00, "experimentx:wooden slope 2");
 	public static Tile wooden_slope_3 = new WallTile (Sprite.wooden_slope_3, "e-x:"+16,0xff591F00, "experimentx:wooden slope 3");
 	public static Tile wooden_slope_4 = new WallTile (Sprite.wooden_slope_4, "e-x:"+17,0xff662100, "experimentx:wooden slope 4");
-	public static Tile wooden_slab_1 = new WallTile (Sprite.wooden_slab_1, "e-x:"+18,0xff722200, "experimentx:wooden slab 1");
-	public static Tile wooden_slab_2 = new WallTile (Sprite.wooden_slab_2, "e-x:"+19,0xff7F2400, "experimentx:wooden slab 2");
-	public static Tile wooden_slab_3 = new WallTile (Sprite.wooden_slab_3, "e-x:"+20,0xff8C2700, "experimentx:wooden slab 3");
-	public static Tile wooden_slab_4 = new WallTile (Sprite.wooden_slab_4, "e-x:"+21,0xff992800, "experimentx:wooden slab 4");
-	public static Tile metal_gray = new GeneralTile (Sprite.metal_gray, "e-x:"+22,0xffBFBFBF, "experimentx:iron block");
+	public static Tile metal_gray = new GeneralTile (Sprite.metal_gray, "e-x:"+18,0xffBFBFBF, "experimentx:iron block");
 	
 	public Tile(Sprite sprite, String id, int colorID, String name) {
 		this.sprite = sprite;
