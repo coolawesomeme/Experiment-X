@@ -5,6 +5,7 @@ import java.awt.event.KeyListener;
 
 import com.rokru.experiment_x.ExperimentX;
 import com.rokru.experiment_x.Logger;
+import com.rokru.experiment_x.gui.pause.OptionsMenu;
 import com.rokru.experiment_x.gui.pause.PauseMenu;
 
 public class Keyboard implements KeyListener {
@@ -40,10 +41,13 @@ public class Keyboard implements KeyListener {
 			keys[mostRecentKey] = false;
 			Logger.generalLogger.logAction("key", "Pause Key (Key " + pause_key + ")");
 			PauseMenu.setPaused(true);
-		}else if(PauseMenu.paused){
+		}else if(PauseMenu.paused && !OptionsMenu.menuOpen){
 			Logger.generalLogger.logAction("key", "Key " + e.getKeyCode() + "(while paused)");
 			PauseMenu.requestFocus();
-		}
+		}else if(PauseMenu.paused && OptionsMenu.menuOpen){
+			Logger.generalLogger.logAction("key", "Key " + e.getKeyCode() + "(while paused)");
+        	OptionsMenu.requestFocus();
+        }
 	}
 
 	public void keyReleased(KeyEvent e) {

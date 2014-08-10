@@ -51,7 +51,7 @@ public class PauseMenu{
 		menu.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {
 				if(arg0.getKeyCode() == Keyboard.pause_key){
-					closePauseMenu();
+					closePauseMenu(0);
 				}
 			}			
 		});
@@ -95,16 +95,15 @@ public class PauseMenu{
 		returntogame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Logger.generalLogger.logAction("button", "ReturnToGame");
-				closePauseMenu();
+				closePauseMenu(0);
 			}
 		});
 		
 		options.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Logger.generalLogger.logAction("button", "Options");
-				JOptionPane.showMessageDialog(null, new JLabel("Not yet implemented.", JLabel.CENTER), "Error", JOptionPane.ERROR_MESSAGE);
-				options.setBackground(new Color(255, 89, 89));
-				options.setForeground(new Color(255, 89, 89));
+				OptionsMenu.openOptionsMenu();
+				closePauseMenu(1);
 			}
 		});
 		
@@ -122,12 +121,14 @@ public class PauseMenu{
 		}
 	}
 	
-	public static void closePauseMenu(){
+	public static void closePauseMenu(int i){
 		if(menuOpen){
 			menu.dispose();
 			menuOpen = false;
-			setPaused(false);
-			ExperimentX.pauseMenuClosed();
+			if(i == 0){
+				setPaused(false);
+				ExperimentX.pauseMenuClosed();
+			}
 		}
 	}
 

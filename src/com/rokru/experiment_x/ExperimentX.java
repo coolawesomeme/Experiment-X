@@ -28,6 +28,7 @@ import javax.swing.UIManager;
 
 import com.rokru.experiment_x.entity.mob.Player;
 import com.rokru.experiment_x.graphics.Render;
+import com.rokru.experiment_x.gui.pause.OptionsMenu;
 import com.rokru.experiment_x.gui.pause.PauseMenu;
 import com.rokru.experiment_x.input.Keyboard;
 import com.rokru.experiment_x.level.Level;
@@ -58,6 +59,8 @@ public class ExperimentX extends Canvas implements Runnable{
     public static Tile currentTile = Tile.voidTile;
     private boolean debugBar = true;
     
+    private static int pauseRender = 0;
+    
     private Render screen;
     
     public static boolean debug = false;
@@ -86,8 +89,11 @@ public class ExperimentX extends Canvas implements Runnable{
         
 		addMouseListener(new MouseAdapter() {
 		     public void mouseReleased(MouseEvent e) {
-		        if(PauseMenu.paused){
+		        if(PauseMenu.paused && !OptionsMenu.menuOpen){
 		        	PauseMenu.requestFocus();
+		        	Logger.generalLogger.logAction("mouse", "Click (while paused)");
+		        }else if(PauseMenu.paused && OptionsMenu.menuOpen){
+		        	OptionsMenu.requestFocus();
 		        	Logger.generalLogger.logAction("mouse", "Click (while paused)");
 		        }
 		     }
@@ -169,7 +175,7 @@ public class ExperimentX extends Canvas implements Runnable{
         		frames++;
             
         		if(!debug && System.currentTimeMillis() % 600 == 0){
-					Logger.playerLogger.logInfo("COORDS: (" + player.tileX + ", " + player.tileY + ")");
+					Logger.xLogger.logInfo(u2 + "ups, " + f2 + " fps");
 				}
         		
         		if (System.currentTimeMillis() - timer > 1000) {
@@ -183,7 +189,12 @@ public class ExperimentX extends Canvas implements Runnable{
         			frames = 0;
         		}
         	}else{
-        		render();
+        		if(pauseRender < 2){
+        			render();
+        			pauseRender++;
+        			frames = 0;
+        		}
+        		updates = 0;
         	}
         }
         stop();
@@ -192,7 +203,7 @@ public class ExperimentX extends Canvas implements Runnable{
     public void update() {
     	key.update();
     	player.update();
-    	if(PauseMenu.paused){
+    	if(PauseMenu.paused && !OptionsMenu.menuOpen){
     		PauseMenu.openPauseMenu();
     		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     	}
@@ -217,10 +228,10 @@ public class ExperimentX extends Canvas implements Runnable{
     	Graphics g = bs.getDrawGraphics();
     	g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		g.setFont(getDefaultFont(Font.BOLD, 14, 1));
-    	if(!debug && debugBar){
+    	if(debugBar && !debug){
     		g.setColor(new Color(0f, 0f, 0f, 0.15f));
-    		g.fillRect(0, 0, width*scale, 22);
-    	}else if(!PauseMenu.paused && debugBar){
+    		g.fillRect(0, 0, 5 + g.getFontMetrics().stringWidth(username) + 6, 22);
+    	}else if(debugBar && !PauseMenu.paused){
     		g.setColor(new Color(0f, 0f, 0f, 0.15f));
     		g.fillRect(0, 0, width*scale, 22);
     		g.fillRect(0, 22, g.getFontMetrics().stringWidth("Tile: " + currentTile.getFormattedTileName()) + 15, 32);
@@ -232,13 +243,14 @@ public class ExperimentX extends Canvas implements Runnable{
     	if(PauseMenu.paused){
     		g.setColor(new Color(0f, 0f, 0f, 0.6f));
         	g.fillRect(0, 0, width*scale, height*scale);
-        	//g.setColor(Color.WHITE);
-        	//g.setFont(getDefaultFont(Font.BOLD, 40));
-        	//Rectangle2D fontBox = g.getFont().getStringBounds("PAUSED", g.getFontMetrics().getFontRenderContext());
-        	//g.drawString("PAUSED", width*scale/2 - (int)fontBox.getWidth()/2, height*scale / 2);
+        	if(OptionsMenu.menuOpen){
+        		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.8f));
+        		g.setFont(getDefaultFont(Font.BOLD, 40));
+        		g.drawString("PAUSED", width*scale/2 - g.getFontMetrics().stringWidth("PAUSED")/2, height*scale / 2);
+        	}
     	}else if(debug){
     		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
-    		g.drawString(u2 + " ups, " + f2 + " fps", width*scale - 5 - 105 , 16);
+    		g.drawString(u2 + " ups, " + f2 + " fps", width*scale - 5 - g.getFontMetrics().stringWidth(u2 + " ups, " + f2 + " fps") , 16);
     		g.drawString("Tile: " + currentTile.getFormattedTileName(), 5, 32);
     		g.drawString("(" + player.tileX + ", " + player.tileY + ")", 5, 48);
     	}
@@ -304,6 +316,7 @@ public class ExperimentX extends Canvas implements Runnable{
 	
 	public static void pauseMenuClosed(){
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pauseRender = 0;
 	}
 	
 	public static void debugMode(boolean turnOnDebug){
