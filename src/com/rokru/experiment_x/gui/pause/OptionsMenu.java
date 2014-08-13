@@ -26,6 +26,7 @@ public class OptionsMenu{
 	public static boolean menuOpen = false;
 
 	public JButton options, quit, returntopause;
+	public static int menuID = 2;
 	
 	private JLabel mainContentLabel = new JLabel();
 	
@@ -107,12 +108,14 @@ public class OptionsMenu{
 	public static void openOptionsMenu(){
 		if(!menuOpen){
 			new OptionsMenu();
+			ExperimentX.setCurrentMenu(menuID);
 		}
 	}
 	
 	public static void closeOptionsMenu(){
 		if(menuOpen){
 			menu.dispose();
+			ExperimentX.setCurrentMenu(PauseMenu.menuID);
 			menuOpen = false;
 		}
 	}

@@ -41,10 +41,11 @@ public class Keyboard implements KeyListener {
 			keys[mostRecentKey] = false;
 			Logger.generalLogger.logAction("key", "Pause Key (Key " + pause_key + ")");
 			PauseMenu.setPaused(true);
-		}else if(PauseMenu.paused && !OptionsMenu.menuOpen){
+			ExperimentX.setCurrentMenu(PauseMenu.menuID);
+		}else if(ExperimentX.currentMenu == PauseMenu.menuID){
 			Logger.generalLogger.logAction("key", "Key " + e.getKeyCode() + "(while paused)");
 			PauseMenu.requestFocus();
-		}else if(PauseMenu.paused && OptionsMenu.menuOpen){
+		}else if(ExperimentX.currentMenu == OptionsMenu.menuID){
 			Logger.generalLogger.logAction("key", "Key " + e.getKeyCode() + "(while paused)");
         	OptionsMenu.requestFocus();
         }

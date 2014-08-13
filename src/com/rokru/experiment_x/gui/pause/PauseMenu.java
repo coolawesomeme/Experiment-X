@@ -27,6 +27,7 @@ public class PauseMenu{
 	
 	private static boolean menuOpen = false;
 	public static boolean paused = false;
+	public static int menuID = 1;
 
 	public JButton options, quit, returntogame;
 	
@@ -118,6 +119,7 @@ public class PauseMenu{
 	public static void openPauseMenu(){
 		if(!menuOpen){
 			new PauseMenu();
+			ExperimentX.setCurrentMenu(menuID);
 		}
 	}
 	
@@ -128,6 +130,7 @@ public class PauseMenu{
 			if(i == 0){
 				setPaused(false);
 				ExperimentX.pauseMenuClosed();
+				ExperimentX.setCurrentMenu(0);
 			}
 		}
 	}

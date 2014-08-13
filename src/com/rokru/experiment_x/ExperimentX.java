@@ -46,6 +46,7 @@ public class ExperimentX extends Canvas implements Runnable{
     public static int scale = 3;
     public static String title = "Experiment X";
     
+    public static int currentMenu;
     private int borderWidth, borderHeight = 0;
     
     private Thread gameThread;
@@ -210,7 +211,7 @@ public class ExperimentX extends Canvas implements Runnable{
     public void update() {
     	key.update();
     	player.update();
-    	if(PauseMenu.paused && !OptionsMenu.menuOpen){
+    	if(currentMenu == PauseMenu.menuID){
     		PauseMenu.openPauseMenu();
     		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     	}
@@ -256,7 +257,7 @@ public class ExperimentX extends Canvas implements Runnable{
     	if(PauseMenu.paused){
     		g.setColor(new Color(0f, 0f, 0f, 0.6f));
         	g.fillRect(0 + borderWidth, 0 + borderHeight, width*scale, height*scale);
-        	if(OptionsMenu.menuOpen){
+        	if(currentMenu == OptionsMenu.menuID){
         		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.8f));
         		g.setFont(getDefaultFont(Font.BOLD, 40));
         		g.drawString("PAUSED", width*scale/2 - g.getFontMetrics().stringWidth("PAUSED")/2 + borderWidth, height*scale / 2 + borderHeight);
@@ -338,5 +339,9 @@ public class ExperimentX extends Canvas implements Runnable{
 	
 	public static void setCurrentTile(Tile tile){
 		currentTile = tile;
+	}
+	
+	public static void setCurrentMenu(int x){
+		currentMenu = x;
 	}
 }
