@@ -16,12 +16,10 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -235,14 +233,12 @@ public class ExperimentX extends Canvas implements Runnable{
     	}
     	
     	Graphics g = bs.getDrawGraphics();
-    	Image image1 = null;
-		try {
-			image1 = ImageIO.read(ExperimentX.class.getResource("/images/undecorated_frame.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	g.drawImage(image1, 0, 0, getWidth(), getHeight(), null);
+    	if(!PauseMenu.paused){
+    		g.setColor(new Color(0xff002747));
+    	}else{
+    		g.setColor(new Color(0xff1a1a1a));
+    	}
+    	g.fillRect(0, 0, getWidth(), getHeight());
     	g.drawImage(image, xOffset, yOffset, getWidth() - 2*xOffset, getHeight() - 2*yOffset, null);
 		g.setFont(getDefaultFont(Font.BOLD, 14, 1));
     	if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !debug){
