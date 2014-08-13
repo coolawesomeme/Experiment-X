@@ -16,10 +16,12 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -46,6 +48,8 @@ public class ExperimentX extends Canvas implements Runnable{
     public static int scale = 3;
     public static String title = "Experiment X";
     
+    private int xOffset, yOffset = 0;
+    
     private Thread gameThread;
     private static JFrame frame;
     private Keyboard key;
@@ -68,9 +72,12 @@ public class ExperimentX extends Canvas implements Runnable{
     private int [] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
     
     public ExperimentX() {
-        Dimension size = new Dimension(width * scale, height * scale);
+    	Dimension size = new Dimension(width * scale, height * scale);
         setPreferredSize(size);
-        
+        if(!Boolean.parseBoolean(Config.getProperty("titleBar"))){
+        	xOffset = yOffset = 10;
+        	setPreferredSize(new Dimension(width*scale+20, height*scale+20));
+        }
         screen = new Render(width, height);
         frame = new JFrame();
         key = new Keyboard();
@@ -132,7 +139,9 @@ public class ExperimentX extends Canvas implements Runnable{
 		ExperimentX.frame.setTitle(gameVersionFormatted);
 		ExperimentX.frame.setIconImage(new ImageIcon(ExperimentX.class.getResource("/images/app_icon.png")).getImage());
 		ExperimentX.frame.add(x);
+		ExperimentX.frame.setUndecorated(!Boolean.parseBoolean(Config.getProperty("titleBar")));
 		ExperimentX.frame.pack();
+		ExperimentX.frame.setLayout(null);
 		ExperimentX.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ExperimentX.frame.setLocationRelativeTo(null);
 		ExperimentX.frame.setVisible(true);
@@ -226,33 +235,41 @@ public class ExperimentX extends Canvas implements Runnable{
     	}
     	
     	Graphics g = bs.getDrawGraphics();
-    	g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+    	Image image1 = null;
+		try {
+			image1 = ImageIO.read(ExperimentX.class.getResource("/images/undecorated_frame.png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	g.drawImage(image1, 0, 0, getWidth(), getHeight(), null);
+    	g.drawImage(image, xOffset, yOffset, getWidth() - 2*xOffset, getHeight() - 2*yOffset, null);
 		g.setFont(getDefaultFont(Font.BOLD, 14, 1));
     	if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !debug){
     		g.setColor(new Color(0f, 0f, 0f, 0.15f));
-    		g.fillRect(0, 0, 5 + g.getFontMetrics().stringWidth(username) + 6, 22);
+    		g.fillRect(0 + xOffset, 0 + yOffset, 5 + g.getFontMetrics().stringWidth(username) + 6, 22);
     	}else if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !PauseMenu.paused){
     		g.setColor(new Color(0f, 0f, 0f, 0.15f));
-    		g.fillRect(0, 0, width*scale, 22);
-    		g.fillRect(0, 22, g.getFontMetrics().stringWidth("Tile: " + currentTile.getFormattedTileName()) + 15, 32);
+    		g.fillRect(0 + xOffset, 0 + yOffset, width*scale, 22);
+    		g.fillRect(0 + xOffset, 22 + yOffset, g.getFontMetrics().stringWidth("Tile: " + currentTile.getFormattedTileName()) + 15, 32);
     	}
     	
     	g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
-    	g.drawString(username, 5, 16);
+    	g.drawString(username, xOffset + 5, yOffset + 16);
     	
     	if(PauseMenu.paused){
     		g.setColor(new Color(0f, 0f, 0f, 0.6f));
-        	g.fillRect(0, 0, width*scale, height*scale);
+        	g.fillRect(0 + xOffset, 0 + yOffset, width*scale, height*scale);
         	if(OptionsMenu.menuOpen){
         		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.8f));
         		g.setFont(getDefaultFont(Font.BOLD, 40));
-        		g.drawString("PAUSED", width*scale/2 - g.getFontMetrics().stringWidth("PAUSED")/2, height*scale / 2);
+        		g.drawString("PAUSED", width*scale/2 - g.getFontMetrics().stringWidth("PAUSED")/2 + xOffset, height*scale / 2 + yOffset);
         	}
     	}else if(debug){
     		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
-    		g.drawString(u2 + " ups, " + f2 + " fps", width*scale - 5 - g.getFontMetrics().stringWidth(u2 + " ups, " + f2 + " fps") , 16);
-    		g.drawString("Tile: " + currentTile.getFormattedTileName(), 5, 32);
-    		g.drawString("(" + player.tileX + ", " + player.tileY + ")", 5, 48);
+    		g.drawString(u2 + " ups, " + f2 + " fps", width*scale + xOffset - 5 - g.getFontMetrics().stringWidth(u2 + " ups, " + f2 + " fps") , 16 + yOffset);
+    		g.drawString("Tile: " + currentTile.getFormattedTileName(), 5 + xOffset, 32 + yOffset);
+    		g.drawString("(" + player.tileX + ", " + player.tileY + ")", 5 + xOffset, 48 + yOffset);
     	}
     	g.dispose();
     	bs.show();

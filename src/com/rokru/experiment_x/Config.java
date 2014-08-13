@@ -15,6 +15,7 @@ public class Config {
 	
 	public Config(){
 		configValueMap.put("guiBar", "true");
+		configValueMap.put("titleBar", "true");
 		
 		if(new File(ExperimentX.getDirectory() + "/options.properties").exists()){
 			for(int i = 0; i<configValueMap.size();i++){
@@ -66,8 +67,8 @@ public class Config {
 			prop.load(input);
 	 
 			// get the property value and print it out
-			s = prop.getProperty(key);
-	 
+			s = prop.getProperty(key, configValueMap.get(key));
+			
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -91,6 +92,9 @@ public class Config {
 			output = new FileOutputStream(ExperimentX.getDirectory() + "/options.properties");
 	 
 			// set the properties value
+			for(int i = 0; i < configValueMap.size(); i++){
+				prop.setProperty((String) configValueMap.keySet().toArray()[i], configValueMap.get(configValueMap.keySet().toArray()[i]));
+			}
 			prop.setProperty(key, value);
 	 
 			// save properties to project root folder
@@ -108,7 +112,7 @@ public class Config {
 			}
 	 
 		}
-		reload();
+		configValueMap.put(key, value);
 	}
 	
 	public static String getProperty(String property){
