@@ -46,7 +46,7 @@ public class ExperimentX extends Canvas implements Runnable{
     public static int scale = 3;
     public static String title = "Experiment X";
     
-    private int xOffset, yOffset = 0;
+    private int borderWidth, borderHeight = 0;
     
     private Thread gameThread;
     private static JFrame frame;
@@ -73,8 +73,8 @@ public class ExperimentX extends Canvas implements Runnable{
     	Dimension size = new Dimension(width * scale, height * scale);
         setPreferredSize(size);
         if(!Boolean.parseBoolean(Config.getProperty("titleBar"))){
-        	xOffset = yOffset = 10;
-        	setPreferredSize(new Dimension(width*scale+20, height*scale+20));
+        	borderWidth = borderHeight = 8;
+        	setPreferredSize(new Dimension(width*scale+borderWidth*2, height*scale+borderHeight*2));
         }
         screen = new Render(width, height);
         frame = new JFrame();
@@ -239,33 +239,33 @@ public class ExperimentX extends Canvas implements Runnable{
     		g.setColor(new Color(0xff1a1a1a));
     	}
     	g.fillRect(0, 0, getWidth(), getHeight());
-    	g.drawImage(image, xOffset, yOffset, getWidth() - 2*xOffset, getHeight() - 2*yOffset, null);
+    	g.drawImage(image, borderWidth, borderHeight, getWidth() - 2*borderWidth, getHeight() - 2*borderHeight, null);
 		g.setFont(getDefaultFont(Font.BOLD, 14, 1));
     	if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !debug){
     		g.setColor(new Color(0f, 0f, 0f, 0.15f));
-    		g.fillRect(0 + xOffset, 0 + yOffset, 5 + g.getFontMetrics().stringWidth(username) + 6, 22);
+    		g.fillRect(0 + borderWidth, 0 + borderHeight, 5 + g.getFontMetrics().stringWidth(username) + 6, 22);
     	}else if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !PauseMenu.paused){
     		g.setColor(new Color(0f, 0f, 0f, 0.15f));
-    		g.fillRect(0 + xOffset, 0 + yOffset, width*scale, 22);
-    		g.fillRect(0 + xOffset, 22 + yOffset, g.getFontMetrics().stringWidth("Tile: " + currentTile.getFormattedTileName()) + 15, 32);
+    		g.fillRect(0 + borderWidth, 0 + borderHeight, width*scale, 22);
+    		g.fillRect(0 + borderWidth, 22 + borderHeight, g.getFontMetrics().stringWidth("Tile: " + currentTile.getFormattedTileName()) + 15, 32);
     	}
     	
     	g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
-    	g.drawString(username, xOffset + 5, yOffset + 16);
+    	g.drawString(username, borderWidth + 5, borderHeight + 16);
     	
     	if(PauseMenu.paused){
     		g.setColor(new Color(0f, 0f, 0f, 0.6f));
-        	g.fillRect(0 + xOffset, 0 + yOffset, width*scale, height*scale);
+        	g.fillRect(0 + borderWidth, 0 + borderHeight, width*scale, height*scale);
         	if(OptionsMenu.menuOpen){
         		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.8f));
         		g.setFont(getDefaultFont(Font.BOLD, 40));
-        		g.drawString("PAUSED", width*scale/2 - g.getFontMetrics().stringWidth("PAUSED")/2 + xOffset, height*scale / 2 + yOffset);
+        		g.drawString("PAUSED", width*scale/2 - g.getFontMetrics().stringWidth("PAUSED")/2 + borderWidth, height*scale / 2 + borderHeight);
         	}
     	}else if(debug){
     		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
-    		g.drawString(u2 + " ups, " + f2 + " fps", width*scale + xOffset - 5 - g.getFontMetrics().stringWidth(u2 + " ups, " + f2 + " fps") , 16 + yOffset);
-    		g.drawString("Tile: " + currentTile.getFormattedTileName(), 5 + xOffset, 32 + yOffset);
-    		g.drawString("(" + player.tileX + ", " + player.tileY + ")", 5 + xOffset, 48 + yOffset);
+    		g.drawString(u2 + " ups, " + f2 + " fps", width*scale + borderWidth - 5 - g.getFontMetrics().stringWidth(u2 + " ups, " + f2 + " fps") , 16 + borderHeight);
+    		g.drawString("Tile: " + currentTile.getFormattedTileName(), 5 + borderWidth, 32 + borderHeight);
+    		g.drawString("(" + player.tileX + ", " + player.tileY + ")", 5 + borderWidth, 48 + borderHeight);
     	}
     	g.dispose();
     	bs.show();
