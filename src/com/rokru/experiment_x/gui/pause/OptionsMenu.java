@@ -8,10 +8,12 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
 
+import com.rokru.experiment_x.Config;
 import com.rokru.experiment_x.ExperimentX;
 import com.rokru.experiment_x.Logger;
 
@@ -55,15 +57,22 @@ public class OptionsMenu{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		Config.reload();
+		
+		final JCheckBox guiBarBox = new JCheckBox("Gui Bar");
+		guiBarBox.setBounds(20, 0, 60, 100);
+		guiBarBox.setSelected(Boolean.parseBoolean(Config.getProperty("guiBar")));
+		mainContentLabel.add(guiBarBox);
 		
 		returntopause = new JButton("Back to Pause Menu");
-		returntopause.setBounds(40, 100,
+		returntopause.setBounds(40, ExperimentX.height*ExperimentX.scale - 50 - 20,
 				820, 50);
 		mainContentLabel.add(returntopause);
 		
 		returntopause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Logger.generalLogger.logAction("button", "ReturnToPause");
+				Config.setValue("guiBar", Boolean.toString(guiBarBox.isSelected()));
 				closeOptionsMenu();
 			}
 		});

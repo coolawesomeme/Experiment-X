@@ -57,7 +57,6 @@ public class ExperimentX extends Canvas implements Runnable{
     private int frames, f2 = 0;
     private int updates, u2 = 0;
     public static Tile currentTile = Tile.voidTile;
-    private boolean debugBar = true;
     
     private static int pauseRender = 0;
     
@@ -115,6 +114,7 @@ public class ExperimentX extends Canvas implements Runnable{
 			Logger.xLogger.logPlain(gameVersion);
 			System.exit(0);
 		}
+		new Config();
 		Random random = new Random();
 		username = "Player" + random.nextInt(999);
 		if(parameters.size() > 0){
@@ -140,7 +140,7 @@ public class ExperimentX extends Canvas implements Runnable{
 		x.start();
     }
 
-    public synchronized void start(){
+	public synchronized void start(){
         running = true;
         gameThread = new Thread(this, "Game");
         gameThread.start();
@@ -228,10 +228,10 @@ public class ExperimentX extends Canvas implements Runnable{
     	Graphics g = bs.getDrawGraphics();
     	g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		g.setFont(getDefaultFont(Font.BOLD, 14, 1));
-    	if(debugBar && !debug){
+    	if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !debug){
     		g.setColor(new Color(0f, 0f, 0f, 0.15f));
     		g.fillRect(0, 0, 5 + g.getFontMetrics().stringWidth(username) + 6, 22);
-    	}else if(debugBar && !PauseMenu.paused){
+    	}else if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !PauseMenu.paused){
     		g.setColor(new Color(0f, 0f, 0f, 0.15f));
     		g.fillRect(0, 0, width*scale, 22);
     		g.fillRect(0, 22, g.getFontMetrics().stringWidth("Tile: " + currentTile.getFormattedTileName()) + 15, 32);
