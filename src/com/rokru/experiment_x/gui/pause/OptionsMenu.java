@@ -1,6 +1,7 @@
 package com.rokru.experiment_x.gui.pause;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -39,6 +40,7 @@ public class OptionsMenu{
 		menu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		menu.getContentPane().add(mainContentLabel);
 		addComponents();
+		menu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menu.setLocationRelativeTo(null);
 		menu.setUndecorated(true);
 		menu.setResizable(false);
