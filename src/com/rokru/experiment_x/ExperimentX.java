@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import com.rokru.experiment_x.entity.mob.Player;
@@ -47,7 +48,8 @@ public class ExperimentX extends Canvas implements Runnable{
     public static String title = "Experiment X";
     
     public static int currentMenu;
-    private int borderWidth, borderHeight = 0;
+    private static int borderWidth = 0;
+    private static int borderHeight = 0;
     
     private Thread gameThread;
     private static JFrame frame;
@@ -72,10 +74,9 @@ public class ExperimentX extends Canvas implements Runnable{
     
     public ExperimentX() {
     	Dimension size = new Dimension(width * scale, height * scale);
-        setPreferredSize(size);
+        setSize(size);
         if(!Boolean.parseBoolean(Config.getProperty("titleBar"))){
         	borderWidth = borderHeight = 8;
-        	setPreferredSize(new Dimension(width*scale+borderWidth*2, height*scale+borderHeight*2));
         }
         screen = new Render(width, height);
         frame = new JFrame();
@@ -137,10 +138,24 @@ public class ExperimentX extends Canvas implements Runnable{
 		ExperimentX.frame.setResizable(false);
 		ExperimentX.frame.setTitle(gameVersionFormatted);
 		ExperimentX.frame.setIconImage(new ImageIcon(ExperimentX.class.getResource("/images/app_icon.png")).getImage());
-		ExperimentX.frame.add(x);
+		if(!Boolean.parseBoolean(Config.getProperty("titleBar"))){
+			ExperimentX.frame.getContentPane().setBackground(new Color(0xff002747));
+			JPanel j = new JPanel();
+			j.setBounds(borderWidth, borderHeight, width*scale, height*scale);
+			j.setBackground(new Color(0xff002747));
+			j.add(x);
+			j.setLayout(null);
+			j.setVisible(true);
+			ExperimentX.frame.setSize(new Dimension(j.getWidth() + 2*borderWidth, j.getHeight() + 2*borderHeight));
+			ExperimentX.frame.add(j);
+		}else{
+			ExperimentX.frame.add(x);
+		}
 		ExperimentX.frame.setUndecorated(!Boolean.parseBoolean(Config.getProperty("titleBar")));
-		ExperimentX.frame.pack();
-		ExperimentX.frame.setLayout(null);
+		if(Boolean.parseBoolean(Config.getProperty("titleBar"))){
+			ExperimentX.frame.pack();
+		}
+    	ExperimentX.frame.setLayout(null);
 		ExperimentX.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ExperimentX.frame.setLocationRelativeTo(null);
 		ExperimentX.frame.setVisible(true);
@@ -214,7 +229,8 @@ public class ExperimentX extends Canvas implements Runnable{
     	if(currentMenu == PauseMenu.menuID){
     		PauseMenu.openPauseMenu();
     		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-    	}
+    		ExperimentX.frame.getContentPane().setBackground(new Color(0xff1a1a1a));
+    	}    	
     }
     
     public void render() {
@@ -234,39 +250,33 @@ public class ExperimentX extends Canvas implements Runnable{
     	}
     	
     	Graphics g = bs.getDrawGraphics();
-    	if(!PauseMenu.paused){
-    		g.setColor(new Color(0xff002747));
-    	}else{
-    		g.setColor(new Color(0xff1a1a1a));
-    	}
-    	g.fillRect(0, 0, getWidth(), getHeight());
-    	g.drawImage(image, borderWidth, borderHeight, getWidth() - 2*borderWidth, getHeight() - 2*borderHeight, null);
+    	g.drawImage(image, 0, 0, width*scale, height*scale, null);
 		g.setFont(getDefaultFont(Font.BOLD, 14, 1));
     	if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !debug){
     		g.setColor(new Color(0f, 0f, 0f, 0.15f));
-    		g.fillRect(0 + borderWidth, 0 + borderHeight, 5 + g.getFontMetrics().stringWidth(username) + 6, 22);
+    		g.fillRect(0, 0, 5 + g.getFontMetrics().stringWidth(username) + 6, 22);
     	}else if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !PauseMenu.paused){
     		g.setColor(new Color(0f, 0f, 0f, 0.15f));
-    		g.fillRect(0 + borderWidth, 0 + borderHeight, width*scale, 22);
-    		g.fillRect(0 + borderWidth, 22 + borderHeight, g.getFontMetrics().stringWidth("Tile: " + currentTile.getFormattedTileName()) + 15, 32);
+    		g.fillRect(0, 0, width*scale, 22);
+    		g.fillRect(0, 22, g.getFontMetrics().stringWidth("Tile: " + currentTile.getFormattedTileName()) + 15, 32);
     	}
     	
     	g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
-    	g.drawString(username, borderWidth + 5, borderHeight + 16);
+    	g.drawString(username, 5, 16);
     	
     	if(PauseMenu.paused){
     		g.setColor(new Color(0f, 0f, 0f, 0.6f));
-        	g.fillRect(0 + borderWidth, 0 + borderHeight, width*scale, height*scale);
+        	g.fillRect(0, 0, width*scale, height*scale);
         	if(currentMenu == OptionsMenu.menuID){
         		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.8f));
         		g.setFont(getDefaultFont(Font.BOLD, 40));
-        		g.drawString("PAUSED", width*scale/2 - g.getFontMetrics().stringWidth("PAUSED")/2 + borderWidth, height*scale / 2 + borderHeight);
+        		g.drawString("PAUSED", width*scale/2 - g.getFontMetrics().stringWidth("PAUSED")/2, height*scale / 2);
         	}
     	}else if(debug){
     		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
-    		g.drawString(u2 + " ups, " + f2 + " fps", width*scale + borderWidth - 5 - g.getFontMetrics().stringWidth(u2 + " ups, " + f2 + " fps") , 16 + borderHeight);
-    		g.drawString("Tile: " + currentTile.getFormattedTileName(), 5 + borderWidth, 32 + borderHeight);
-    		g.drawString("(" + player.tileX + ", " + player.tileY + ")", 5 + borderWidth, 48 + borderHeight);
+    		g.drawString(u2 + " ups, " + f2 + " fps", width*scale - 5 - g.getFontMetrics().stringWidth(u2 + " ups, " + f2 + " fps") , 16);
+    		g.drawString("Tile: " + currentTile.getFormattedTileName(), 5, 32);
+    		g.drawString("(" + player.tileX + ", " + player.tileY + ")", 5, 48);
     	}
     	g.dispose();
     	bs.show();
@@ -331,6 +341,7 @@ public class ExperimentX extends Canvas implements Runnable{
 	public static void pauseMenuClosed(){
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pauseRender = 0;
+		ExperimentX.frame.getContentPane().setBackground(new Color(0xff002747));
 	}
 	
 	public static void debugMode(boolean turnOnDebug){
