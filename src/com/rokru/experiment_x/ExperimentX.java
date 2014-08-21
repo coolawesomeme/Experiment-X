@@ -76,7 +76,7 @@ public class ExperimentX extends Canvas implements Runnable{
     	Dimension size = new Dimension(width * scale, height * scale);
         setSize(size);
         if(!Boolean.parseBoolean(Config.getProperty("titleBar"))){
-        	borderWidth = borderHeight = 8;
+        	borderWidth = borderHeight = 7;
         }
         screen = new Render(width, height);
         frame = new JFrame();
