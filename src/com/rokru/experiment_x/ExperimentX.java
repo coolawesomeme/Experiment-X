@@ -354,5 +354,6 @@ public class ExperimentX extends Canvas implements Runnable{
 	
 	public static void setCurrentMenu(int x){
 		currentMenu = x;
+		pauseRender = 0;
 	}
 }
