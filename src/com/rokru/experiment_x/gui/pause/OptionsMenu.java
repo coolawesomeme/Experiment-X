@@ -40,7 +40,6 @@ public class OptionsMenu{
 		menu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		menu.getContentPane().add(mainContentLabel);
 		addComponents();
-		menu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menu.setLocationRelativeTo(null);
 		menu.setUndecorated(true);
 		menu.setResizable(false);
@@ -73,16 +72,19 @@ public class OptionsMenu{
 		guiBarBox.setBounds(40, 60, 60, 100);
 		guiBarBox.setSelected(Boolean.parseBoolean(Config.getProperty("guiBar")));
 		mainContentLabel.add(guiBarBox);
+		guiBarBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		final JCheckBox titleBarBox = new JCheckBox("Title Bar");
 		titleBarBox.setBounds(140, 60, 100, 100);
 		titleBarBox.setSelected(Boolean.parseBoolean(Config.getProperty("titleBar")));
 		mainContentLabel.add(titleBarBox);
+		titleBarBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		returntopause = new JButton("Back to Pause Menu");
 		returntopause.setBounds(40, ExperimentX.height*ExperimentX.scale - 50 - 20,
 				820, 50);
 		mainContentLabel.add(returntopause);
+		returntopause.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		final JLabel warning = new JLabel("Warning: In order for this to take effect, you must restart the game.", JLabel.CENTER);
 		warning.setFont(ExperimentX.getDefaultFont(Font.PLAIN, 14));

@@ -45,7 +45,6 @@ public class PauseMenu{
 		menu.setResizable(false);
 		menu.setUndecorated(true);
 		menu.setBackground(new Color((float)0/255, (float)0/255, (float)0/255, 0.6f));
-		menu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menu.setVisible(true);
 		mainContentLabel.setLayout(null);
 		
@@ -82,16 +81,19 @@ public class PauseMenu{
 		returntogame.setBounds(40, 100,
 				465, 50);
 		mainContentLabel.add(returntogame);
+		returntogame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		options = new JButton("Options");
 		options.setBounds(40, 100 + 60 + 20,
 				465, 50);
 		mainContentLabel.add(options);
+		options.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		quit = new JButton("Quit Game");
 		quit.setBounds(40, 100 + (60 + 20) * 2,
 				465, 50);
 		mainContentLabel.add(quit);
+		quit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		returntogame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
