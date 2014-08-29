@@ -49,13 +49,13 @@ public class Render {
 	public void renderPlayer(int xp, int yp, Sprite sprite) {
 		xp -= xOffset;
 		yp -= yOffset;
-		for (int y = 0; y < 32; y++) {
+		for (int y = 0; y < sprite.SIZEx; y++) {
 			int ya = y + yp;
-			for (int x = 0; x < 32; x++) {
+			for (int x = 0; x < sprite.SIZEx; x++) {
 				int xa = x + xp;
-				if (xa < -32 || xa >= width || ya < 0 || ya >= height) break;
+				if (xa < -sprite.SIZEx || xa >= width || ya < 0 || ya >= height) break;
 				if (xa < 0) xa = 0;
-				int col = sprite.pixels[x + y * 32];
+				int col = sprite.pixels[x + y * sprite.SIZEx];
 				if (col != 0xffff00ff) pixels[xa + ya * width] = col;
 				}
 			}
