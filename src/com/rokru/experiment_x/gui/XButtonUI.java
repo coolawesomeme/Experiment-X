@@ -44,7 +44,7 @@ public class XButtonUI extends MetalButtonUI{
     	}else{
     		Image img = new ImageIcon(this.getClass().getResource("/images/button_unpressed.png")).getImage();
             g.drawImage(img, 0, 0, c.getWidth(), c.getHeight(), null);
-            c.setForeground(Color.BLACK);
+            c.setForeground(Color.DARK_GRAY);
             super.paint(g, c);
     	}
     }

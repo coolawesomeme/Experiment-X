@@ -41,19 +41,19 @@ public class MainMenu extends JPanel{
 
 	private void addComponents() {
 		JButton play = new JButton("Play!");
-		play.setBounds(getWidth()/2 - 120/2, 400, 120, 60);
+		play.setBounds(getWidth()/2 - 120/2, 385, 140, 60);
 		play.setUI(new XButtonUI());
 		play.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		add(play);
 		
 		JButton exit = new JButton("Exit");
-		exit.setBounds(getWidth() - 80 - 120, 400, 120, 60);
+		exit.setBounds(getWidth() - 80 - 120, 385, 120, 60);
 		exit.setUI(new XButtonUI());
 		exit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		add(exit);
 		
 		JButton options = new JButton("Options");
-		options.setBounds(80, 400, 120, 60);
+		options.setBounds(80, 385, 120, 60);
 		options.setUI(new XButtonUI());
 		options.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		add(options);
