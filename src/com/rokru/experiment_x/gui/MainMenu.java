@@ -112,6 +112,7 @@ public class MainMenu extends JPanel{
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		g.drawImage(new ImageIcon(this.getClass().getResource("/images/main_menu_bg.png")).getImage(), 0, 0, getWidth(), getHeight(), null);
 		g.drawImage(new ImageIcon(this.getClass().getResource("/images/ex_x_logo.png")).getImage(), getWidth()/2 - 600/2, 60, 600, 200, null);
 	}
 
