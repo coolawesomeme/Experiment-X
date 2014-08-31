@@ -24,13 +24,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import com.rokru.experiment_x.entity.mob.Player;
 import com.rokru.experiment_x.graphics.Render;
-import com.rokru.experiment_x.gui.pause.OptionsMenu;
-import com.rokru.experiment_x.gui.pause.PauseMenu;
+import com.rokru.experiment_x.gui.MainMenu;
+import com.rokru.experiment_x.gui.OptionsMenu;
+import com.rokru.experiment_x.gui.PauseMenu;
 import com.rokru.experiment_x.input.Keyboard;
 import com.rokru.experiment_x.level.Level;
 import com.rokru.experiment_x.level.SpawnLevel;
@@ -48,8 +48,8 @@ public class ExperimentX extends Canvas implements Runnable{
     public static String title = "Experiment X";
     
     public static int currentMenu;
-    private static int borderWidth = 0;
-    private static int borderHeight = 0;
+    public static int borderWidth = 0;
+    public static int borderHeight = 0;
     
     private Thread gameThread;
     private static JFrame frame;
@@ -69,13 +69,15 @@ public class ExperimentX extends Canvas implements Runnable{
     
     public static boolean debug = false;
     
+    public static boolean titleBar = true;
+    
     private BufferedImage image = new BufferedImage (width, height, BufferedImage.TYPE_INT_RGB);
     private int [] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
     
     public ExperimentX() {
     	Dimension size = new Dimension(width * scale, height * scale);
         setSize(size);
-        if(!Boolean.parseBoolean(Config.getProperty("titleBar"))){
+        if(!titleBar){
         	borderWidth = borderHeight = 7;
         }
         screen = new Render(width, height);
@@ -134,33 +136,29 @@ public class ExperimentX extends Canvas implements Runnable{
 		}
 		Logger.playerLogger.logInfo("Current Username: " + username);
 		makeDirectories();
+		titleBar = Boolean.parseBoolean(Config.getProperty("titleBar"));
 		ExperimentX x = new ExperimentX();
 		ExperimentX.frame.setResizable(false);
 		ExperimentX.frame.setTitle(gameVersionFormatted);
 		ExperimentX.frame.setIconImage(new ImageIcon(ExperimentX.class.getResource("/images/app_icon.png")).getImage());
-		if(!Boolean.parseBoolean(Config.getProperty("titleBar"))){
+		MainMenu m = new MainMenu(x, frame);
+		if(!titleBar){
 			ExperimentX.frame.getContentPane().setBackground(new Color(0xff002747));
-			JPanel j = new JPanel();
-			j.setBounds(borderWidth, borderHeight, width*scale, height*scale);
-			j.setBackground(new Color(0xff002747));
-			j.add(x);
-			j.setLayout(null);
-			j.setVisible(true);
-			ExperimentX.frame.setSize(new Dimension(j.getWidth() + 2*borderWidth, j.getHeight() + 2*borderHeight));
-			ExperimentX.frame.add(j);
+			m.setBounds(borderWidth, borderHeight, width*scale, height*scale);
+			ExperimentX.frame.setSize(new Dimension(width*scale + 2*borderWidth, height*scale + 2*borderHeight));
+			ExperimentX.frame.add(m);
 		}else{
-			ExperimentX.frame.add(x);
+			ExperimentX.frame.add(m);
 		}
-		ExperimentX.frame.setUndecorated(!Boolean.parseBoolean(Config.getProperty("titleBar")));
-		if(Boolean.parseBoolean(Config.getProperty("titleBar"))){
+		ExperimentX.frame.setUndecorated(!titleBar);
+		if(titleBar){
 			ExperimentX.frame.pack();
 		}
     	ExperimentX.frame.setLayout(null);
 		ExperimentX.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ExperimentX.frame.setLocationRelativeTo(null);
 		ExperimentX.frame.setVisible(true);
-		
-		x.start();
+		//m.start();
     }
 
 	public synchronized void start(){

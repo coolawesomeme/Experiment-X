@@ -4,7 +4,7 @@ import com.rokru.experiment_x.ExperimentX;
 import com.rokru.experiment_x.Logger;
 import com.rokru.experiment_x.graphics.Render;
 import com.rokru.experiment_x.graphics.Sprite;
-import com.rokru.experiment_x.gui.pause.PauseMenu;
+import com.rokru.experiment_x.gui.PauseMenu;
 import com.rokru.experiment_x.input.Keyboard;
 import com.rokru.experiment_x.level.Level;
 

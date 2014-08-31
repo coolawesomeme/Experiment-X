@@ -1,4 +1,4 @@
-package com.rokru.experiment_x.gui.pause;
+package com.rokru.experiment_x.gui;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -26,6 +26,8 @@ public class OptionsMenu{
 	
 	public static boolean menuOpen = false;
 
+	private static int openType = 0;
+	
 	public JButton options, quit, returntopause;
 	public static int menuID = 2;
 	
@@ -80,7 +82,7 @@ public class OptionsMenu{
 		mainContentLabel.add(titleBarBox);
 		titleBarBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		returntopause = new JButton("Back to Pause Menu");
+		returntopause = new JButton("Back to Previous Menu");
 		returntopause.setBounds(40, ExperimentX.height*ExperimentX.scale - 50 - 20,
 				820, 50);
 		mainContentLabel.add(returntopause);
@@ -95,7 +97,7 @@ public class OptionsMenu{
 		
 		returntopause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Logger.generalLogger.logAction("button", "ReturnToPause");
+				Logger.generalLogger.logAction("button", "ReturnToPrevious");
 				Config.setValue("guiBar", Boolean.toString(guiBarBox.isSelected()));
 				Config.setValue("titleBar", Boolean.toString(titleBarBox.isSelected()));
 				closeOptionsMenu();
@@ -109,17 +111,21 @@ public class OptionsMenu{
 		});
 	}
 
-	public static void openOptionsMenu(){
+	public static void openOptionsMenu(int type){
 		if(!menuOpen){
+			openType = type;
+			if(type == 0){
+				ExperimentX.setCurrentMenu(menuID);
+			}
 			new OptionsMenu();
-			ExperimentX.setCurrentMenu(menuID);
 		}
 	}
 	
 	public static void closeOptionsMenu(){
 		if(menuOpen){
 			menu.dispose();
-			ExperimentX.setCurrentMenu(PauseMenu.menuID);
+			if(openType == 0)
+				ExperimentX.setCurrentMenu(PauseMenu.menuID);
 			menuOpen = false;
 		}
 	}

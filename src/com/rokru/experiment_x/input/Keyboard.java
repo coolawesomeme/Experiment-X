@@ -5,8 +5,8 @@ import java.awt.event.KeyListener;
 
 import com.rokru.experiment_x.ExperimentX;
 import com.rokru.experiment_x.Logger;
-import com.rokru.experiment_x.gui.pause.OptionsMenu;
-import com.rokru.experiment_x.gui.pause.PauseMenu;
+import com.rokru.experiment_x.gui.OptionsMenu;
+import com.rokru.experiment_x.gui.PauseMenu;
 
 public class Keyboard implements KeyListener {
 	

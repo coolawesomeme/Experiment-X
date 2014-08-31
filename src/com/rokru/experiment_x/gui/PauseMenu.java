@@ -1,4 +1,4 @@
-package com.rokru.experiment_x.gui.pause;
+package com.rokru.experiment_x.gui;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -14,7 +14,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import com.rokru.experiment_x.ExperimentX;
@@ -105,7 +104,7 @@ public class PauseMenu{
 		options.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Logger.generalLogger.logAction("button", "Options");
-				OptionsMenu.openOptionsMenu();
+				OptionsMenu.openOptionsMenu(0);
 				closePauseMenu(1);
 			}
 		});
