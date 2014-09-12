@@ -94,7 +94,7 @@ public class MainMenu extends JPanel implements Runnable{
 		super.paintComponent(g);
 		if (pictures[current] != null)
 			g.drawImage(pictures[current], 0, 0, this);
-		g.drawImage(new ImageIcon(this.getClass().getResource("/images/ex_x_logo.png")).getImage(), getWidth()/2 - 600/2, 60, 600, 200, null);
+		g.drawImage(new ImageIcon(this.getClass().getResource("/images/ex_x_logo.png")).getImage(), getWidth()/2 - 600/2, 75, 600, 200, null);
 	}
 
 	public void start() {
