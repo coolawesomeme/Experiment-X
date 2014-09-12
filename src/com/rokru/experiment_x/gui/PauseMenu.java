@@ -91,7 +91,7 @@ public class PauseMenu{
 		mainContentLabel.add(options);
 		options.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		quit = new JButton("Quit Game");
+		quit = new JButton("Quit to Main Menu");
 		quit.setBounds(40, 100 + (60 + 20) * 2,
 				465, 50);
 		mainContentLabel.add(quit);
@@ -115,7 +115,9 @@ public class PauseMenu{
 		quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Logger.generalLogger.logAction("button", "Quit");
-				System.exit(0);
+				xFrame.remove(xInstance);
+				xFrame.add(ExperimentX.mainMenuInstance);
+				closePauseMenu(2);
 			}
 		});
 	}
@@ -133,10 +135,14 @@ public class PauseMenu{
 		if(menuOpen){
 			menu.dispose();
 			menuOpen = false;
+			setPaused(false);
 			if(i == 0){
-				setPaused(false);
 				ExperimentX.pauseMenuClosed();
 				ExperimentX.setCurrentMenu(0);
+			}else if(i == 2){
+				ExperimentX.pauseMenuClosed();
+				ExperimentX.setCurrentMenu(0);
+				ExperimentX.stopThread();
 			}
 		}
 	}

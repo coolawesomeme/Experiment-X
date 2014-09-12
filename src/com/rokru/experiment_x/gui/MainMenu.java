@@ -139,5 +139,9 @@ public class MainMenu extends JPanel implements Runnable{
 		frame.remove(this);
 		stop();
 	}
+	
+	public void restart(){
+		start();
+	}
 
 }

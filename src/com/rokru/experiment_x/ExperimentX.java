@@ -51,13 +51,14 @@ public class ExperimentX extends Canvas implements Runnable{
     public static int borderWidth = 0;
     public static int borderHeight = 0;
     
-    private Thread gameThread;
+    public static MainMenu mainMenuInstance;
+    private static Thread gameThread;
     private static JFrame frame;
     private Keyboard key;
     public static Level level;
     public static Player player;
     public static String username;
-    private boolean running = false;
+    private static boolean running = false;
     
     private int frames, f2 = 0;
     private int updates, u2 = 0;
@@ -142,14 +143,14 @@ public class ExperimentX extends Canvas implements Runnable{
 		ExperimentX.frame.setResizable(false);
 		ExperimentX.frame.setTitle(gameVersionFormatted);
 		ExperimentX.frame.setIconImage(new ImageIcon(ExperimentX.class.getResource("/images/app_icon.png")).getImage());
-		MainMenu m = new MainMenu(x, frame);
+		mainMenuInstance = new MainMenu(x, frame);
 		if(!titleBar){
 			ExperimentX.frame.getContentPane().setBackground(new Color(0xff002747));
-			m.setBounds(borderWidth, borderHeight, width*scale, height*scale);
+			mainMenuInstance.setBounds(borderWidth, borderHeight, width*scale, height*scale);
 			ExperimentX.frame.setSize(new Dimension(width*scale + 2*borderWidth, height*scale + 2*borderHeight));
-			ExperimentX.frame.add(m);
+			ExperimentX.frame.add(mainMenuInstance);
 		}else{
-			ExperimentX.frame.add(m);
+			ExperimentX.frame.add(mainMenuInstance);
 		}
 		ExperimentX.frame.setUndecorated(!titleBar);
 		if(titleBar){
@@ -168,7 +169,7 @@ public class ExperimentX extends Canvas implements Runnable{
         gameThread.start();
     }
     
-    public synchronized void stop(){
+    private synchronized static void stop(){
         running = false;
         try {
             gameThread.join();
@@ -360,5 +361,9 @@ public class ExperimentX extends Canvas implements Runnable{
 
 	public static void hideGui(boolean hideGui) {
 		hidegui = hideGui;
+	}
+	
+	public static void stopThread(){
+		stop();
 	}
 }
