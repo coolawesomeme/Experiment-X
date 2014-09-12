@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -15,15 +16,21 @@ import javax.swing.JPanel;
 import com.rokru.experiment_x.ExperimentX;
 import com.rokru.experiment_x.Logger;
 
-public class MainMenu extends JPanel{
+public class MainMenu extends JPanel implements Runnable{
 	private static final long serialVersionUID = 1L;
 	private ExperimentX x;
 	private JFrame frame;
-	//private boolean menuRunning = false;
-	//private Thread menuThread;
-	//private int frames = 0;
 
+	private Image[] pictures = new Image[2];
+	private int current = 0;
+	private Thread runner;
+	private int pause = 250;
+	
 	public MainMenu(ExperimentX x, JFrame frame) {
+		for(int i = 0; i < pictures.length; i++){
+			pictures[i] = new ImageIcon(this.getClass().getResource("/images/main_menu_bg_" + (i+1) + ".png")).getImage();
+		}
+		
 		this.frame = frame;
 		this.x = x;
 		
@@ -34,9 +41,12 @@ public class MainMenu extends JPanel{
 		this.setBackground(new Color(0xff003E85));
 		this.setLayout(null);
 		
+		addComponents();
 		frame.add(this);
 		
-		addComponents();
+		start();
+		
+		Logger.generalLogger.logInfo("Main Menu running.");
 	}
 
 	private void addComponents() {
@@ -80,42 +90,38 @@ public class MainMenu extends JPanel{
 		});
 	}
 
-	/*public void start() {
-		menuThread = new Thread(this, "MainMenu");
-		menuThread.start();
-		menuRunning = true;
-	}
-	
-	private synchronized void stop(){
-        menuRunning = false;
-        try {
-            menuThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }*/
-	
-	/*public void run(){
-		long startTime = System.currentTimeMillis();
-		while(menuRunning){
-			while(frames <= 60){
-				System.out.println(frames);
-				repaint();
-				frames++;
-			}
-			if(System.currentTimeMillis() - startTime > 1000){
-				startTime = System.currentTimeMillis();
-				frames = 0;
-			}
-		}
-	}*/
-
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(new ImageIcon(this.getClass().getResource("/images/main_menu_bg.png")).getImage(), 0, 0, getWidth(), getHeight(), null);
+		if (pictures[current] != null)
+			g.drawImage(pictures[current], 0, 0, this);
 		g.drawImage(new ImageIcon(this.getClass().getResource("/images/ex_x_logo.png")).getImage(), getWidth()/2 - 600/2, 60, 600, 200, null);
 	}
 
+	public void start() {
+		if (runner == null) {
+			runner = new Thread(this, "BackgroundAnimatedThread");
+			runner.start();
+		}
+	}
+	
+	public void run() {
+		while (runner == Thread.currentThread()) {
+			repaint();
+			current++;
+			if (current >= pictures.length)
+				current = 0;
+			try {
+				Thread.sleep(pause);
+			} catch (InterruptedException e) { }
+		}
+	}
+	
+	public void stop() {
+		if (runner != null) {
+			runner = null;
+		}
+	}
+	
 	private void startGame() {
 		if(!ExperimentX.titleBar){
 			JPanel j = new JPanel();
@@ -131,7 +137,7 @@ public class MainMenu extends JPanel{
 		}
 		x.start();
 		frame.remove(this);
-		//stop();
+		stop();
 	}
 
 }
