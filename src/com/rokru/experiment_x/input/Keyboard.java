@@ -18,6 +18,7 @@ public class Keyboard implements KeyListener {
 			right_key = KeyEvent.VK_D;
 	public static int pause_key = KeyEvent.VK_ESCAPE;
 	public static int debug_key = KeyEvent.VK_F3;
+	public static int hidegui_key = KeyEvent.VK_F1;
 	private int mostRecentKey;
 	
 	public void update() {
@@ -35,6 +36,8 @@ public class Keyboard implements KeyListener {
 				mostRecentKey = e.getKeyCode();
 				if(e.getKeyCode() == debug_key)
 					ExperimentX.debugMode(!ExperimentX.debug);
+				else if(e.getKeyCode() == hidegui_key)
+					ExperimentX.hideGui(!ExperimentX.hidegui);
 			}
 		}else if(e.getKeyCode() == pause_key && !PauseMenu.paused){
 			keys[pause_key] = true;

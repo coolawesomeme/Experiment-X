@@ -28,6 +28,9 @@ public class PauseMenu{
 	public static boolean paused = false;
 	public static int menuID = 1;
 
+	private static ExperimentX xInstance;
+	private static JFrame xFrame;
+	
 	public JButton options, quit, returntogame;
 	
 	private JLabel mainContentLabel = new JLabel();
@@ -117,8 +120,10 @@ public class PauseMenu{
 		});
 	}
 
-	public static void openPauseMenu(){
+	public static void openPauseMenu(ExperimentX x, JFrame frame){
 		if(!menuOpen){
+			xInstance = x;
+			xFrame = frame;
 			new PauseMenu();
 			ExperimentX.setCurrentMenu(menuID);
 		}

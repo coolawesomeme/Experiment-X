@@ -68,6 +68,7 @@ public class ExperimentX extends Canvas implements Runnable{
     private Render screen;
     
     public static boolean debug = false;
+	public static boolean hidegui = false;
     
     public static boolean titleBar = true;
     
@@ -225,7 +226,7 @@ public class ExperimentX extends Canvas implements Runnable{
     	key.update();
     	player.update();
     	if(currentMenu == PauseMenu.menuID){
-    		PauseMenu.openPauseMenu();
+    		PauseMenu.openPauseMenu(this, frame);
     		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     		ExperimentX.frame.getContentPane().setBackground(new Color(0xff1a1a1a));
     	}    	
@@ -249,32 +250,34 @@ public class ExperimentX extends Canvas implements Runnable{
     	
     	Graphics g = bs.getDrawGraphics();
     	g.drawImage(image, 0, 0, width*scale, height*scale, null);
-		g.setFont(getDefaultFont(Font.BOLD, 14, 1));
-    	if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !debug){
-    		g.setColor(new Color(0f, 0f, 0f, 0.15f));
-    		g.fillRect(0, 0, 5 + g.getFontMetrics().stringWidth(username) + 6, 22);
-    	}else if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !PauseMenu.paused){
-    		g.setColor(new Color(0f, 0f, 0f, 0.15f));
-    		g.fillRect(0, 0, width*scale, 22);
-    		g.fillRect(0, 22, g.getFontMetrics().stringWidth("Tile: " + currentTile.getFormattedTileName()) + 15, 32);
-    	}
+    	if(!hidegui){
+    		g.setFont(getDefaultFont(Font.BOLD, 14, 1));
+    		if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !debug){
+    			g.setColor(new Color(0f, 0f, 0f, 0.15f));
+    			g.fillRect(0, 0, 5 + g.getFontMetrics().stringWidth(username) + 6, 22);
+    		}else if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !PauseMenu.paused){
+    			g.setColor(new Color(0f, 0f, 0f, 0.15f));
+    			g.fillRect(0, 0, width*scale, 22);
+    			g.fillRect(0, 22, g.getFontMetrics().stringWidth("Tile: " + currentTile.getFormattedTileName()) + 15, 32);
+    		}
     	
-    	g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
-    	g.drawString(username, 5, 16);
-    	
-    	if(PauseMenu.paused){
-    		g.setColor(new Color(0f, 0f, 0f, 0.6f));
-        	g.fillRect(0, 0, width*scale, height*scale);
-        	if(currentMenu == OptionsMenu.menuID){
-        		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.8f));
-        		g.setFont(getDefaultFont(Font.BOLD, 40));
-        		g.drawString("PAUSED", width*scale/2 - g.getFontMetrics().stringWidth("PAUSED")/2, height*scale / 2);
-        	}
-    	}else if(debug){
     		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
-    		g.drawString(u2 + " ups, " + f2 + " fps", width*scale - 5 - g.getFontMetrics().stringWidth(u2 + " ups, " + f2 + " fps") , 16);
-    		g.drawString("Tile: " + currentTile.getFormattedTileName(), 5, 32);
-    		g.drawString("(" + player.tileX + ", " + player.tileY + ")", 5, 48);
+    		g.drawString(username, 5, 16);
+    	
+    		if(PauseMenu.paused){
+    			g.setColor(new Color(0f, 0f, 0f, 0.6f));
+        		g.fillRect(0, 0, width*scale, height*scale);
+        		if(currentMenu == OptionsMenu.menuID){
+        			g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.8f));
+        			g.setFont(getDefaultFont(Font.BOLD, 40));
+        			g.drawString("PAUSED", width*scale/2 - g.getFontMetrics().stringWidth("PAUSED")/2, height*scale / 2);
+        		}
+    		}else if(debug){
+    			g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
+    			g.drawString(u2 + " ups, " + f2 + " fps", width*scale - 5 - g.getFontMetrics().stringWidth(u2 + " ups, " + f2 + " fps") , 16);
+    			g.drawString("Tile: " + currentTile.getFormattedTileName(), 5, 32);
+    			g.drawString("(" + player.tileX + ", " + player.tileY + ")", 5, 48);
+    		}
     	}
     	g.dispose();
     	bs.show();
@@ -353,5 +356,9 @@ public class ExperimentX extends Canvas implements Runnable{
 	public static void setCurrentMenu(int x){
 		currentMenu = x;
 		pauseRender = 0;
+	}
+
+	public static void hideGui(boolean hideGui) {
+		hidegui = hideGui;
 	}
 }
