@@ -103,8 +103,7 @@ public class MainMenu extends JPanel implements Runnable{
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		BufferedImage result = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
-	    Graphics2D gbi = result.createGraphics();
+	    Graphics2D gbi = (Graphics2D)g;
 	    BufferedImage x = null;
 	    try {
 	        x = ImageIO.read(getClass().getResource("/images/main_menu_bg.png"));
@@ -113,10 +112,8 @@ public class MainMenu extends JPanel implements Runnable{
 	    gbi.drawImage(x, 0, 0, this);
 	    gbi.setColor(new Color((float)currentMenuColor.getRed()/255,
 	    		(float)currentMenuColor.getGreen()/255,
-	    		(float)currentMenuColor.getBlue()/255, 0.8f));
-	    gbi.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.8f));
+	    		(float)currentMenuColor.getBlue()/255, 0.65f));
 	    gbi.fillRect(0, 0, getWidth(), getHeight());
-	    g.drawImage(result, 0, 0, this);
 		g.drawImage(new ImageIcon(this.getClass().getResource("/images/ex_x_logo.png")).getImage(), getWidth()/2 - 600/2, 75, 600, 200, null);
 	}
 
