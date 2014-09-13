@@ -27,15 +27,13 @@ public class PauseMenu{
 	private static boolean menuOpen = false;
 	public static boolean paused = false;
 	public static int menuID = 1;
-
-	private static ExperimentX xInstance;
-	private static JFrame xFrame;
 	
 	public JButton options, quit, returntogame;
 	
 	private JLabel mainContentLabel = new JLabel();
 	
 	private PauseMenu(){
+		setPaused(true);
 		menu = new JFrame();
 		menu.setTitle("Pause Menu");
 		menu.setIconImage(new ImageIcon(ExperimentX.class.getResource("/images/app_icon.png")).getImage());
@@ -91,7 +89,7 @@ public class PauseMenu{
 		mainContentLabel.add(options);
 		options.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		quit = new JButton("Quit to Main Menu");
+		quit = new JButton("Quit Game");
 		quit.setBounds(40, 100 + (60 + 20) * 2,
 				465, 50);
 		mainContentLabel.add(quit);
@@ -115,17 +113,13 @@ public class PauseMenu{
 		quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Logger.generalLogger.logAction("button", "Quit");
-				xFrame.remove(xInstance);
-				xFrame.add(ExperimentX.mainMenuInstance);
-				closePauseMenu(2);
+				System.exit(0);
 			}
 		});
 	}
 
-	public static void openPauseMenu(ExperimentX x, JFrame frame){
+	public static void openPauseMenu(){
 		if(!menuOpen){
-			xInstance = x;
-			xFrame = frame;
 			new PauseMenu();
 			ExperimentX.setCurrentMenu(menuID);
 		}
@@ -135,11 +129,12 @@ public class PauseMenu{
 		if(menuOpen){
 			menu.dispose();
 			menuOpen = false;
-			setPaused(false);
 			if(i == 0){
+				setPaused(false);
 				ExperimentX.pauseMenuClosed();
 				ExperimentX.setCurrentMenu(0);
 			}else if(i == 2){
+				setPaused(false);
 				ExperimentX.pauseMenuClosed();
 				ExperimentX.setCurrentMenu(0);
 				ExperimentX.stopThread();

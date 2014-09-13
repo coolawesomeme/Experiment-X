@@ -24,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import com.rokru.experiment_x.entity.mob.Player;
@@ -227,10 +228,10 @@ public class ExperimentX extends Canvas implements Runnable{
     	key.update();
     	player.update();
     	if(currentMenu == PauseMenu.menuID){
-    		PauseMenu.openPauseMenu(this, frame);
+    		PauseMenu.openPauseMenu();
     		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     		ExperimentX.frame.getContentPane().setBackground(new Color(0xff1a1a1a));
-    	}    	
+    	}
     }
     
     public void render() {
