@@ -24,15 +24,20 @@ public class MainMenu extends JPanel implements Runnable{
 	private ExperimentX x;
 	private JFrame frame;
 	
-	float hue = 0.0f; //hue
-	float saturation = 1.0f; //saturation
-	float brightness = 0.75f; //brightness
-	Color currentColor = Color.getHSBColor(hue, saturation, brightness);
+	static float colHue = 0.0f; //hue
+	static float colSaturation = 1.0f; //saturation
+	static float colBrightness = 0.75f; //brightness
+	public static Color currentMenuColor = Color.getHSBColor(colHue, colSaturation, colBrightness);
+	
+	long colorAnimTimer;
+	
+	private static boolean isOpen = false;
 	
 	private Thread runner;
 	private int pause = 100;
 	
 	public MainMenu(ExperimentX x, JFrame frame) {
+		isOpen = true;
 		this.frame = frame;
 		this.x = x;
 		
@@ -47,6 +52,8 @@ public class MainMenu extends JPanel implements Runnable{
 		frame.add(this);
 		
 		start();
+		
+		colorAnimTimer = System.currentTimeMillis();
 		
 		Logger.generalLogger.logInfo("Main Menu running.");
 	}
@@ -73,6 +80,7 @@ public class MainMenu extends JPanel implements Runnable{
 		play.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Logger.generalLogger.logAction("button", "Play");
+				isOpen = false;
 				startGame();
 			}
 		});
@@ -80,6 +88,7 @@ public class MainMenu extends JPanel implements Runnable{
 		exit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Logger.generalLogger.logAction("button", "Exit");
+				isOpen = false;
 				System.exit(0);
 			}
 		});
@@ -102,10 +111,10 @@ public class MainMenu extends JPanel implements Runnable{
 	    } catch (Exception ex) {
 	    }
 	    gbi.drawImage(x, 0, 0, this);
-	    gbi.setColor(new Color((float)currentColor.getRed()/255,
-	    		(float)currentColor.getGreen()/255,
-	    		(float)currentColor.getBlue()/255, 0.80f));
-	    gbi.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.75f));
+	    gbi.setColor(new Color((float)currentMenuColor.getRed()/255,
+	    		(float)currentMenuColor.getGreen()/255,
+	    		(float)currentMenuColor.getBlue()/255, 0.8f));
+	    gbi.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.8f));
 	    gbi.fillRect(0, 0, getWidth(), getHeight());
 	    g.drawImage(result, 0, 0, this);
 		g.drawImage(new ImageIcon(this.getClass().getResource("/images/ex_x_logo.png")).getImage(), getWidth()/2 - 600/2, 75, 600, 200, null);
@@ -121,11 +130,14 @@ public class MainMenu extends JPanel implements Runnable{
 	public void run() {
 		while (runner == Thread.currentThread()) {
 			repaint();
-			hue += 0.001f;
-			currentColor = Color.getHSBColor(hue, saturation, brightness);
-			if (hue >= 1.0f){
-				hue = 0.0f;
+			colHue += 0.001f;
+			frame.getContentPane().setBackground(Color.getHSBColor(colHue, 1.0f, 0.28f));
+			if (colHue >= 1.0f){
+				Logger.generalLogger.logInfo("Main menu colors cycled through in " + (System.currentTimeMillis() - colorAnimTimer) + " ms.");
+				colHue = 0.0f;
+				colorAnimTimer = System.currentTimeMillis();
 			}
+			currentMenuColor = Color.getHSBColor(colHue, colSaturation, colBrightness);
 			try {
 				Thread.sleep(pause);
 			} catch (InterruptedException e) { }
@@ -154,6 +166,10 @@ public class MainMenu extends JPanel implements Runnable{
 		x.start();
 		frame.remove(this);
 		stop();
+	}
+
+	public static boolean isOpen() {
+		return isOpen;
 	}
 
 }
