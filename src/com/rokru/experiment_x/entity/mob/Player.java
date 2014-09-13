@@ -43,12 +43,15 @@ public class Player extends Mob {
 		}
 		
 		if (xa != 0 || ya != 0) {
+			int prevTileX = tileX;
+			int prevTileY = tileY;
 			move(xa, ya);
-			if(ExperimentX.debug){
-				Logger.playerLogger.logInfo("COORDS: (" + tileX + ", " + tileY + ")");
-				Logger.playerLogger.logInfo("Current Block: " + level.getTile(tileX, tileY).getFormattedTileName() + " (id = " + level.getTile(tileX, tileY).getTileID() + ")");
-				ExperimentX.setCurrentTile(level.getTile(tileX, tileY));
+			if(prevTileX != tileX || prevTileY != tileY){
+				if(ExperimentX.debug){
+					Logger.playerLogger.logInfo("Block @ (" + tileX + ", " + tileY + "): " + level.getTile(tileX, tileY).getFormattedTileName() + " (id = " + level.getTile(tileX, tileY).getTileID() + ")");
+					ExperimentX.setCurrentTile(level.getTile(tileX, tileY));
 				}
+			}
 			walking = true;
 		} else {
 			walking = false;
