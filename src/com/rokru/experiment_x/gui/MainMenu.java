@@ -1,13 +1,16 @@
 package com.rokru.experiment_x.gui;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,17 +23,16 @@ public class MainMenu extends JPanel implements Runnable{
 	private static final long serialVersionUID = 1L;
 	private ExperimentX x;
 	private JFrame frame;
-
-	private Image[] pictures = new Image[2];
-	private int current = 0;
+	
+	float hue = 0.0f; //hue
+	float saturation = 1.0f; //saturation
+	float brightness = 0.75f; //brightness
+	Color currentColor = Color.getHSBColor(hue, saturation, brightness);
+	
 	private Thread runner;
-	private int pause = 250;
+	private int pause = 100;
 	
 	public MainMenu(ExperimentX x, JFrame frame) {
-		for(int i = 0; i < pictures.length; i++){
-			pictures[i] = new ImageIcon(this.getClass().getResource("/images/main_menu_bg_" + (i+1) + ".png")).getImage();
-		}
-		
 		this.frame = frame;
 		this.x = x;
 		
@@ -92,8 +94,20 @@ public class MainMenu extends JPanel implements Runnable{
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (pictures[current] != null)
-			g.drawImage(pictures[current], 0, 0, this);
+		BufferedImage result = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_ARGB);
+	    Graphics2D gbi = result.createGraphics();
+	    BufferedImage x = null;
+	    try {
+	        x = ImageIO.read(getClass().getResource("/images/main_menu_bg.png"));
+	    } catch (Exception ex) {
+	    }
+	    gbi.drawImage(x, 0, 0, this);
+	    gbi.setColor(new Color((float)currentColor.getRed()/255,
+	    		(float)currentColor.getGreen()/255,
+	    		(float)currentColor.getBlue()/255, 0.80f));
+	    gbi.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_ATOP, 0.75f));
+	    gbi.fillRect(0, 0, getWidth(), getHeight());
+	    g.drawImage(result, 0, 0, this);
 		g.drawImage(new ImageIcon(this.getClass().getResource("/images/ex_x_logo.png")).getImage(), getWidth()/2 - 600/2, 75, 600, 200, null);
 	}
 
@@ -107,9 +121,11 @@ public class MainMenu extends JPanel implements Runnable{
 	public void run() {
 		while (runner == Thread.currentThread()) {
 			repaint();
-			current++;
-			if (current >= pictures.length)
-				current = 0;
+			hue += 0.001f;
+			currentColor = Color.getHSBColor(hue, saturation, brightness);
+			if (hue >= 1.0f){
+				hue = 0.0f;
+			}
 			try {
 				Thread.sleep(pause);
 			} catch (InterruptedException e) { }
@@ -138,10 +154,6 @@ public class MainMenu extends JPanel implements Runnable{
 		x.start();
 		frame.remove(this);
 		stop();
-	}
-	
-	public void restart(){
-		start();
 	}
 
 }
