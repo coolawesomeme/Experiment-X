@@ -1,6 +1,5 @@
 package com.rokru.experiment_x.gui;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -9,11 +8,13 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.Calendar;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.rokru.experiment_x.ExperimentX;
@@ -59,6 +60,14 @@ public class MainMenu extends JPanel implements Runnable{
 	}
 
 	private void addComponents() {
+		String logoPath = "/images/ex_x_logo.png";
+		if(Calendar.getInstance().get(Calendar.MONTH) == Calendar.OCTOBER && Calendar.getInstance().get(Calendar.DATE) == 31){
+			logoPath = "/images/logos/ex_x_logo_halloween.png";
+		}
+		JLabel logo = new JLabel(new ImageIcon(this.getClass().getResource(logoPath)));
+		logo.setBounds(getWidth()/2 - 600/2, 75, 600, 200);
+		add(logo);
+		
 		JButton play = new JButton("Play!");
 		play.setBounds(getWidth()/2 - 120/2, 385, 140, 60);
 		play.setUI(new XButtonUI());
@@ -114,7 +123,7 @@ public class MainMenu extends JPanel implements Runnable{
 	    		(float)currentMenuColor.getGreen()/255,
 	    		(float)currentMenuColor.getBlue()/255, 0.65f));
 	    gbi.fillRect(0, 0, getWidth(), getHeight());
-		g.drawImage(new ImageIcon(this.getClass().getResource("/images/ex_x_logo.png")).getImage(), getWidth()/2 - 600/2, 75, 600, 200, null);
+		//g.drawImage(new ImageIcon(this.getClass().getResource("/images/ex_x_logo.png")).getImage(), getWidth()/2 - 600/2, 75, 600, 200, null);
 	}
 
 	public void start() {
