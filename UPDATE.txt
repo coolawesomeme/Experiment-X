@@ -1,1 +1,1 @@
-0.0.1|https://github.com/coolawesomeme/Experiment-X/releases/download/0.0.1/Experiment.X.jar
+0.0.1|https://github.com/coolawesomeme/Experiment-X/releases/download/v0.0.1/Experiment.X.jar
