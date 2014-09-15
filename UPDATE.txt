@@ -1,1 +1,1 @@
-0.0.1|https://google.com
+0.0.1|https://github.com/coolawesomeme/Experiment-X/releases/download/0.0.1/Experiment.X.jar
