@@ -43,7 +43,8 @@ public class MainMenu extends JPanel implements Runnable{
 		this.x = x;
 		
 		Dimension size = new Dimension(ExperimentX.width * ExperimentX.scale, ExperimentX.height * ExperimentX.scale);
-		setPreferredSize(size);
+		if(ExperimentX.titleBar)
+			setPreferredSize(size);
 		setSize(size);
 		
 		this.setBackground(new Color(0xff003E85));
