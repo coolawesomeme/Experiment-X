@@ -113,6 +113,7 @@ public class PauseMenu{
 		quit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Logger.generalLogger.logAction("button", "Quit");
+				ExperimentX.endGameEvent();
 				System.exit(0);
 			}
 		});
@@ -137,7 +138,6 @@ public class PauseMenu{
 				setPaused(false);
 				ExperimentX.pauseMenuClosed();
 				ExperimentX.setCurrentMenu(0);
-				ExperimentX.stopThread();
 			}
 		}
 	}

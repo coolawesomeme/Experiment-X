@@ -33,19 +33,20 @@ import com.rokru.experiment_x.gui.OptionsMenu;
 import com.rokru.experiment_x.gui.PauseMenu;
 import com.rokru.experiment_x.input.Keyboard;
 import com.rokru.experiment_x.level.Level;
+import com.rokru.experiment_x.level.PlayerInfoSaver;
 import com.rokru.experiment_x.level.SpawnLevel;
 import com.rokru.experiment_x.level.tile.Tile;
 
 public class ExperimentX extends Canvas implements Runnable{
     private static final long serialVersionUID = 1L;
-    
-    public static String gameVersion = "0.0.1";
-    public static String gameVersionFormatted = "Experiment X - v" + gameVersion;
 
-    public static int width = 300;
-    public static int height = 168;
-    public static int scale = 3;
-    public static String title = "Experiment X";
+    public final static String title = "Experiment X";
+    public final static String gameVersion = "0.0.1";
+    public final static String gameVersionFormatted = title + " - v" + gameVersion;
+    
+    public final static int width = 300;
+    public final static int height = 168;
+    public final static int scale = 3;
     
     public static int currentMenu;
     public static int borderWidth = 0;
@@ -86,7 +87,13 @@ public class ExperimentX extends Canvas implements Runnable{
         frame = new JFrame();
         key = new Keyboard();
         level = new SpawnLevel("/level/spawn_level.png");
-        player = new Player(level, 64*16 + 8, 32*16 - 1, key, username);
+    	int[] coords = PlayerInfoSaver.getPlayerCoords();
+    	if(coords == null){
+    		coords = new int[2];
+    		coords[0] = 64;
+            coords[1] = 32;
+    	}
+        player = new Player(level, coords[0]*16 + 8, coords[1]*16 - 1, key, username);
         player.initLevel(level);
         setCurrentTile(level.getTile(player.tileX, player.tileY));
         
@@ -363,7 +370,7 @@ public class ExperimentX extends Canvas implements Runnable{
 		hidegui = hideGui;
 	}
 	
-	public static void stopThread(){
-		stop();
+	public static void endGameEvent(){
+		PlayerInfoSaver.savePlayerCoords(player.tileX, player.tileY);
 	}
 }
