@@ -136,7 +136,6 @@ public class MainMenu extends JPanel implements Runnable{
 	
 	public void run() {
 		while (runner == Thread.currentThread()) {
-			repaint();
 			colHue += 0.001f;
 			frame.getContentPane().setBackground(Color.getHSBColor(colHue, 1.0f, 0.28f));
 			if (colHue >= 1.0f){
@@ -145,6 +144,7 @@ public class MainMenu extends JPanel implements Runnable{
 				colorAnimTimer = System.currentTimeMillis();
 			}
 			currentMenuColor = Color.getHSBColor(colHue, colSaturation, colBrightness);
+			repaint();
 			try {
 				Thread.sleep(pause);
 			} catch (InterruptedException e) { }
