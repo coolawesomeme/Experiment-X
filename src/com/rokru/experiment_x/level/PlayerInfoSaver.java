@@ -10,15 +10,15 @@ import com.rokru.experiment_x.Logger;
 
 public class PlayerInfoSaver {
 
-	public static void savePlayerCoords(int tileX, int tileY){
+	public static void savePlayerCoords(Coordinates coords){
 		File folders = new File(ExperimentX.getDirectory() + "/saves/");
 		folders.mkdirs();
 		File f = new File(ExperimentX.getDirectory() + "/saves/player.loc");
 		try {
 			f.createNewFile();
 			FileWriter f1 = new FileWriter(f);
-			f1.write("(" + tileX + ", " + tileY + ")");
-			Logger.playerLogger.logInfo("Saved Coords: (" + tileX + ", " + tileY + ")");
+			f1.write("(" + coords.getX() + ", " + coords.getY() + ")");
+			Logger.playerLogger.logInfo("Saved Coords: (" + coords.getX() + ", " + coords.getY() + ")");
 			f1.flush();
 			f1.close();
 		} catch (IOException e) {
@@ -26,9 +26,9 @@ public class PlayerInfoSaver {
 		}
 	}
 	
-	public static int[] getPlayerCoords(){
+	public static Coordinates getPlayerCoords(){
 		File file = new File(ExperimentX.getDirectory() + "/saves/player.loc");
-		int[] coords = null;
+		Coordinates coords = null;
 		String result = null;
 		if(file.exists()){
 			try {
@@ -37,9 +37,9 @@ public class PlayerInfoSaver {
 				result = null;
 			}
 			Logger.playerLogger.logInfo("Loaded Coords: " + result);
-			coords = new int[2];
-			coords[0] = Integer.parseInt(result.split(", ")[0].substring(1));
-			coords[1] = Integer.parseInt(result.split(", ")[1].substring(0, result.split(", ")[1].length() - 1));
+			coords = new Coordinates(
+					Integer.parseInt(result.split(", ")[0].substring(1)),
+					Integer.parseInt(result.split(", ")[1].substring(0, result.split(", ")[1].length() - 1)));
 		}
 		return coords;
 	}

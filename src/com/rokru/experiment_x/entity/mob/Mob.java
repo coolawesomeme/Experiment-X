@@ -2,7 +2,9 @@ package com.rokru.experiment_x.entity.mob;
 
 import com.rokru.experiment_x.entity.Entity;
 import com.rokru.experiment_x.graphics.Sprite;
+import com.rokru.experiment_x.level.Coordinates;
 import com.rokru.experiment_x.level.Level;
+import com.rokru.experiment_x.level.tile.Tile;
 
 public abstract class Mob extends Entity {
 	
@@ -13,7 +15,19 @@ public abstract class Mob extends Entity {
 	protected Sprite sprite;
 	protected int dir = 0;
 	protected boolean moving = false;
-			
+    public Tile currentTile = Tile.voidTile;
+	
+	public void setCoords(Coordinates coords){
+		x = coords.getX() * 16 + 8;
+		y = (coords.getY() * 16) - 15 + 8;
+		tileX = coords.getX();
+		tileY = coords.getY();
+	}
+	
+	public void setCurrentTile(Tile tile){
+		currentTile = tile;
+	}
+	
 	public void move(int xa, int ya) {
 		if(xa != 0 && ya != 0){
 			move(xa, 0);
@@ -34,12 +48,9 @@ public abstract class Mob extends Entity {
 			tileX = x/16;
 			tileY = (y+15)/16;
 			if(prevTileX != tileX || prevTileY != tileY){
-				level.getTile(tileX, tileY).onTileStep(this);
+				newTileEvent(new Coordinates(prevTileX, prevTileY));
 			}
 		}
-	}
-	
-	public void update() {
 	}
 	
 	private boolean collision(int xa, int ya) {
@@ -47,12 +58,20 @@ public abstract class Mob extends Entity {
 		for(int c = 0; c < 4; c++){
 			int xt = ((x+xa) + c % 2 * 12 - 5) / 16;
 			int yt = ((y+ya) + c / 2 * 12 + 4) / 16;
-			if(!level.getTile(xt, yt).walkable()) walkable = false;
+			if(!level.getTile(new Coordinates(xt, yt)).isWalkable()) walkable = false;
 		}
 		return !walkable;
 	}
 	
-	public void render() {
+	private void newTileEvent(Coordinates prevCoords){
+		this.setCurrentTile(level.getTile(new Coordinates(tileX, tileY)));
+		this.currentTile.onTileStep(this);
+		onMobMovedToNewTile(prevCoords);
 	}
-
+	
+	public void update() {}
+	
+	public void render() {}
+	
+	public void onMobMovedToNewTile(Coordinates prevCoords) {}
 }

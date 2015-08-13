@@ -18,6 +18,8 @@ import javax.swing.UIManager;
 
 import com.rokru.experiment_x.ExperimentX;
 import com.rokru.experiment_x.input.Keyboard;
+import com.rokru.experiment_x.level.Coordinates;
+import com.rokru.experiment_x.level.PlayerInfoSaver;
 import com.rokru.experiment_x.Logger;
 
 public class PauseMenu{	
@@ -34,6 +36,7 @@ public class PauseMenu{
 	
 	private PauseMenu(){
 		setPaused(true);
+		PlayerInfoSaver.savePlayerCoords(new Coordinates(ExperimentX.player.tileX, ExperimentX.player.tileY));
 		menu = new JFrame();
 		menu.setTitle("Pause Menu");
 		menu.setIconImage(new ImageIcon(ExperimentX.class.getResource("/images/app_icon.png")).getImage());

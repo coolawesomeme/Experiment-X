@@ -8,10 +8,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.NumberFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.UIManager;
@@ -71,16 +73,25 @@ public class OptionsMenu{
 		Config.reload();
 		
 		final JCheckBox guiBarBox = new JCheckBox("Gui Bar");
-		guiBarBox.setBounds(40, 60, 60, 100);
+		guiBarBox.setBounds(40, 110, 60, 20);
 		guiBarBox.setSelected(Boolean.parseBoolean(Config.getProperty("guiBar")));
 		mainContentLabel.add(guiBarBox);
 		guiBarBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
 		final JCheckBox titleBarBox = new JCheckBox("Title Bar");
-		titleBarBox.setBounds(140, 60, 100, 100);
+		titleBarBox.setBounds(140, 110, 65, 20);
 		titleBarBox.setSelected(Boolean.parseBoolean(Config.getProperty("titleBar")));
 		mainContentLabel.add(titleBarBox);
 		titleBarBox.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		
+		final JFormattedTextField saveTimerBox = new JFormattedTextField(NumberFormat.getNumberInstance());
+		saveTimerBox.setBounds(40, 160, 25, 20);
+		saveTimerBox.setValue(Integer.parseInt(Config.getProperty("saveTimer")));
+		mainContentLabel.add(saveTimerBox);
+		
+		final JLabel saveTimerLabel = new JLabel("mins. save timer");
+		saveTimerLabel.setBounds(70, 160, 85, 20);
+		mainContentLabel.add(saveTimerLabel);
 		
 		returntopause = new JButton("Back to Previous Menu");
 		returntopause.setBounds(40, ExperimentX.height*ExperimentX.scale - 50 - 20,
@@ -100,6 +111,7 @@ public class OptionsMenu{
 				Logger.generalLogger.logAction("button", "ReturnToPrevious");
 				Config.setValue("guiBar", Boolean.toString(guiBarBox.isSelected()));
 				Config.setValue("titleBar", Boolean.toString(titleBarBox.isSelected()));
+				Config.setValue("saveTimer", "" + Integer.parseInt(saveTimerBox.getText()));
 				closeOptionsMenu();
 			}
 		});

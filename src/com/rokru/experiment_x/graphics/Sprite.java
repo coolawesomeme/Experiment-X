@@ -25,11 +25,13 @@ public class Sprite {
 	public static Sprite wooden_slope_2 = new Sprite(16, 4, 1, SpriteSheet.tiles);
 	public static Sprite wooden_slope_3 = new Sprite(16, 5, 1, SpriteSheet.tiles);
 	public static Sprite wooden_slope_4 = new Sprite(16, 6, 1, SpriteSheet.tiles);
-	public static Sprite wooden_slab_1 = new Sprite(16, 7, 1, SpriteSheet.tiles);
-	public static Sprite wooden_slab_2 = new Sprite(16, 8, 1, SpriteSheet.tiles);
-	public static Sprite wooden_slab_3 = new Sprite(16, 9, 1, SpriteSheet.tiles);
-	public static Sprite wooden_slab_4 = new Sprite(16, 10, 1, SpriteSheet.tiles);
+	//public static Sprite wooden_slab_1 = new Sprite(16, 7, 1, SpriteSheet.tiles);
+	//public static Sprite wooden_slab_2 = new Sprite(16, 8, 1, SpriteSheet.tiles);
+	//public static Sprite wooden_slab_3 = new Sprite(16, 9, 1, SpriteSheet.tiles);
+	//public static Sprite wooden_slab_4 = new Sprite(16, 10, 1, SpriteSheet.tiles);
 	public static Sprite metal_gray = new Sprite(16, 0, 2, SpriteSheet.tiles);
+	public static Sprite teleporter_1 = new Sprite(16, 0, 3, SpriteSheet.tiles);
+	public static Sprite teleporter_2 = new Sprite(16, 1, 3, SpriteSheet.tiles);
 	
 	public static Sprite player_up = new Sprite(32, 0, 0, SpriteSheet.charSpritesheet);
 	public static Sprite player_down = new Sprite(32, 3, 0, SpriteSheet.charSpritesheet);

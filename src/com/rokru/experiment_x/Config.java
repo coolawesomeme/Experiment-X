@@ -14,14 +14,18 @@ public class Config {
 	private static HashMap<String, String> configValueMap = new HashMap<String, String>();
 	
 	public Config(){
+		//put in default values
 		configValueMap.put("guiBar", "true");
-		configValueMap.put("titleBar", "true");
+		configValueMap.put("titleBar", "" + ExperimentX.titleBar);
+		configValueMap.put("saveTimer", "" + ExperimentX.saveTimer);
 		
 		if(new File(ExperimentX.getDirectory() + "/options.properties").exists()){
 			for(int i = 0; i<configValueMap.size();i++){
+				//read already existing values
 				configValueMap.put((String) configValueMap.keySet().toArray()[i], getValue((String) configValueMap.keySet().toArray()[i]));
 			}
 		}else{
+			//generate new config file
 			Properties prop = new Properties();
 			OutputStream output = null;
 			try {
@@ -30,23 +34,17 @@ public class Config {
 				for(int i = 0; i<configValueMap.size();i++){
 					prop.setProperty((String) configValueMap.keySet().toArray()[i], configValueMap.get(configValueMap.keySet().toArray()[i]));
 				}
-		 
-				// save properties to project root folder
+				//save properties
 				prop.store(output, null);
-		 
 			} catch (IOException io) {
 				io.printStackTrace();
 			} finally {
-				if (output != null) {
-					try {
-						output.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-		 
+				try {
+					output.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}		 
 			}
-		
 		}
 	}
 	
@@ -62,13 +60,12 @@ public class Config {
 		String s = null;
 		try {
 			input = new FileInputStream(ExperimentX.getDirectory() + "/options.properties");
-	 
-			// load a properties file
+			//load a properties file
 			prop.load(input);
-	 
-			// get the property value and print it out
+			//get the property value
+			if(!prop.containsKey(key))
+				setValue(key, configValueMap.get(key));
 			s = prop.getProperty(key, configValueMap.get(key));
-			
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -86,37 +83,29 @@ public class Config {
 	public static void setValue(String key, String value){
 		Properties prop = new Properties();
 		OutputStream output = null;
-	 
 		try {
-	 
 			output = new FileOutputStream(ExperimentX.getDirectory() + "/options.properties");
-	 
-			// set the properties value
+			//set the properties value
 			for(int i = 0; i < configValueMap.size(); i++){
 				prop.setProperty((String) configValueMap.keySet().toArray()[i], configValueMap.get(configValueMap.keySet().toArray()[i]));
 			}
 			prop.setProperty(key, value);
-	 
-			// save properties to project root folder
+			//save properties
 			prop.store(output, null);
-	 
 		} catch (IOException io) {
 			io.printStackTrace();
 		} finally {
-			if (output != null) {
-				try {
-					output.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			try {
+				output.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-	 
 		}
+		//update config value map
 		configValueMap.put(key, value);
 	}
 	
 	public static String getProperty(String property){
-		if(configValueMap.containsKey(property)) return configValueMap.get(property);
-		else return null;
+		return configValueMap.containsKey(property) ? configValueMap.get(property) : null;
 	}
 }

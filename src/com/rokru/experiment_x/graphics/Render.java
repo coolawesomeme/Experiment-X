@@ -41,7 +41,8 @@ public class Render {
 				int xa = x + xp;
 				if (xa < -tile.sprite.SIZEx || xa >= width || ya < 0 || ya >= height) break;
 				if (xa < 0) xa = 0;
-				pixels[xa + ya * width] = tile.sprite.pixels[x + y * tile.sprite.SIZEx];
+				if(tile.sprite.pixels[x + y * tile.sprite.SIZEx] < 0)
+					pixels[xa + ya * width] = tile.sprite.pixels[x + y * tile.sprite.SIZEx];
 			}
 		}
 	}
@@ -65,5 +66,4 @@ public class Render {
 		this.xOffset = xOffset;
 		this.yOffset = yOffset;
 	}
-
 }

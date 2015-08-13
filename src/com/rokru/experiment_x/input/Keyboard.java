@@ -55,7 +55,11 @@ public class Keyboard implements KeyListener {
 	}
 
 	public void keyReleased(KeyEvent e) {
-		keys[e.getKeyCode()] = false;
+		try{
+			keys[e.getKeyCode()] = false;
+		}catch(Exception ex){
+			Logger.generalLogger.logError("Invalid key released! ID: " + e.getKeyCode() + " (" + e.getKeyChar() + ")", 1);
+		}
 	}
 
 	public void keyTyped(KeyEvent e) {

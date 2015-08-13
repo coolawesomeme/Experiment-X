@@ -1,11 +1,10 @@
 package com.rokru.experiment_x.entity.mob;
 
-import com.rokru.experiment_x.ExperimentX;
-import com.rokru.experiment_x.Logger;
 import com.rokru.experiment_x.graphics.Render;
 import com.rokru.experiment_x.graphics.Sprite;
 import com.rokru.experiment_x.gui.PauseMenu;
 import com.rokru.experiment_x.input.Keyboard;
+import com.rokru.experiment_x.level.Coordinates;
 import com.rokru.experiment_x.level.Level;
 
 public class Player extends Mob {
@@ -31,6 +30,15 @@ public class Player extends Mob {
 		sprite = Sprite.player_up;
 	}
 	
+	@Override
+	public void onMobMovedToNewTile(Coordinates prevCoords){
+		/*Random random = new Random();
+		if(ExperimentX.debug && random.nextBoolean()){
+			Logger.playerLogger.logInfo("Location: Block @ (" + tileX + ", " + tileY + "): " + level.getTile(new Coordinates(tileX, tileY)).getFormattedTileName() + " (id = " + level.getTile(new Coordinates(tileX, tileY)).getTileID() + ")");
+		}*/
+	}
+	
+	@Override
 	public void update() {
 		int xa = 0, ya = 0;
 		if (anim < 7500) anim++;
@@ -43,21 +51,14 @@ public class Player extends Mob {
 		}
 		
 		if (xa != 0 || ya != 0) {
-			int prevTileX = tileX;
-			int prevTileY = tileY;
 			move(xa, ya);
-			if(prevTileX != tileX || prevTileY != tileY){
-				if(ExperimentX.debug){
-					Logger.playerLogger.logInfo("Block @ (" + tileX + ", " + tileY + "): " + level.getTile(tileX, tileY).getFormattedTileName() + " (id = " + level.getTile(tileX, tileY).getTileID() + ")");
-					ExperimentX.setCurrentTile(level.getTile(tileX, tileY));
-				}
-			}
 			walking = true;
 		} else {
 			walking = false;
 		}
 	}
 	
+	@Override
 	public void render(Render screen) {
 		if (dir == 0) {
 			sprite = Sprite.player_up;
@@ -105,6 +106,5 @@ public class Player extends Mob {
 		}		
 		screen.renderPlayer(x - 16, y - 16, sprite);
 		
-	}
-	
+	}	
 }

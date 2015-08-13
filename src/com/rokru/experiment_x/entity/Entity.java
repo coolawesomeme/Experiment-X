@@ -19,26 +19,24 @@ public abstract class Entity {
 	protected Level level;
 	protected String name = "Entity";
 	protected final Random random = new Random();
-	protected static UUID entityUUID;
+	public UUID entityUUID;
 	private static HashMap<UUID, Entity> uuidMap = new HashMap<UUID, Entity>();
 	private static List<Entity> entityList = new ArrayList<Entity>();
 
 	public Entity(Level level, String name) {
 		this.level = level;
-		this.name = name;
+		if(name != null)
+			this.name = name;
 		entityUUID = UUID.randomUUID();
 		uuidMap.put(entityUUID, this);
 		entityList.add(this);
-		if(this instanceof Player){
+		if(this instanceof Player) 
 			Logger.playerLogger.logInfo("Player UUID: " + entityUUID.toString());
-		}
 	}
 
-	public void update() {
-	}
+	public void update() {}
 
-	public void render(Render screen) {
-	}
+	public void render(Render screen) {}
 
 	public void remove() {
 		// Remove from level
@@ -72,9 +70,5 @@ public abstract class Entity {
 	
 	public String getEntityName(){
 		return name;
-	}
-	
-	public void initLevel(Level level){
-		this.level = level;
 	}
 }

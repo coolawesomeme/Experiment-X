@@ -12,6 +12,8 @@ import com.rokru.experiment_x.level.tile.Tile;
 
 public class SpawnLevel extends Level{
 	
+	private int[] tilePixels;
+
 	public SpawnLevel(String path) {
 		super(path);
 	}
@@ -22,6 +24,7 @@ public class SpawnLevel extends Level{
 			int w = width = image.getWidth();
 			int h = height = image.getHeight();
 			tilePixels = new int[w*h];
+			tiles = new String[w*h];
 			image.getRGB(0, 0, w, h, tilePixels, 0, w);
 			for(int i = 0; i < tilePixels.length; i++){
 				if(tilePixels[i] == 0xff9f00a2){
@@ -64,7 +67,14 @@ public class SpawnLevel extends Level{
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			Logger.generalLogger.logError("Exception! Could not load level file!");
+			Logger.generalLogger.logError("Exception! Could not load level file!", 1);
+		}
+		pixelsToIDs();
+	}
+
+	private void pixelsToIDs() {
+		for(int i = 0; i < tilePixels.length; i++){
+			tiles[i] = Tile.getTileFromColorID(tilePixels[i]).getTileID();
 		}
 	}
 }

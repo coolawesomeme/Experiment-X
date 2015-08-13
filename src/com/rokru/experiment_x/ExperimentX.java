@@ -10,6 +10,8 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
@@ -32,14 +34,14 @@ import com.rokru.experiment_x.gui.MainMenu;
 import com.rokru.experiment_x.gui.OptionsMenu;
 import com.rokru.experiment_x.gui.PauseMenu;
 import com.rokru.experiment_x.input.Keyboard;
+import com.rokru.experiment_x.level.Coordinates;
+import com.rokru.experiment_x.level.LevelLoader;
 import com.rokru.experiment_x.level.Level;
 import com.rokru.experiment_x.level.PlayerInfoSaver;
-import com.rokru.experiment_x.level.SpawnLevel;
-import com.rokru.experiment_x.level.tile.Tile;
 
-public class ExperimentX extends Canvas implements Runnable{
+public class ExperimentX extends Canvas implements Runnable {
+	
     private static final long serialVersionUID = 1L;
-
     public final static String title = "Experiment X";
     public final static String gameVersion = "0.0.1";
     public final static String gameVersionFormatted = title + " - v" + gameVersion;
@@ -49,11 +51,11 @@ public class ExperimentX extends Canvas implements Runnable{
     public final static int scale = 3;
     
     public static int currentMenu;
-    public static int borderWidth = 0;
-    public static int borderHeight = 0;
+    public static int borderWidth = 0, borderHeight = 0;
     
     public static MainMenu mainMenuInstance;
     private static Thread gameThread;
+    
     private static JFrame frame;
     private Keyboard key;
     public static Level level;
@@ -63,7 +65,6 @@ public class ExperimentX extends Canvas implements Runnable{
     
     private int frames, f2 = 0;
     private int updates, u2 = 0;
-    public static Tile currentTile = Tile.voidTile;
     
     private static int pauseRender = 0;
     
@@ -71,31 +72,30 @@ public class ExperimentX extends Canvas implements Runnable{
     
     public static boolean debug = false;
 	public static boolean hidegui = false;
-    
+	
     public static boolean titleBar = true;
+	public static int saveTimer = 4;
     
     private BufferedImage image = new BufferedImage (width, height, BufferedImage.TYPE_INT_RGB);
     private int [] pixels = ((DataBufferInt)image.getRaster().getDataBuffer()).getData();
     
     public ExperimentX() {
+    	if(!titleBar)
+    		borderWidth = borderHeight = 7;
     	Dimension size = new Dimension(width * scale, height * scale);
         setSize(size);
-        if(!titleBar){
-        	borderWidth = borderHeight = 7;
-        }
         screen = new Render(width, height);
         frame = new JFrame();
         key = new Keyboard();
-        level = new SpawnLevel("/level/spawn_level.png");
-    	int[] coords = PlayerInfoSaver.getPlayerCoords();
+        //level = new SpawnLevel("/level/spawn_level.png");
+        level = new LevelLoader("/level/spawn_level.map", 128, 64);
+    	Coordinates coords = PlayerInfoSaver.getPlayerCoords();
     	if(coords == null){
-    		coords = new int[2];
-    		coords[0] = 64;
-            coords[1] = 32;
+    		coords = new Coordinates(level.getLevelWidth()/2, level.getLevelHeight()/2, player);
+    		PlayerInfoSaver.savePlayerCoords(coords);
     	}
-        player = new Player(level, coords[0]*16 + 8, coords[1]*16 - 1, key, username);
-        player.initLevel(level);
-        setCurrentTile(level.getTile(player.tileX, player.tileY));
+        player = new Player(level, coords.getX()*16 + 8, coords.getY()*16 - 1, key, username);
+        player.setCurrentTile(level.getTile(new Coordinates(player.tileX, player.tileY)));
         
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Image cursorI = new ImageIcon(ExperimentX.class.getResource(("/images/cursor_main.png"))).getImage();
@@ -103,6 +103,16 @@ public class ExperimentX extends Canvas implements Runnable{
         setCursor(cursor);
         
         addKeyListener(key);
+        
+        addFocusListener(new FocusAdapter() {
+        	@Override
+        	public void focusLost(FocusEvent e){
+        		if(currentMenu != PauseMenu.menuID){
+        			currentMenu = PauseMenu.menuID;
+        			Logger.generalLogger.logInfo("Focus lost");
+        			Logger.generalLogger.logInfo("Pause menu opened");
+        		}
+        	}});
         
 		addMouseListener(new MouseAdapter() {
 		     public void mouseReleased(MouseEvent e) {
@@ -126,12 +136,15 @@ public class ExperimentX extends Canvas implements Runnable{
 			try {
 				UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());} catch (Exception e) {}
 			JOptionPane.showMessageDialog(null, new JLabel("Please use the official (or a custom) launcher to open the game.", JLabel.CENTER), "Error", JOptionPane.ERROR_MESSAGE);
-			Logger.xLogger.logError("Launcher not detected, going to exit.");
+			Logger.xLogger.logError("Launcher not detected, going to exit.", 2);
 			System.exit(0);
 		}else if(parameters.contains("-v") || parameters.contains("-version")){
 			Logger.xLogger.logPlain(gameVersion);
 			System.exit(0);
 		}
+		Logger.generalLogger.logPlain("===========================================");
+		Logger.generalLogger.logPlain(gameVersionFormatted.toUpperCase());
+		Logger.generalLogger.logPlain("===========================================");
 		new Config();
 		Random random = new Random();
 		username = "Player" + random.nextInt(999);
@@ -146,12 +159,14 @@ public class ExperimentX extends Canvas implements Runnable{
 		Logger.playerLogger.logInfo("Current Username: " + username);
 		makeDirectories();
 		titleBar = Boolean.parseBoolean(Config.getProperty("titleBar"));
+		saveTimer = Integer.parseInt(Config.getProperty("saveTimer"));
 		ExperimentX x = new ExperimentX();
 		ExperimentX.frame.setResizable(false);
 		ExperimentX.frame.setTitle(gameVersionFormatted);
 		ExperimentX.frame.setIconImage(new ImageIcon(ExperimentX.class.getResource("/images/app_icon.png")).getImage());
 		mainMenuInstance = new MainMenu(x, frame);
 		if(!titleBar){
+			Logger.generalLogger.logInfo("Launching without title bar");
 			ExperimentX.frame.getContentPane().setBackground(new Color(0xff002747));
 			mainMenuInstance.setBounds(borderWidth, borderHeight, width*scale, height*scale);
 			ExperimentX.frame.setSize(new Dimension(width*scale + 2*borderWidth, height*scale + 2*borderHeight));
@@ -167,6 +182,7 @@ public class ExperimentX extends Canvas implements Runnable{
 		ExperimentX.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		ExperimentX.frame.setLocationRelativeTo(null);
 		ExperimentX.frame.setVisible(true);
+		new ThreadHandler();
 		//m.start();
     }
 
@@ -178,11 +194,7 @@ public class ExperimentX extends Canvas implements Runnable{
     
     private synchronized static void stop(){
         running = false;
-        try {
-            gameThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        ThreadHandler.closeThread(gameThread);
     }
     
     public void run(){
@@ -266,7 +278,7 @@ public class ExperimentX extends Canvas implements Runnable{
     		}else if(Boolean.parseBoolean(Config.getProperty("guiBar")) && !PauseMenu.paused){
     			g.setColor(new Color(0f, 0f, 0f, 0.15f));
     			g.fillRect(0, 0, width*scale, 22);
-    			g.fillRect(0, 22, g.getFontMetrics().stringWidth("Tile: " + currentTile.getFormattedTileName()) + 15, 32);
+    			g.fillRect(0, 22, g.getFontMetrics().stringWidth("Tile: " + player.currentTile.getFormattedTileName() + " (id " + player.currentTile.getTileID() + ")") + 15, 32);
     		}
     	
     		g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
@@ -283,7 +295,7 @@ public class ExperimentX extends Canvas implements Runnable{
     		}else if(debug){
     			g.setColor(new Color(1.0f, 1.0f, 1.0f, 0.7f));
     			g.drawString(u2 + " ups, " + f2 + " fps", width*scale - 5 - g.getFontMetrics().stringWidth(u2 + " ups, " + f2 + " fps") , 16);
-    			g.drawString("Tile: " + currentTile.getFormattedTileName(), 5, 32);
+    			g.drawString("Tile: " + player.currentTile.getFormattedTileName() + " (id " + player.currentTile.getTileID() + ")", 5, 32);
     			g.drawString("(" + player.tileX + ", " + player.tileY + ")", 5, 48);
     		}
     	}
@@ -357,10 +369,6 @@ public class ExperimentX extends Canvas implements Runnable{
 		debug = turnOnDebug;
 	}
 	
-	public static void setCurrentTile(Tile tile){
-		currentTile = tile;
-	}
-	
 	public static void setCurrentMenu(int x){
 		currentMenu = x;
 		pauseRender = 0;
@@ -371,6 +379,10 @@ public class ExperimentX extends Canvas implements Runnable{
 	}
 	
 	public static void endGameEvent(){
-		PlayerInfoSaver.savePlayerCoords(player.tileX, player.tileY);
+		saveGame();
+	}
+
+	public static void saveGame() {
+		PlayerInfoSaver.savePlayerCoords(new Coordinates(player.tileX, player.tileY, player));
 	}
 }

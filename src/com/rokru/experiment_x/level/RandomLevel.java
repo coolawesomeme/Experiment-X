@@ -46,7 +46,7 @@ public class RandomLevel extends Level {
 				py += 3;
 			}
 			
-			if(!Tile.getTileFromID(tiles[px+py*height]).walkable()){
+			if(!Tile.getTileFromID(tiles[px+py*height]).isWalkable()){
 				continue;
 			}
 			

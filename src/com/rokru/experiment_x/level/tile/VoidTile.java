@@ -8,7 +8,8 @@ public class VoidTile extends Tile {
 		super(sprite, id, colorID, name);
 	}
 
-	public boolean walkable(){
+	@Override
+	public boolean isWalkable(){
 		return false;
 	}
 }

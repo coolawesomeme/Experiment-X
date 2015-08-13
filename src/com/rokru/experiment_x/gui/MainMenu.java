@@ -3,10 +3,13 @@ package com.rokru.experiment_x.gui;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.Calendar;
 
@@ -57,6 +60,15 @@ public class MainMenu extends JPanel implements Runnable{
 		
 		colorAnimTimer = System.currentTimeMillis();
 		
+		addMouseListener(new MouseAdapter() {
+		     public void mouseReleased(MouseEvent e) {
+		        if(OptionsMenu.menuOpen){
+		        	OptionsMenu.requestFocus();
+		        	Logger.generalLogger.logAction("mouse", "Click (while option menu open)");
+		        }
+		     }
+		});
+		
 		Logger.generalLogger.logInfo("Main Menu running.");
 	}
 
@@ -70,21 +82,24 @@ public class MainMenu extends JPanel implements Runnable{
 		add(logo);
 		
 		JButton play = new JButton("Play!");
-		play.setBounds(getWidth()/2 - 120/2, 385, 140, 60);
+		play.setBounds(getWidth()/2 - 120/2, 383, 140, 65);
 		play.setUI(new XButtonUI());
 		play.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		play.setFont(new Font("", 1, 20));
 		add(play);
 		
 		JButton exit = new JButton("Exit");
 		exit.setBounds(getWidth() - 80 - 120, 385, 120, 60);
 		exit.setUI(new XButtonUI());
 		exit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		exit.setFont(new Font("", 1, 17));
 		add(exit);
 		
 		JButton options = new JButton("Options");
 		options.setBounds(80, 385, 120, 60);
 		options.setUI(new XButtonUI());
 		options.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		options.setFont(new Font("", 1, 17));
 		add(options);
 		
 		play.addActionListener(new ActionListener() {
@@ -124,6 +139,8 @@ public class MainMenu extends JPanel implements Runnable{
 	    		(float)currentMenuColor.getGreen()/255,
 	    		(float)currentMenuColor.getBlue()/255, 0.65f));
 	    gbi.fillRect(0, 0, getWidth(), getHeight());
+	    gbi.setColor(new Color(0, 0, 0, 0.13f));
+	    gbi.fillRect(0, getHeight() - 157, getWidth(), 157);
 		//g.drawImage(new ImageIcon(this.getClass().getResource("/images/ex_x_logo.png")).getImage(), getWidth()/2 - 600/2, 75, 600, 200, null);
 	}
 

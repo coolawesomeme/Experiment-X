@@ -20,8 +20,12 @@ public class Logger {
 		System.out.println("[" + channel.toUpperCase() + " - INFO] " + message);
 	}
 	
-	public void logError(String message){
-		System.out.println("[" + channel.toUpperCase() + " - ERROR] " + message);
+	public void logError(String message, int priorityLevel){
+		String priority = "";
+		if(priorityLevel <= 1) priority = "!";
+		else if(priorityLevel == 2) priority = "!!";
+		else if(priorityLevel >= 3) priority = "!!!";
+		System.out.println("[" + channel.toUpperCase() + " - ERROR] " + priority + " " + message);
 	}
 	
 	public void logAction(String type, String cause){
