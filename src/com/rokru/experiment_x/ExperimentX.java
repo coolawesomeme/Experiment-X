@@ -45,11 +45,6 @@ public class ExperimentX extends Canvas implements Runnable {
     public final static String title = "Experiment X";
     public final static String gameVersion = "0.0.1";
     public final static String gameVersionFormatted = title + " - v" + gameVersion;
-<<<<<<< HEAD
-    public static Object dummyTestObject = 4;
-=======
-    public static Object dummyTestObject2 = 2;
->>>>>>> master
     
     public final static int width = 300;
     public final static int height = 168;
