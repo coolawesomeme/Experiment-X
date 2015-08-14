@@ -85,21 +85,21 @@ public class MainMenu extends JPanel implements Runnable{
 		play.setBounds(getWidth()/2 - 120/2, 383, 140, 65);
 		play.setUI(new XButtonUI());
 		play.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		play.setFont(new Font("", 1, 20));
+		play.setFont(ExperimentX.getDefaultFont(1, 20));
 		add(play);
 		
 		JButton exit = new JButton("Exit");
 		exit.setBounds(getWidth() - 80 - 120, 385, 120, 60);
 		exit.setUI(new XButtonUI());
 		exit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		exit.setFont(new Font("", 1, 17));
+		exit.setFont(ExperimentX.getDefaultFont(1, 17));
 		add(exit);
 		
 		JButton options = new JButton("Options");
 		options.setBounds(80, 385, 120, 60);
 		options.setUI(new XButtonUI());
 		options.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		options.setFont(new Font("", 1, 17));
+		options.setFont(ExperimentX.getDefaultFont(1, 17));
 		add(options);
 		
 		play.addActionListener(new ActionListener() {

@@ -346,7 +346,7 @@ public class ExperimentX extends Canvas implements Runnable {
             	}
             }
 		if(flag){
-			return new Font("Arial", fontType, fontSize);
+			return getDefaultFont(fontType, fontSize);
 		}else{
 			if(reformatIfDefault <= 1)
 				return new Font(UIManager.getFont("Label.font").getFontName(), Font.PLAIN, fontSize);
