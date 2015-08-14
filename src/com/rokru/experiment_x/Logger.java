@@ -21,10 +21,10 @@ public class Logger {
 	}
 	
 	public void logError(String message, int priorityLevel){
-		String priority = "";
+		String priority;
 		if(priorityLevel <= 1) priority = "!";
 		else if(priorityLevel == 2) priority = "!!";
-		else if(priorityLevel >= 3) priority = "!!!";
+		else priority = "!!!";
 		System.out.println("[" + channel.toUpperCase() + " - ERROR] " + priority + " " + message);
 	}
 	
