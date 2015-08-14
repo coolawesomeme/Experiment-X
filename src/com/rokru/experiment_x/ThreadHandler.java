@@ -41,6 +41,7 @@ public class ThreadHandler implements Runnable{
 				Thread.sleep(20 * 60 * 60 * ExperimentX.saveTimer);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
+				closeThread(ThreadHandler.saveThread);
 			}
 		}
 	}
